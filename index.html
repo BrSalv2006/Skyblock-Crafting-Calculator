@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skyblock Crafting Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a202c;
+            color: #e2e8f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 1rem;
+        }
+        .container {
+            background-color: #2d3748;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+            padding: 2rem;
+            max-width: 90%;
+            width: 600px;
+            text-align: center;
+        }
+        input[type="text"], input[type="number"], button {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+        button {
+            background-color: #4299e1;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #3182ce;
+        }
+        #results {
+            background-color: #2c313a;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            text-align: left;
+            border: 1px solid #4a5568;
+        }
+        #results ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        #results li {
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed #4a5568;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #results li:last-child {
+            border-bottom: none;
+        }
+        .item-name {
+            font-weight: bold;
+            color: #90cdf4;
+        }
+        .item-quantity {
+            color: #a0aec0;
+        }
+        .error-message {
+            color: #fc8181;
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+        .loading-spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #4299e1;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 1rem auto;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #craftTreeDisplay {
+            background-color: #2c313a;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            text-align: left;
+            border: 1px solid #4a5568;
+        }
+
+        #craftTreeDisplay ul {
+            list-style: none;
+            padding-left: 1rem;
+        }
+
+        #craftTreeDisplay li {
+            padding: 0.25rem 0;
+            border-bottom: 1px dotted #4a5568;
+        }
+
+        #craftTreeDisplay li:last-child {
+            border-bottom: none;
+        }
+
+        .craft-step {
+            font-weight: bold;
+            color: #63b3ed;
+        }
+        .craft-step-details {
+            font-size: 0.9em;
+            color: #a0aec0;
+            margin-left: 0.5rem;
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+            appearance: none; /* Added for compatibility */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-3xl font-bold mb-6 white">Skyblock Crafting Calculator</h1>
+
+        <div class="mb-4">
+            <input type="text" id="itemName" placeholder="Enter item INTERNAL NAME (e.g., ASPECT_OF_THE_END)"
+                   class="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-gray-100
+                          focus:outline-none focus:ring-2 focus:ring-blue-400">
+        </div>
+        <div class="mb-4">
+            <input type="number" id="itemQuantity" placeholder="Quantity (default 1)" value="1" min="1"
+                   class="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-gray-100
+                          focus:outline-none focus:ring-2 focus:ring-blue-400 appearance-none">
+        </div>
+        <button id="calculateBtn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out">
+            Calculate Resources
+        </button>
+
+        <div class="loading-spinner" id="loadingSpinner"></div>
+
+        <div id="results" class="mt-6 p-4 bg-gray-800 rounded-lg text-left">
+            <p class="text-gray-400">Enter an item's **INTERNAL NAME** and quantity above to see the required base resources.</p>
+            <p class="text-gray-400 mt-2 text-sm">
+                **Recipes are fetched live from the NotEnoughUpdates GitHub repository.**
+                This requires an internet connection and may be subject to GitHub's rate limits.
+            </p>
+        </div>
+
+        <div id="craftTreeDisplay" class="mt-6 p-4 bg-gray-800 rounded-lg text-left hidden">
+            <h2 class="text-xl font-bold mb-4 text-white">Crafting Steps:</h2>
+            <div id="craftTreeContent"></div>
+        </div>
+    </div>
+
+    <script>
+        const itemNameInput = document.getElementById('itemName');
+        const itemQuantityInput = document.getElementById('itemQuantity');
+        const calculateBtn = document.getElementById('calculateBtn');
+        const resultsDiv = document.getElementById('results');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const craftTreeDisplay = document.getElementById('craftTreeDisplay');
+        const craftTreeContent = document.getElementById('craftTreeContent');
+
+        const RECIPES_BASE_URL = 'https://raw.githubusercontent.com/NotEnoughUpdates/NotEnoughUpdates-REPO/master/items/';
+
+        function normalizeInternalName(name) {
+            return name.toUpperCase().trim();
+        }
+
+        function cleanDisplayName(name) {
+            return name ? name.replace(/§[0-9a-fklmnor]/g, '') : '';
+        }
+
+        async function fetchRecipe(internalName) {
+            const url = `${RECIPES_BASE_URL}${normalizeInternalName(internalName)}.json`;
+            console.log(`Attempting to fetch recipe from: ${url}`);
+
+            try {
+                const response = await fetch(url);
+
+                if (!response.ok) {
+                    console.warn(`Recipe file not found or error for ${internalName}: ${response.status} ${response.statusText}. Treating as base item.`);
+                    return { output: cleanDisplayName(internalName), ingredients: [], internalname: internalName, count: 1, isVanilla: false };
+                }
+
+                const recipeRecord = await response.json();
+
+                if (!recipeRecord || typeof recipeRecord.internalname !== 'string') {
+                    console.error(`Invalid recipe data structure for ${internalName}:`, recipeRecord);
+                    throw new Error(`Invalid recipe data for ${internalName}`);
+                }
+
+                const isVanillaItem = recipeRecord.vanilla === true;
+
+                if (isVanillaItem) {
+                    console.log(`Item ${internalName} has 'vanilla: true' tag. Treating as base item.`);
+                    return {
+                        output: cleanDisplayName(recipeRecord.displayname || internalName),
+                        ingredients: [],
+                        internalname: recipeRecord.internalname,
+                        count: 1,
+                        isVanilla: true
+                    };
+                }
+
+                const ingredientsMap = {};
+                let outputCount = 1;
+                let recipeFound = false;
+
+                if (recipeRecord.recipes && Array.isArray(recipeRecord.recipes) && recipeRecord.recipes.length > 0) {
+                    for (const primaryRecipe of recipeRecord.recipes) {
+                        if (primaryRecipe) {
+                            if (primaryRecipe.inputs && Array.isArray(primaryRecipe.inputs)) {
+                                primaryRecipe.inputs.forEach(inputString => {
+                                    const [ingInternalName, quantityStr] = inputString.split(':');
+                                    const quantity = parseInt(quantityStr, 10);
+                                    if (ingInternalName && !isNaN(quantity) && quantity > 0) {
+                                        ingredientsMap[ingInternalName] = (ingredientsMap[ingInternalName] || 0) + quantity;
+                                    }
+                                });
+                                outputCount = primaryRecipe.count || 1;
+                                recipeFound = true;
+                                break;
+                            } else if (primaryRecipe.A1 !== undefined || primaryRecipe.A2 !== undefined || primaryRecipe.A3 !== undefined ||
+                                       primaryRecipe.B1 !== undefined || primaryRecipe.B2 !== undefined || primaryRecipe.B3 !== undefined ||
+                                       primaryRecipe.C1 !== undefined || primaryRecipe.C2 !== undefined || primaryRecipe.C3 !== undefined) {
+                                const gridSlots = ['A1', 'A2', 'A3', 'B1', 'B2', 'B3', 'C1', 'C2', 'C3'];
+                                gridSlots.forEach(slot => {
+                                    const ingredientString = primaryRecipe[slot];
+                                    if (ingredientString) {
+                                        const [ingInternalName, quantityStr] = ingredientString.split(':');
+                                        const quantity = parseInt(quantityStr, 10);
+                                        if (ingInternalName && !isNaN(quantity) && quantity > 0) {
+                                            ingredientsMap[ingInternalName] = (ingredientsMap[ingInternalName] || 0) + quantity;
+                                        }
+                                    }
+                                });
+                                outputCount = primaryRecipe.count || 1;
+                                recipeFound = true;
+                                break;
+                            }
+                        }
+                    }
+                } else if (recipeRecord.recipe && Object.keys(recipeRecord.recipe).length > 0) {
+                    for (const slot in recipeRecord.recipe) {
+                        const ingredientString = recipeRecord.recipe[slot];
+                        if (ingredientString) {
+                            const [ingInternalName, quantityStr] = ingredientString.split(':');
+                            const quantity = parseInt(quantityStr, 10);
+                            if (ingInternalName && !isNaN(quantity) && quantity > 0) {
+                                ingredientsMap[ingInternalName] = (ingredientsMap[ingInternalName] || 0) + quantity;
+                            }
+                        }
+                    }
+                    outputCount = 1;
+                    recipeFound = true;
+                }
+
+                const ingredientsArray = Object.entries(ingredientsMap).map(([ingInternalName, quantity]) => {
+                    return { name: cleanDisplayName(ingInternalName), internalName: ingInternalName, quantity: quantity };
+                });
+
+                if (ingredientsArray.length === 0) {
+                    console.log(`Item ${internalName} has no craftable recipe defined. Treating as base item.`);
+                }
+
+                return {
+                    output: cleanDisplayName(recipeRecord.displayname || internalName),
+                    ingredients: ingredientsArray,
+                    internalname: recipeRecord.internalname,
+                    count: outputCount,
+                    isVanilla: false
+                };
+
+            } catch (error) {
+                console.error(`Error fetching recipe for ${internalName}:`, error);
+                return { output: cleanDisplayName(internalName), ingredients: [], internalname: internalName, count: 1, isVanilla: false };
+            }
+        }
+
+        async function buildCraftTree(itemInternalName, quantityNeeded) {
+            const recipeInfo = await fetchRecipe(itemInternalName);
+
+            if (recipeInfo.ingredients.length === 0) {
+                return {
+                    name: recipeInfo.output,
+                    internalName: recipeInfo.internalname,
+                    quantityNeeded: quantityNeeded,
+                    quantityProducedPerCraft: 1,
+                    numCraftsRequired: quantityNeeded,
+                    ingredients: [],
+                    children: []
+                };
+            }
+
+            const numCrafts = Math.ceil(quantityNeeded / recipeInfo.count);
+
+            const childrenNodes = [];
+            for (const ingredient of recipeInfo.ingredients) {
+                const childNode = await buildCraftTree(ingredient.internalName, ingredient.quantity * numCrafts);
+                childrenNodes.push(childNode);
+            }
+
+            return {
+                name: recipeInfo.output,
+                internalName: recipeInfo.internalname,
+                quantityNeeded: quantityNeeded,
+                quantityProducedPerCraft: recipeInfo.count,
+                numCraftsRequired: numCrafts,
+                ingredients: recipeInfo.ingredients,
+                children: childrenNodes
+            };
+        }
+
+        function flattenCraftTree(node, totalResources) {
+            if (node.ingredients.length === 0) {
+                totalResources[node.name] = (totalResources[node.name] || 0) + node.quantityNeeded;
+                return;
+            }
+
+            for (const child of node.children) {
+                flattenCraftTree(child, totalResources);
+            }
+        }
+
+        function renderCraftTree(node, level = 0) {
+            let html = '';
+            html += `<li>`;
+            html += `<span class="craft-step">${node.name}</span>`;
+            html += `<span class="craft-step-details"> (Need: ${node.quantityNeeded}`;
+
+            if (node.ingredients.length > 0) {
+                html += `, Crafts: ${node.numCraftsRequired}`;
+                html += `, Yield: ${node.quantityProducedPerCraft} per craft)`;
+            } else {
+                html += `)`;
+            }
+            html += `</span>`;
+
+
+            if (node.children && node.children.length > 0) {
+                html += `<ul>`;
+                for (const child of node.children) {
+                    html += renderCraftTree(child, level + 1);
+                }
+                html += `</ul>`;
+            }
+            html += `</li>`;
+
+            return html;
+        }
+
+
+        calculateBtn.addEventListener('click', async () => {
+            const itemNameInputVal = itemNameInput.value.trim();
+            const itemQuantity = parseInt(itemQuantityInput.value, 10);
+
+            resultsDiv.innerHTML = '';
+            craftTreeContent.innerHTML = '';
+            craftTreeDisplay.classList.add('hidden');
+            loadingSpinner.style.display = 'block';
+
+            if (!itemNameInputVal) {
+                resultsDiv.innerHTML = '<p class="error-message">Please enter an item **INTERNAL NAME**.</p>';
+                loadingSpinner.style.display = 'none';
+                return;
+            }
+
+            if (isNaN(itemQuantity) || itemQuantity <= 0) {
+                resultsDiv.innerHTML = '<p class="error-message">Please enter a valid quantity (a positive number).</p>';
+                loadingSpinner.style.display = 'none';
+                return;
+            }
+
+            try {
+                const initialInternalName = normalizeInternalName(itemNameInputVal);
+
+                const initialRecipeInfo = await fetchRecipe(initialInternalName);
+
+                if (initialRecipeInfo.internalname !== initialInternalName) {
+                     resultsDiv.innerHTML = `<p class="error-message">
+                        Recipe for "${itemNameInputVal}" not found.
+                        Please ensure you've entered the correct **INTERNAL NAME** (e.g., TITANIUM_DRILL_1)
+                        and that its corresponding JSON file (e.g., \`/items/TITANIUM_DRILL_1.json\`) exists
+                        and is accessible on the NotEnoughUpdates GitHub repository.
+                        <br>
+                        **Check your browser's console (F12 -> Network/Console tabs) for specific errors (e.g., 404 Not Found).**
+                     </p>`;
+                     loadingSpinner.style.display = 'none';
+                     craftTreeDisplay.classList.add('hidden');
+                     return;
+                }
+
+                if (initialRecipeInfo.ingredients.length === 0 && initialRecipeInfo.isVanilla === false) {
+                    resultsDiv.innerHTML = `<p class="error-message">
+                        The item "${cleanDisplayName(initialRecipeInfo.output)}" is not craftable or its recipe is unknown.
+                        Please check the recipe definition in its JSON file on GitHub.
+                    </p>`;
+                    loadingSpinner.style.display = 'none';
+                    craftTreeDisplay.classList.add('hidden');
+                    return;
+                }
+
+                const craftTreeRoot = await buildCraftTree(initialInternalName, itemQuantity);
+
+                const totalResources = {};
+                flattenCraftTree(craftTreeRoot, totalResources);
+
+                if (Object.keys(totalResources).length === 0) {
+                    resultsDiv.innerHTML = '<p class="text-gray-400">No base resources found (this might happen for items that are themselves base resources with no ingredients).</p>';
+                } else {
+                    const ul = document.createElement('ul');
+                    Object.entries(totalResources).sort(([nameA], [nameB]) => nameA.localeCompare(nameB)).forEach(([resourceName, quantity]) => {
+                        const li = document.createElement('li');
+                        li.innerHTML = `<span class="item-name">${resourceName}</span> <span class="item-quantity">${quantity}</span>`;
+                        ul.appendChild(li);
+                    });
+                    resultsDiv.appendChild(ul);
+                }
+
+                if (craftTreeRoot) {
+                    craftTreeContent.innerHTML = `<ul>${renderCraftTree(craftTreeRoot)}</ul>`;
+                    craftTreeDisplay.classList.remove('hidden');
+                }
+
+            } catch (error) {
+                console.error("Error calculating resources:", error);
+                resultsDiv.innerHTML = `<p class="error-message">An unexpected error occurred: ${error.message}. Please check your browser's console for details.</p>`;
+            } finally {
+                loadingSpinner.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
