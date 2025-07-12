@@ -20,7 +20,9 @@ body {
     border: 1px solid #4a5568;
 }
 
-input[type="text"], input[type="number"], button {
+input[type="text"],
+input[type="number"],
+button {
     font-size: 1.05rem;
     margin-bottom: 1.25rem;
 }
@@ -129,8 +131,13 @@ button:active {
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 #craftTreeDisplay {
@@ -346,7 +353,8 @@ input[type="number"] {
     width: calc(4.5rem * 2 + 0.5rem);
 }
 
-.current-quantity-input, .packs-quantity-input {
+.current-quantity-input,
+.packs-quantity-input {
     width: 4.5rem;
     padding: 0.3rem 0.6rem;
     border-radius: 0.35rem;
@@ -359,13 +367,15 @@ input[type="number"] {
     flex-shrink: 0;
 }
 
-.current-quantity-input:focus, .packs-quantity-input:focus {
+.current-quantity-input:focus,
+.packs-quantity-input:focus {
     border-color: #90cdf4;
     background-color: #2d3748;
     outline: none;
 }
 
-.current-quantity-input:disabled, .packs-quantity-input:disabled {
+.current-quantity-input:disabled,
+.packs-quantity-input:disabled {
     background-color: #3d4654;
     border-color: #3d4654;
     color: #6b7280;
@@ -407,65 +417,70 @@ input[type="number"] {
 
 @media (max-width: 640px) {
     .container {
-padding: 1.5rem;
-border-radius: 1rem;
+        padding: 1.5rem;
+        border-radius: 1rem;
     }
 
-    input[type="text"], input[type="number"], button {
-font-size: 0.95rem;
-margin-bottom: 1rem;
-    }
-    
+    input[type="text"],
+    input[type="number"],
     button {
-padding: 0.75rem 1.5rem;
-border-radius: 0.5rem;
+        font-size: 0.95rem;
+        margin-bottom: 1rem;
     }
 
-    #results, #craftTreeDisplay {
-padding: 1rem;
-margin-top: 1rem;
-border-radius: 0.5rem;
+    button {
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
     }
 
-    .item-name, .item-quantity {
-font-size: 0.95rem;
+    #results,
+    #craftTreeDisplay {
+        padding: 1rem;
+        margin-top: 1rem;
+        border-radius: 0.5rem;
+    }
+
+    .item-name,
+    .item-quantity {
+        font-size: 0.95rem;
     }
 
     .craft-step-details {
-font-size: 0.85em;
-margin-top: 0.1rem;
+        font-size: 0.85em;
+        margin-top: 0.1rem;
     }
 
     .quantity-labels-row {
-display: none;
+        display: none;
     }
 
     .craft-step-header {
-flex-wrap: wrap;
-align-items: flex-start;
+        flex-wrap: wrap;
+        align-items: flex-start;
     }
 
     .main-content-flex {
-flex-direction: column;
-align-items: flex-start;
-flex-grow: 1;
-width: 100%;
-margin-top: 0.25rem;
+        flex-direction: column;
+        align-items: flex-start;
+        flex-grow: 1;
+        width: 100%;
+        margin-top: 0.25rem;
     }
 
     .item-text-content {
-width: 100%;
+        width: 100%;
     }
 
     .quantity-inputs-row {
-width: 100%;
-justify-content: flex-start;
-margin-top: 0.5rem;
+        width: 100%;
+        justify-content: flex-start;
+        margin-top: 0.5rem;
     }
 
-    .current-quantity-input, .packs-quantity-input {
-width: 3.5rem;
-padding: 0.2rem 0.4rem;
-font-size: 0.8rem;
+    .current-quantity-input,
+    .packs-quantity-input {
+        width: 3.5rem;
+        padding: 0.2rem 0.4rem;
+        font-size: 0.8rem;
     }
 }
