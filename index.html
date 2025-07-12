@@ -203,6 +203,43 @@
             min-width: 1em;
             text-align: center;
         }
+
+        .craft-checkbox {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 2px solid #63b3ed;
+            border-radius: 0.25rem;
+            background-color: #2c313a;
+            cursor: pointer;
+            position: relative;
+            margin-right: 0.5rem;
+            flex-shrink: 0;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+
+        .craft-checkbox:checked {
+            background-color: #48bb78;
+            border-color: #48bb78;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='white'%3e%3cpath fill-rule='evenodd' d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z' clip-rule='evenodd'/%3e%3c/svg%3e");
+            background-size: 100% 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .craft-checkbox:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.5);
+        }
+
+        .completed-item .craft-step,
+        .completed-item .craft-step-details,
+        .completed-item .toggle-arrow {
+            color: #a0aec0;
+            text-decoration: line-through;
+        }
     </style>
 </head>
 <body>
@@ -210,7 +247,7 @@
         <h1 class="text-3xl font-bold mb-6 text-white">Skyblock Crafting Calculator</h1>
 
         <div class="mb-4 relative">
-            <input type="text" id="itemName" placeholder="Enter item name (type and press TAB for autocompletion)"
+            <input type="text" id="itemName" placeholder="Enter item name (type and press TAB for suggestions)"
                    class="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-gray-100
                           focus:outline-none focus:ring-2 focus:ring-blue-400">
             <div id="autocomplete-list" class="hidden"></div>
@@ -229,8 +266,8 @@
         <div id="results" class="mt-6 p-4 bg-gray-800 rounded-lg text-left">
             <p class="text-gray-400" id="initialMessage">Loading item data for search... Please wait.</p>
             <p class="text-gray-400 mt-2 text-sm">
-                Recipes are fetched live from the NotEnoughUpdates GitHub repository.
-                This requires an internet connection and may be subject to GitHub's rate limits.
+                **Recipes are fetched live from the NotEnoughUpdates GitHub repository.**
+                This requires an-internet connection and may be subject to GitHub's rate limits.
             </p>
         </div>
 
@@ -256,6 +293,8 @@
 
         let DISPLAY_NAME_LOOKUP = {};
         let ORIGINAL_DISPLAY_NAMES_BY_INTERNAL_NAME = {};
+        let currentCraftTreeRoot = null;
+        let nodeMap = new Map();
 
         function normalizeInternalName(name) {
             return name.toUpperCase().trim();
@@ -405,39 +444,43 @@
 
         async function buildCraftTree(itemInternalName, quantityNeeded) {
             const recipeInfo = await fetchRecipe(itemInternalName);
-
-            if (recipeInfo.ingredients.length === 0) {
-                return {
-                    name: recipeInfo.output,
-                    internalName: recipeInfo.internalname,
-                    quantityNeeded: quantityNeeded,
-                    quantityProducedPerCraft: 1,
-                    numCraftsRequired: quantityNeeded,
-                    ingredients: [],
-                    children: []
-                };
-            }
-
-            const numCrafts = Math.ceil(quantityNeeded / recipeInfo.count);
-
-            const childrenNodes = [];
-            for (const ingredient of recipeInfo.ingredients) {
-                const childNode = await buildCraftTree(ingredient.internalName, ingredient.quantity * numCrafts);
-                childrenNodes.push(childNode);
-            }
-
-            return {
+            const nodeId = crypto.randomUUID();
+            const node = {
                 name: recipeInfo.output,
                 internalName: recipeInfo.internalname,
                 quantityNeeded: quantityNeeded,
-                quantityProducedPerCraft: recipeInfo.count,
-                numCraftsRequired: numCrafts,
-                ingredients: recipeInfo.ingredients,
-                children: childrenNodes
+                quantityProducedPerCraft: 1,
+                numCraftsRequired: quantityNeeded,
+                ingredients: [],
+                children: [],
+                nodeId: nodeId,
+                completed: false,
+                isCollapsed: false
             };
+            nodeMap.set(nodeId, node);
+
+            if (recipeInfo.ingredients.length === 0) {
+                return node;
+            }
+
+            const numCrafts = Math.ceil(quantityNeeded / recipeInfo.count);
+            node.quantityProducedPerCraft = recipeInfo.count;
+            node.numCraftsRequired = numCrafts;
+            node.ingredients = recipeInfo.ingredients;
+
+            for (const ingredient of recipeInfo.ingredients) {
+                const childNode = await buildCraftTree(ingredient.internalName, ingredient.quantity * numCrafts);
+                node.children.push(childNode);
+            }
+
+            return node;
         }
 
         function flattenCraftTree(node, totalResources) {
+            if (node.completed) {
+                return;
+            }
+
             if (node.ingredients.length === 0) {
                 totalResources[node.name] = (totalResources[node.name] || 0) + node.quantityNeeded;
                 return;
@@ -450,11 +493,13 @@
 
         function renderCraftTree(node, level = 0) {
             let html = `<li>`;
-            let uniqueId = `tree-node-${node.internalName}-${level}-${Math.random().toString(36).substring(2, 9)}`;
+            let uniqueId = `tree-node-${node.nodeId}`;
+            const isCompletedClass = node.completed ? 'completed-item' : '';
 
-            html += `<div class="craft-step-header">`;
+            html += `<div class="craft-step-header ${isCompletedClass}">`;
+            html += `<input type="checkbox" class="craft-checkbox" data-node-id="${node.nodeId}" ${node.completed ? 'checked' : ''}>`;
             if (node.children && node.children.length > 0) {
-                html += `<span class="toggle-arrow" data-target-id="${uniqueId}">▼</span> `;
+                html += `<span class="toggle-arrow" data-target-id="${uniqueId}">${node.isCollapsed ? '►' : '▼'}</span> `;
             } else {
                 html += `<span class="toggle-arrow" style="visibility: hidden;">►</span> `;
             }
@@ -471,7 +516,7 @@
             html += `</div>`;
 
             if (node.children && node.children.length > 0) {
-                html += `<ul id="${uniqueId}" style="display: block;">`;
+                html += `<ul id="${uniqueId}" style="display: ${node.isCollapsed ? 'none' : 'block'};">`;
                 for (const child of node.children) {
                     html += renderCraftTree(child, level + 1);
                 }
@@ -480,6 +525,50 @@
             html += `</li>`;
 
             return html;
+        }
+
+        function recalculateAndRenderResources() {
+            resultsDiv.innerHTML = '';
+            const totalResources = {};
+            if (currentCraftTreeRoot) {
+                flattenCraftTree(currentCraftTreeRoot, totalResources);
+            }
+
+            if (Object.keys(totalResources).length === 0) {
+                resultsDiv.innerHTML = '<p class="text-gray-400">No base resources found (all items might be marked as completed or are base resources with no ingredients).</p>';
+            } else {
+                const ul = document.createElement('ul');
+                Object.entries(totalResources).sort(([nameA], [nameB]) => nameA.localeCompare(nameB)).forEach(([resourceName, quantity]) => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<span class="item-name">${resourceName}</span> <span class="item-quantity">${quantity}</span>`;
+                    ul.appendChild(li);
+                });
+                resultsDiv.appendChild(ul);
+            }
+        }
+
+        function setNodeAndChildrenCompletion(node, completedStatus) {
+            node.completed = completedStatus;
+            const listItem = document.querySelector(`[data-node-id="${node.nodeId}"]`).closest('li');
+            if (listItem) {
+                const headerDiv = listItem.querySelector('.craft-step-header');
+                const checkbox = listItem.querySelector('.craft-checkbox');
+
+                if (headerDiv) {
+                    if (completedStatus) {
+                        headerDiv.classList.add('completed-item');
+                    } else {
+                        headerDiv.classList.remove('completed-item');
+                    }
+                }
+                if (checkbox) {
+                    checkbox.checked = completedStatus;
+                }
+            }
+
+            for (const child of node.children) {
+                setNodeAndChildrenCompletion(child, completedStatus);
+            }
         }
 
         function longestCommonPrefix(strs) {
@@ -626,6 +715,7 @@
             craftTreeDisplay.classList.add('hidden');
             loadingSpinner.style.display = 'block';
             autocompleteList.classList.add('hidden');
+            nodeMap.clear();
 
             if (!itemNameInputVal) {
                 resultsDiv.innerHTML = '<p class="error-message">Please enter an item **INTERNAL NAME** or **DISPLAY NAME**.</p>';
@@ -674,42 +764,15 @@
                     return;
                 }
 
-                const craftTreeRoot = await buildCraftTree(initialInternalName, itemQuantity);
+                currentCraftTreeRoot = await buildCraftTree(initialInternalName, itemQuantity);
 
-                const totalResources = {};
-                flattenCraftTree(craftTreeRoot, totalResources);
+                recalculateAndRenderResources();
 
-                if (Object.keys(totalResources).length === 0) {
-                    resultsDiv.innerHTML = '<p class="text-gray-400">No base resources found (this might happen for items that are themselves base resources with no ingredients).</p>';
-                } else {
-                    const ul = document.createElement('ul');
-                    Object.entries(totalResources).sort(([nameA], [nameB]) => nameA.localeCompare(nameB)).forEach(([resourceName, quantity]) => {
-                        const li = document.createElement('li');
-                        li.innerHTML = `<span class="item-name">${resourceName}</span> <span class="item-quantity">${quantity}</span>`;
-                        ul.appendChild(li);
-                    });
-                    resultsDiv.appendChild(ul);
-                }
-
-                if (craftTreeRoot) {
-                    craftTreeContent.innerHTML = `<ul>${renderCraftTree(craftTreeRoot)}</ul>`;
+                if (currentCraftTreeRoot) {
+                    craftTreeContent.innerHTML = `<ul>${renderCraftTree(currentCraftTreeRoot)}</ul>`;
                     craftTreeDisplay.classList.remove('hidden');
 
-                    craftTreeContent.querySelectorAll('.toggle-arrow').forEach(arrow => {
-                        arrow.addEventListener('click', function() {
-                            const targetId = this.dataset.targetId;
-                            const targetUl = document.getElementById(targetId);
-                            if (targetUl) {
-                                if (targetUl.style.display === 'none') {
-                                    targetUl.style.display = 'block';
-                                    this.textContent = '▼';
-                                } else {
-                                    targetUl.style.display = 'none';
-                                    this.textContent = '►';
-                                }
-                            }
-                        });
-                    });
+                    attachCraftTreeListeners();
                 }
 
             } catch (error) {
@@ -719,6 +782,35 @@
                 loadingSpinner.style.display = 'none';
             }
         });
+
+        function attachCraftTreeListeners() {
+            craftTreeContent.querySelectorAll('.toggle-arrow').forEach(arrow => {
+                arrow.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                    const targetId = this.dataset.targetId;
+                    const targetUl = document.getElementById(targetId);
+                    if (targetUl) {
+                        const node = nodeMap.get(targetId.replace('tree-node-', ''));
+                        if (node) {
+                            node.isCollapsed = !node.isCollapsed;
+                            targetUl.style.display = node.isCollapsed ? 'none' : 'block';
+                            this.textContent = node.isCollapsed ? '►' : '▼';
+                        }
+                    }
+                });
+            });
+
+            craftTreeContent.querySelectorAll('.craft-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const nodeId = this.dataset.nodeId;
+                    const node = nodeMap.get(nodeId);
+                    if (node) {
+                        setNodeAndChildrenCompletion(node, this.checked);
+                        recalculateAndRenderResources();
+                    }
+                });
+            });
+        }
     </script>
 </body>
 </html>
