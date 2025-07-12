@@ -36,6 +36,10 @@
             cursor: pointer;
             transition: background-color 0.2s;
             width: 100%;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
         }
         button:hover {
             background-color: #3182ce;
@@ -132,35 +136,86 @@
 
         input[type="number"] {
             -moz-appearance: textfield;
-            appearance: none; /* Added for compatibility */
+            appearance: none;
+        }
+
+        #autocomplete-list {
+            position: absolute;
+            border: 1px solid #4a5568;
+            border-top: none;
+            z-index: 99;
+            background-color: #2d3748;
+            max-height: 200px;
+            overflow-y: auto;
+            width: calc(100% - 4rem);
+            left: 2rem;
+            right: 2rem;
+            border-radius: 0 0 0.5rem 0.5rem;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #autocomplete-list div {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #2d3748;
+            border-bottom: 1px solid #4a5568;
+            text-align: left;
+        }
+
+        #autocomplete-list div:hover {
+            background-color: #4a5568;
+        }
+
+        #autocomplete-list div:last-child {
+            border-bottom: none;
+        }
+
+        #autocomplete-list::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #autocomplete-list::-webkit-scrollbar-track {
+            background: #2c313a;
+            border-radius: 10px;
+        }
+
+        #autocomplete-list::-webkit-scrollbar-thumb {
+            background-color: #4a5568;
+            border-radius: 10px;
+            border: 2px solid #2c313a;
+        }
+
+        #autocomplete-list::-webkit-scrollbar-thumb:hover {
+            background-color: #63b3ed;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="text-3xl font-bold mb-6 white">Skyblock Crafting Calculator</h1>
+        <h1 class="text-3xl font-bold mb-6 text-white">Skyblock Crafting Calculator</h1>
 
-        <div class="mb-4">
-            <input type="text" id="itemName" placeholder="Enter item INTERNAL NAME (e.g., ASPECT_OF_THE_END)"
+        <div class="mb-4 relative">
+            <input type="text" id="itemName" placeholder="Enter item name (type and press TAB for suggestions)"
                    class="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-gray-100
                           focus:outline-none focus:ring-2 focus:ring-blue-400">
+            <div id="autocomplete-list" class="hidden"></div>
         </div>
         <div class="mb-4">
             <input type="number" id="itemQuantity" placeholder="Quantity (default 1)" value="1" min="1"
                    class="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-gray-100
                           focus:outline-none focus:ring-2 focus:ring-blue-400 appearance-none">
         </div>
-        <button id="calculateBtn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out">
+        <button id="calculateBtn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out" disabled>
             Calculate Resources
         </button>
 
         <div class="loading-spinner" id="loadingSpinner"></div>
 
         <div id="results" class="mt-6 p-4 bg-gray-800 rounded-lg text-left">
-            <p class="text-gray-400">Enter an item's **INTERNAL NAME** and quantity above to see the required base resources.</p>
+            <p class="text-gray-400" id="initialMessage">Loading item data for search... Please wait.</p>
             <p class="text-gray-400 mt-2 text-sm">
                 **Recipes are fetched live from the NotEnoughUpdates GitHub repository.**
-                This requires an internet connection and may be subject to GitHub's rate limits.
+                This requires an-internet connection and may be subject to GitHub's rate limits.
             </p>
         </div>
 
@@ -178,42 +233,83 @@
         const loadingSpinner = document.getElementById('loadingSpinner');
         const craftTreeDisplay = document.getElementById('craftTreeDisplay');
         const craftTreeContent = document.getElementById('craftTreeContent');
+        const initialMessage = document.getElementById('initialMessage');
+        const autocompleteList = document.getElementById('autocomplete-list');
 
         const RECIPES_BASE_URL = 'https://raw.githubusercontent.com/NotEnoughUpdates/NotEnoughUpdates-REPO/master/items/';
+        const DISPLAY_NAME_LOOKUP_FILE = '/skyblock_displayname_map.json';
+
+        let DISPLAY_NAME_LOOKUP = {};
+        let ORIGINAL_DISPLAY_NAMES_BY_INTERNAL_NAME = {};
 
         function normalizeInternalName(name) {
             return name.toUpperCase().trim();
         }
 
         function cleanDisplayName(name) {
-            return name ? name.replace(/§[0-9a-fklmnor]/g, '') : '';
+            return name ? name.replace(/§[0-9a-fklmnor]/g, '').trim() : '';
         }
 
+        async function loadDisplayNameLookup() {
+            try {
+                initialMessage.textContent = 'Fetching item name lookup data...';
+                const response = await fetch(DISPLAY_NAME_LOOKUP_FILE);
+                if (!response.ok) {
+                    throw new Error(`Failed to load display name lookup file: ${response.status} ${response.statusText}`);
+                }
+                const rawLookup = await response.json();
+
+                for (const displayName in rawLookup) {
+                    const internalName = rawLookup[displayName];
+                    const cleanedLowerDisplayName = cleanDisplayName(displayName).toLowerCase();
+                    DISPLAY_NAME_LOOKUP[cleanedLowerDisplayName] = internalName;
+                    ORIGINAL_DISPLAY_NAMES_BY_INTERNAL_NAME[internalName] = cleanDisplayName(displayName);
+                }
+
+                initialMessage.textContent = 'Item data loaded. Enter an item to calculate.';
+                calculateBtn.disabled = false;
+            } catch (error) {
+                console.error(`Error loading display name lookup: ${error.message}`);
+                initialMessage.innerHTML = `<span class="error-message">Error loading item data: ${error.message}. Display name search may not work.</span>`;
+                calculateBtn.disabled = false;
+            }
+        }
+
+        loadDisplayNameLookup();
+
         async function fetchRecipe(internalName) {
+            if (normalizeInternalName(internalName) === "SKYBLOCK_COIN") {
+                return {
+                    output: "Skyblock Coins",
+                    ingredients: [],
+                    internalname: "SKYBLOCK_COIN",
+                    count: 1,
+                    isVanilla: true
+                };
+            }
+
             const url = `${RECIPES_BASE_URL}${normalizeInternalName(internalName)}.json`;
-            console.log(`Attempting to fetch recipe from: ${url}`);
 
             try {
                 const response = await fetch(url);
 
                 if (!response.ok) {
-                    console.warn(`Recipe file not found or error for ${internalName}: ${response.status} ${response.statusText}. Treating as base item.`);
-                    return { output: cleanDisplayName(internalName), ingredients: [], internalname: internalName, count: 1, isVanilla: false };
+                    const displayOutput = ORIGINAL_DISPLAY_NAMES_BY_INTERNAL_NAME[normalizeInternalName(internalName)] || cleanDisplayName(internalName);
+                    return { output: displayOutput, ingredients: [], internalname: normalizeInternalName(internalName), count: 1, isVanilla: false };
                 }
 
                 const recipeRecord = await response.json();
 
                 if (!recipeRecord || typeof recipeRecord.internalname !== 'string') {
-                    console.error(`Invalid recipe data structure for ${internalName}:`, recipeRecord);
                     throw new Error(`Invalid recipe data for ${internalName}`);
                 }
 
                 const isVanillaItem = recipeRecord.vanilla === true;
 
                 if (isVanillaItem) {
-                    console.log(`Item ${internalName} has 'vanilla: true' tag. Treating as base item.`);
+                    const displayOutput = ORIGINAL_DISPLAY_NAMES_BY_INTERNAL_NAME[recipeRecord.internalname] || cleanDisplayName(recipeRecord.displayname || internalName);
                     return {
-                        output: cleanDisplayName(recipeRecord.displayname || internalName),
+                        output: displayOutput,
                         ingredients: [],
                         internalname: recipeRecord.internalname,
                         count: 1,
@@ -223,7 +319,6 @@
 
                 const ingredientsMap = {};
                 let outputCount = 1;
-                let recipeFound = false;
 
                 if (recipeRecord.recipes && Array.isArray(recipeRecord.recipes) && recipeRecord.recipes.length > 0) {
                     for (const primaryRecipe of recipeRecord.recipes) {
@@ -237,7 +332,6 @@
                                     }
                                 });
                                 outputCount = primaryRecipe.count || 1;
-                                recipeFound = true;
                                 break;
                             } else if (primaryRecipe.A1 !== undefined || primaryRecipe.A2 !== undefined || primaryRecipe.A3 !== undefined ||
                                        primaryRecipe.B1 !== undefined || primaryRecipe.B2 !== undefined || primaryRecipe.B3 !== undefined ||
@@ -254,7 +348,6 @@
                                     }
                                 });
                                 outputCount = primaryRecipe.count || 1;
-                                recipeFound = true;
                                 break;
                             }
                         }
@@ -271,19 +364,17 @@
                         }
                     }
                     outputCount = 1;
-                    recipeFound = true;
                 }
 
                 const ingredientsArray = Object.entries(ingredientsMap).map(([ingInternalName, quantity]) => {
-                    return { name: cleanDisplayName(ingInternalName), internalName: ingInternalName, quantity: quantity };
+                    const display = ORIGINAL_DISPLAY_NAMES_BY_INTERNAL_NAME[normalizeInternalName(ingInternalName)] || cleanDisplayName(ingInternalName);
+                    return { name: display, internalName: ingInternalName, quantity: quantity };
                 });
 
-                if (ingredientsArray.length === 0) {
-                    console.log(`Item ${internalName} has no craftable recipe defined. Treating as base item.`);
-                }
+                const displayOutput = ORIGINAL_DISPLAY_NAMES_BY_INTERNAL_NAME[recipeRecord.internalname] || cleanDisplayName(recipeRecord.displayname || internalName);
 
                 return {
-                    output: cleanDisplayName(recipeRecord.displayname || internalName),
+                    output: displayOutput,
                     ingredients: ingredientsArray,
                     internalname: recipeRecord.internalname,
                     count: outputCount,
@@ -292,7 +383,8 @@
 
             } catch (error) {
                 console.error(`Error fetching recipe for ${internalName}:`, error);
-                return { output: cleanDisplayName(internalName), ingredients: [], internalname: internalName, count: 1, isVanilla: false };
+                const displayOutput = ORIGINAL_DISPLAY_NAMES_BY_INTERNAL_NAME[normalizeInternalName(internalName)] || cleanDisplayName(internalName);
+                return { output: displayOutput, ingredients: [], internalname: internalName, count: 1, isVanilla: false };
             }
         }
 
@@ -342,10 +434,7 @@
         }
 
         function renderCraftTree(node, level = 0) {
-            let html = '';
-            html += `<li>`;
-            html += `<span class="craft-step">${node.name}</span>`;
-            html += `<span class="craft-step-details"> (Need: ${node.quantityNeeded}`;
+            let html = `<li><span class="craft-step">${node.name}</span><span class="craft-step-details"> (Need: ${node.quantityNeeded}`;
 
             if (node.ingredients.length > 0) {
                 html += `, Crafts: ${node.numCraftsRequired}`;
@@ -354,7 +443,6 @@
                 html += `)`;
             }
             html += `</span>`;
-
 
             if (node.children && node.children.length > 0) {
                 html += `<ul>`;
@@ -368,6 +456,140 @@
             return html;
         }
 
+        function longestCommonPrefix(strs) {
+            if (strs.length === 0) return "";
+            if (strs.length === 1) return strs[0];
+
+            let prefix = strs[0];
+            for (let i = 1; i < strs.length; i++) {
+                while (strs[i].indexOf(prefix) !== 0) {
+                    prefix = prefix.substring(0, prefix.length - 1);
+                    if (prefix === "") return "";
+                }
+            }
+            return prefix;
+        }
+
+        itemNameInput.addEventListener('input', function() {
+            const inputValue = this.value.toLowerCase().trim();
+            autocompleteList.innerHTML = '';
+            autocompleteList.classList.add('hidden');
+
+            if (inputValue.length === 0) {
+                return;
+            }
+
+            const matchingDisplayNames = [];
+            for (const internalName in ORIGINAL_DISPLAY_NAMES_BY_INTERNAL_NAME) {
+                const originalDisplayName = ORIGINAL_DISPLAY_NAMES_BY_INTERNAL_NAME[internalName];
+                if (originalDisplayName.toLowerCase().includes(inputValue)) {
+                    matchingDisplayNames.push(originalDisplayName);
+                }
+            }
+
+            matchingDisplayNames.sort();
+
+            if (matchingDisplayNames.length > 0) {
+                matchingDisplayNames.forEach(displayName => {
+                    const div = document.createElement('div');
+                    div.textContent = displayName;
+                    div.addEventListener('click', function() {
+                        itemNameInput.value = this.textContent;
+                        autocompleteList.classList.add('hidden');
+                        itemNameInput.focus();
+                    });
+                    autocompleteList.appendChild(div);
+                });
+                autocompleteList.classList.remove('hidden');
+            }
+        });
+
+        itemNameInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Tab') {
+                e.preventDefault();
+
+                const inputValue = this.value.toLowerCase().trim();
+                autocompleteList.innerHTML = '';
+                autocompleteList.classList.add('hidden');
+
+                if (inputValue.length === 0) {
+                    return;
+                }
+
+                const matchingDisplayNames = [];
+                for (const internalName in ORIGINAL_DISPLAY_NAMES_BY_INTERNAL_NAME) {
+                    const originalDisplayName = ORIGINAL_DISPLAY_NAMES_BY_INTERNAL_NAME[internalName];
+                    if (originalDisplayName.toLowerCase().includes(inputValue)) {
+                        matchingDisplayNames.push(originalDisplayName);
+                    }
+                }
+
+                matchingDisplayNames.sort();
+
+                if (matchingDisplayNames.length > 0) {
+                    const commonPrefix = longestCommonPrefix(matchingDisplayNames);
+                    if (commonPrefix.toLowerCase().startsWith(inputValue)) {
+                        itemNameInput.value = commonPrefix;
+                    }
+
+                    matchingDisplayNames.forEach(displayName => {
+                        const div = document.createElement('div');
+                        div.textContent = displayName;
+                        div.addEventListener('click', function() {
+                            itemNameInput.value = this.textContent;
+                            autocompleteList.classList.add('hidden');
+                            itemNameInput.focus();
+                        });
+                        autocompleteList.appendChild(div);
+                    });
+                    autocompleteList.classList.remove('hidden');
+                }
+            } else if (e.key === 'Enter') {
+                e.preventDefault();
+                autocompleteList.classList.add('hidden');
+                calculateBtn.click();
+            }
+        });
+
+        itemNameInput.addEventListener('focus', function() {
+            const inputValue = this.value.toLowerCase().trim();
+            autocompleteList.innerHTML = '';
+            autocompleteList.classList.add('hidden');
+
+            if (inputValue.length === 0) {
+                return;
+            }
+
+            const matchingDisplayNames = [];
+            for (const internalName in ORIGINAL_DISPLAY_NAMES_BY_INTERNAL_NAME) {
+                const originalDisplayName = ORIGINAL_DISPLAY_NAMES_BY_INTERNAL_NAME[internalName];
+                if (originalDisplayName.toLowerCase().includes(inputValue)) {
+                    matchingDisplayNames.push(originalDisplayName);
+                }
+            }
+
+            matchingDisplayNames.sort();
+
+            if (matchingDisplayNames.length > 0) {
+                matchingDisplayNames.forEach(displayName => {
+                    const div = document.createElement('div');
+                    div.textContent = displayName;
+                    div.addEventListener('click', function() {
+                        itemNameInput.value = this.textContent;
+                        autocompleteList.classList.add('hidden');
+                        itemNameInput.focus();
+                    });
+                    autocompleteList.appendChild(div);
+                });
+                autocompleteList.classList.remove('hidden');
+            }
+        });
+
+        document.addEventListener('click', function(e) {
+            if (e.target !== itemNameInput && e.target.parentNode !== autocompleteList) {
+                autocompleteList.classList.add('hidden');
+            }
+        });
 
         calculateBtn.addEventListener('click', async () => {
             const itemNameInputVal = itemNameInput.value.trim();
@@ -377,9 +599,10 @@
             craftTreeContent.innerHTML = '';
             craftTreeDisplay.classList.add('hidden');
             loadingSpinner.style.display = 'block';
+            autocompleteList.classList.add('hidden');
 
             if (!itemNameInputVal) {
-                resultsDiv.innerHTML = '<p class="error-message">Please enter an item **INTERNAL NAME**.</p>';
+                resultsDiv.innerHTML = '<p class="error-message">Please enter an item **INTERNAL NAME** or **DISPLAY NAME**.</p>';
                 loadingSpinner.style.display = 'none';
                 return;
             }
@@ -391,7 +614,12 @@
             }
 
             try {
-                const initialInternalName = normalizeInternalName(itemNameInputVal);
+                let initialInternalName = normalizeInternalName(itemNameInputVal);
+
+                const cleanedInput = cleanDisplayName(itemNameInputVal).toLowerCase();
+                if (DISPLAY_NAME_LOOKUP[cleanedInput]) {
+                    initialInternalName = DISPLAY_NAME_LOOKUP[cleanedInput];
+                }
 
                 const initialRecipeInfo = await fetchRecipe(initialInternalName);
 
@@ -399,6 +627,7 @@
                      resultsDiv.innerHTML = `<p class="error-message">
                         Recipe for "${itemNameInputVal}" not found.
                         Please ensure you've entered the correct **INTERNAL NAME** (e.g., TITANIUM_DRILL_1)
+                        or a recognized **DISPLAY NAME** (e.g., Aspect of the End)
                         and that its corresponding JSON file (e.g., \`/items/TITANIUM_DRILL_1.json\`) exists
                         and is accessible on the NotEnoughUpdates GitHub repository.
                         <br>
@@ -443,7 +672,7 @@
 
             } catch (error) {
                 console.error("Error calculating resources:", error);
-                resultsDiv.innerHTML = `<p class="error-message">An unexpected error occurred: ${error.message}. Please check your browser's console for details.</p>`;
+                resultsDiv.innerHTML = `<p class="error-message">An unexpected error occurred: ${error.message}. Please check your browser's console for details.`;
             } finally {
                 loadingSpinner.style.display = 'none';
             }
