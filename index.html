@@ -118,6 +118,11 @@
             border-bottom: none;
         }
 
+        .craft-step-header {
+            display: flex;
+            align-items: flex-start;
+        }
+
         .craft-step {
             font-weight: bold;
             color: #63b3ed;
@@ -188,6 +193,16 @@
         #autocomplete-list::-webkit-scrollbar-thumb:hover {
             background-color: #63b3ed;
         }
+
+        .toggle-arrow {
+            cursor: pointer;
+            margin-right: 0.5rem;
+            font-weight: bold;
+            color: #63b3ed;
+            user-select: none;
+            min-width: 1em;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -237,7 +252,7 @@
         const autocompleteList = document.getElementById('autocomplete-list');
 
         const RECIPES_BASE_URL = 'https://raw.githubusercontent.com/NotEnoughUpdates/NotEnoughUpdates-REPO/master/items/';
-        const DISPLAY_NAME_LOOKUP_FILE = '/skyblock_displayname_map.json';
+        const DISPLAY_NAME_LOOKUP_FILE = 'https://raw.githubusercontent.com/BrSalv2006/Skyblock-Crafting-Calculator/refs/heads/main/skyblock_displayname_map.json';
 
         let DISPLAY_NAME_LOOKUP = {};
         let ORIGINAL_DISPLAY_NAMES_BY_INTERNAL_NAME = {};
@@ -434,7 +449,17 @@
         }
 
         function renderCraftTree(node, level = 0) {
-            let html = `<li><span class="craft-step">${node.name}</span><span class="craft-step-details"> (Need: ${node.quantityNeeded}`;
+            let html = `<li>`;
+            let uniqueId = `tree-node-${node.internalName}-${level}-${Math.random().toString(36).substring(2, 9)}`;
+
+            html += `<div class="craft-step-header">`;
+            if (node.children && node.children.length > 0) {
+                html += `<span class="toggle-arrow" data-target-id="${uniqueId}">▼</span> `;
+            } else {
+                html += `<span class="toggle-arrow" style="visibility: hidden;">►</span> `;
+            }
+            html += `<span class="craft-step">${node.name}</span>`;
+            html += `<span class="craft-step-details"> (Need: ${node.quantityNeeded}`;
 
             if (node.ingredients.length > 0) {
                 html += `, Crafts: ${node.numCraftsRequired}`;
@@ -443,9 +468,10 @@
                 html += `)`;
             }
             html += `</span>`;
+            html += `</div>`;
 
             if (node.children && node.children.length > 0) {
-                html += `<ul>`;
+                html += `<ul id="${uniqueId}" style="display: block;">`;
                 for (const child of node.children) {
                     html += renderCraftTree(child, level + 1);
                 }
@@ -668,10 +694,26 @@
                 if (craftTreeRoot) {
                     craftTreeContent.innerHTML = `<ul>${renderCraftTree(craftTreeRoot)}</ul>`;
                     craftTreeDisplay.classList.remove('hidden');
+
+                    craftTreeContent.querySelectorAll('.toggle-arrow').forEach(arrow => {
+                        arrow.addEventListener('click', function() {
+                            const targetId = this.dataset.targetId;
+                            const targetUl = document.getElementById(targetId);
+                            if (targetUl) {
+                                if (targetUl.style.display === 'none') {
+                                    targetUl.style.display = 'block';
+                                    this.textContent = '▼';
+                                } else {
+                                    targetUl.style.display = 'none';
+                                    this.textContent = '►';
+                                }
+                            }
+                        });
+                    });
                 }
 
             } catch (error) {
-                console.error("Error calculating resources:", error);
+                console.error(`Error calculating resources: ${error.message}`);
                 resultsDiv.innerHTML = `<p class="error-message">An unexpected error occurred: ${error.message}. Please check your browser's console for details.`;
             } finally {
                 loadingSpinner.style.display = 'none';
