@@ -92,7 +92,6 @@
         .error-message {
             color: #fc8181;
             font-weight: bold;
-            margin-top: 1rem;
         }
         .loading-spinner {
             border: 4px solid rgba(255, 255, 255, 0.3);
@@ -277,7 +276,6 @@
             margin-left: auto;
             margin-bottom: 0.5rem;
             padding-right: 0.5rem;
-            gap: 0.5rem;
         }
 
         .quantity-label {
@@ -399,8 +397,8 @@
         <div id="results" class="mt-6 p-4 bg-gray-800 rounded-lg text-left">
             <p class="text-gray-400" id="initialMessage">Loading item data for search... Please wait.</p>
             <p class="text-gray-400 mt-2 text-sm">
-                **Recipes are fetched live from the NotEnoughUpdates GitHub repository.**
-                This requires an-internet connection and may be subject to GitHub's rate limits.
+                <b>Recipes are fetched live from the NotEnoughUpdates REPO GitHub repository.</b>
+                This requires an internet connection and may be subject to GitHub's rate limits.
             </p>
         </div>
 
@@ -666,6 +664,7 @@
             } else {
                 html += `<span class="toggle-arrow" style="visibility: hidden;">►</span> `;
             }
+            html += `<div class="main-content-flex">`;
             html += `<div class="item-text-content">`;
             html += `<span class="craft-step">${node.name}</span>`;
             html += `<span class="craft-step-details"> (Need: ${node.quantityNeeded}`;
@@ -681,6 +680,7 @@
             html += `<div class="quantity-inputs-row">`;
             html += `<input type="number" class="current-quantity-input" id="have-${node.nodeId}" min="0" value="${node.currentQuantity}" data-node-id="${node.nodeId}" ${node.completed ? 'disabled' : ''}>`;
             html += `<input type="number" class="packs-quantity-input" id="packs-${node.nodeId}" min="0" value="${node.packsQuantity}" data-node-id="${node.nodeId}" ${node.completed ? 'disabled' : ''}>`;
+            html += `</div>`;
             html += `</div>`;
             html += `</div>`;
 
@@ -907,7 +907,7 @@
             nodeMap.clear();
 
             if (!itemNameInputVal) {
-                resultsDiv.innerHTML = '<p class="error-message">Please enter an item **INTERNAL NAME** or **DISPLAY NAME**.</p>';
+                resultsDiv.innerHTML = '<p class="error-message">Please enter an item <b>INTERNAL NAME</b> or <b>DISPLAY NAME</b>.</p>';
                 loadingSpinner.style.display = 'none';
                 return;
             }
@@ -931,12 +931,12 @@
                 if (initialRecipeInfo.internalname !== initialInternalName) {
                      resultsDiv.innerHTML = `<p class="error-message">
                         Recipe for "${itemNameInputVal}" not found.
-                        Please ensure you've entered the correct **INTERNAL NAME** (e.g., TITANIUM_DRILL_1)
-                        or a recognized **DISPLAY NAME** (e.g., Aspect of the End)
+                        Please ensure you've entered the correct <b>INTERNAL NAME</b> (e.g., TITANIUM_DRILL_1)
+                        or a recognized <b>DISPLAY NAME</b> (e.g., Aspect of the End)
                         and that its corresponding JSON file (e.g., \`/items/TITANIUM_DRILL_1.json\`) exists
                         and is accessible on the NotEnoughUpdates GitHub repository.
                         <br>
-                        **Check your browser's console (F12 -> Network/Console tabs) for specific errors (e.g., 404 Not Found).**
+                        <b>Check your browser's console (F12 -> Network/Console tabs) for specific errors (e.g., 404 Not Found).</b>
                      </p>`;
                      loadingSpinner.style.display = 'none';
                      craftTreeDisplay.classList.add('hidden');
