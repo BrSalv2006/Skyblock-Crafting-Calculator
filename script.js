@@ -8,6 +8,11 @@ const craftTreeContent = document.getElementById('craftTreeContent');
 const initialMessage = document.getElementById('initialMessage');
 const autocompleteList = document.getElementById('autocomplete-list');
 
+const saveStateBtn = document.getElementById('saveStateBtn');
+const loadStateBtn = document.getElementById('loadStateBtn');
+const loadFileInput = document.getElementById('loadFileInput');
+
+
 const RECIPES_BASE_URL = 'https://raw.githubusercontent.com/NotEnoughUpdates/NotEnoughUpdates-REPO/master/items/';
 const DISPLAY_NAME_LOOKUP_FILE = './skyblock_displayname_map.json';
 const PACK_SIZE = 64;
@@ -17,6 +22,7 @@ let ORIGINAL_DISPLAY_NAMES_BY_INTERNAL_NAME = {};
 let currentCraftTreeRoot = null;
 let nodeMap = new Map();
 let frozenNodeId = null;
+let currentAutocompleteIndex = -1;
 
 function normalizeInternalName(name) {
     return name.toUpperCase().trim();
@@ -359,21 +365,135 @@ function longestCommonPrefix(strs) {
     return prefix;
 }
 
-function isAncestor(potentialAncestorId, descendantId) {
-    if (!descendantId) return false;
-    let currentNode = nodeMap.get(descendantId);
-    while (currentNode && currentNode.parentId) {
-        if (currentNode.parentId === potentialAncestorId) {
-            return true;
-        }
-        currentNode = nodeMap.get(currentNode.parentId);
+function selectAutocompleteItem(index) {
+    const items = autocompleteList.querySelectorAll('div');
+    if (items.length === 0) return;
+
+    if (currentAutocompleteIndex > -1 && items[currentAutocompleteIndex]) {
+        items[currentAutocompleteIndex].classList.remove('selected');
     }
-    return false;
+
+    currentAutocompleteIndex = (index + items.length) % items.length;
+    items[currentAutocompleteIndex].classList.add('selected');
+
+    items[currentAutocompleteIndex].scrollIntoView({ block: 'nearest' });
 }
+
+function applyTemporaryHoverHighlight(startNodeId, add) {
+    const node = nodeMap.get(startNodeId);
+    if (!node) return;
+
+    const listItem = document.querySelector(`li[data-node-id="${node.nodeId}"]`);
+    if (listItem) {
+        if (add) {
+            listItem.classList.add('hover-temp-highlight');
+        } else {
+            listItem.classList.remove('hover-temp-highlight');
+        }
+    }
+    for (const child of node.children) {
+        applyTemporaryHoverHighlight(child.nodeId, add);
+    }
+}
+
+function clearAllFrozenPathHighlights() {
+    document.querySelectorAll('#craftTreeDisplay li.frozen-path-highlight').forEach(li => {
+        li.classList.remove('frozen-path-highlight');
+    });
+}
+
+function clearAllHoverTempHighlights() {
+    document.querySelectorAll('#craftTreeDisplay li.hover-temp-highlight').forEach(li => {
+        li.classList.remove('hover-temp-highlight');
+    });
+}
+
+function toggleFrozenAndChildrenHighlight(startNodeId, add) {
+    const node = nodeMap.get(startNodeId);
+    if (!node) return;
+
+    const listItem = document.querySelector(`li[data-node-id="${node.nodeId}"]`);
+    if (listItem) {
+        if (add) {
+            listItem.classList.add('frozen-path-highlight');
+            listItem.classList.remove('hover-temp-highlight');
+        } else {
+            listItem.classList.remove('frozen-path-highlight');
+        }
+    }
+    for (const child of node.children) {
+        toggleFrozenAndChildrenHighlight(child.nodeId, add);
+    }
+}
+
+function rebuildNodeMapFromTree(node) {
+    if (!node) return;
+    nodeMap.set(node.nodeId, node);
+    if (node.children) {
+        for (const child of node.children) {
+            rebuildNodeMapFromTree(child);
+        }
+    }
+}
+
+function saveStateToJson() {
+    if (!currentCraftTreeRoot) {
+        resultsDiv.innerHTML = '<p class="error-message">No crafting tree to save. Please calculate an item first.</p>';
+        return;
+    }
+
+    const state = {
+        itemName: itemNameInput.value.trim(),
+        itemQuantity: parseInt(itemQuantityInput.value, 10),
+        craftTree: currentCraftTreeRoot
+    };
+
+    const jsonString = JSON.stringify(state, null, 2);
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `skyblock_crafting_state_${state.itemName.replace(/\s/g, '_').toLowerCase()}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+function loadStateFromJson(jsonContent) {
+    try {
+        const state = JSON.parse(jsonContent);
+
+        if (!state.itemName || isNaN(state.itemQuantity) || !state.craftTree) {
+            throw new Error("Invalid state file format. Missing item name, quantity, or craft tree data.");
+        }
+
+        itemNameInput.value = state.itemName;
+        itemQuantityInput.value = state.itemQuantity;
+
+        currentCraftTreeRoot = state.craftTree;
+        nodeMap.clear();
+        rebuildNodeMapFromTree(currentCraftTreeRoot);
+
+        craftTreeContent.innerHTML = `<ul>${renderCraftTree(currentCraftTreeRoot)}</ul>`;
+        craftTreeDisplay.classList.remove('hidden');
+        recalculateAndRenderResources();
+        attachCraftTreeListeners();
+    } catch (error) {
+        console.error("Error loading state:", error);
+        resultsDiv.innerHTML = `<p class="error-message">Error loading state: ${error.message}. Please ensure you selected a valid JSON state file.</p>`;
+    } finally {
+        loadingSpinner.style.display = 'none';
+    }
+}
+
+
 itemNameInput.addEventListener('input', function () {
     const inputValue = this.value.toLowerCase().trim();
     autocompleteList.innerHTML = '';
     autocompleteList.classList.add('hidden');
+    currentAutocompleteIndex = -1;
 
     if (inputValue.length === 0) {
         return;
@@ -403,55 +523,66 @@ itemNameInput.addEventListener('input', function () {
         autocompleteList.classList.remove('hidden');
     }
 });
+
 itemNameInput.addEventListener('keydown', function (e) {
-    if (e.key === 'Tab') {
+    const items = autocompleteList.querySelectorAll('div');
+
+    if (e.key === 'ArrowUp') {
         e.preventDefault();
-
-        const inputValue = this.value.toLowerCase().trim();
-        autocompleteList.innerHTML = '';
-        autocompleteList.classList.add('hidden');
-
-        if (inputValue.length === 0) {
-            return;
-        }
-
-        const matchingDisplayNames = [];
-        for (const internalName in ORIGINAL_DISPLAY_NAMES_BY_INTERNAL_NAME) {
-            const originalDisplayName = ORIGINAL_DISPLAY_NAMES_BY_INTERNAL_NAME[internalName];
-            if (originalDisplayName.toLowerCase().includes(inputValue)) {
-                matchingDisplayNames.push(originalDisplayName);
-            }
-        }
-
-        matchingDisplayNames.sort();
-
-        if (matchingDisplayNames.length > 0) {
-            const commonPrefix = longestCommonPrefix(matchingDisplayNames);
-            if (commonPrefix.toLowerCase().startsWith(inputValue)) {
-                itemNameInput.value = commonPrefix;
-            }
-            matchingDisplayNames.forEach(displayName => {
-                const div = document.createElement('div');
-                div.textContent = displayName;
-                div.addEventListener('click', function () {
-                    itemNameInput.value = this.textContent;
-                    autocompleteList.classList.add('hidden');
-                    itemNameInput.focus();
-                });
-                autocompleteList.appendChild(div);
-            });
-            autocompleteList.classList.remove('hidden');
-        }
+        selectAutocompleteItem(currentAutocompleteIndex - 1);
+    } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        selectAutocompleteItem(currentAutocompleteIndex + 1);
     } else if (e.key === 'Enter') {
         e.preventDefault();
-        autocompleteList.classList.add('hidden');
-        calculateBtn.click();
+        if (currentAutocompleteIndex > -1 && items[currentAutocompleteIndex]) {
+            itemNameInput.value = items[currentAutocompleteIndex].textContent;
+            autocompleteList.classList.add('hidden');
+            currentAutocompleteIndex = -1;
+            itemNameInput.focus();
+        } else {
+            autocompleteList.classList.add('hidden');
+            calculateBtn.click();
+        }
+    } else if (e.key === 'Tab') {
+        if (!autocompleteList.classList.contains('hidden') || currentAutocompleteIndex > -1) {
+            e.preventDefault();
+        }
+
+        if (currentAutocompleteIndex > -1 && items[currentAutocompleteIndex]) {
+            itemNameInput.value = items[currentAutocompleteIndex].textContent;
+            autocompleteList.classList.add('hidden');
+            currentAutocompleteIndex = -1;
+            itemNameInput.focus();
+        } else {
+            const inputValue = this.value.toLowerCase().trim();
+            const matchingDisplayNames = [];
+            for (const internalName in ORIGINAL_DISPLAY_NAMES_BY_INTERNAL_NAME) {
+                const originalDisplayName = ORIGINAL_DISPLAY_NAMES_BY_INTERNAL_NAME[internalName];
+                if (originalDisplayName.toLowerCase().includes(inputValue)) {
+                    matchingDisplayNames.push(originalDisplayName);
+                }
+            }
+
+            matchingDisplayNames.sort();
+
+            if (matchingDisplayNames.length > 0) {
+                const commonPrefix = longestCommonPrefix(matchingDisplayNames);
+                if (commonPrefix.toLowerCase().startsWith(inputValue)) {
+                    itemNameInput.value = commonPrefix;
+                }
+            }
+            autocompleteList.classList.add('hidden');
+            currentAutocompleteIndex = -1;
+        }
     }
 });
+
 itemNameInput.addEventListener('focus', function () {
     const inputValue = this.value.toLowerCase().trim();
     autocompleteList.innerHTML = '';
     autocompleteList.classList.add('hidden');
+    currentAutocompleteIndex = -1;
 
     if (inputValue.length === 0) {
         return;
@@ -481,21 +612,28 @@ itemNameInput.addEventListener('focus', function () {
         autocompleteList.classList.remove('hidden');
     }
 });
+
 document.addEventListener('click', function (e) {
     if (e.target !== itemNameInput && e.target.parentNode !== autocompleteList) {
         autocompleteList.classList.add('hidden');
+        currentAutocompleteIndex = -1;
     }
 });
+
 calculateBtn.addEventListener('click', async () => {
     const itemNameInputVal = itemNameInput.value.trim();
     const itemQuantity = parseInt(itemQuantityInput.value, 10);
+
     resultsDiv.innerHTML = '';
     craftTreeContent.innerHTML = '';
     craftTreeDisplay.classList.add('hidden');
     loadingSpinner.style.display = 'block';
     autocompleteList.classList.add('hidden');
+
     nodeMap.clear();
     frozenNodeId = null;
+    currentCraftTreeRoot = null;
+
     if (!itemNameInputVal) {
         resultsDiv.innerHTML = '<p class="error-message">Please enter an item <b>INTERNAL NAME</b> or <b>DISPLAY NAME</b>.</p>';
         loadingSpinner.style.display = 'none';
@@ -514,7 +652,9 @@ calculateBtn.addEventListener('click', async () => {
         if (DISPLAY_NAME_LOOKUP[cleanedInput]) {
             initialInternalName = DISPLAY_NAME_LOOKUP[cleanedInput];
         }
+
         const initialRecipeInfo = await fetchRecipe(initialInternalName);
+
         if (initialRecipeInfo.internalname !== initialInternalName) {
             resultsDiv.innerHTML = `<p class="error-message">
                         Recipe for "${itemNameInputVal}" not found.
@@ -539,8 +679,10 @@ calculateBtn.addEventListener('click', async () => {
             craftTreeDisplay.classList.add('hidden');
             return;
         }
+
         currentCraftTreeRoot = await buildCraftTree(initialInternalName, itemQuantity);
         recalculateAndRenderResources();
+
         if (currentCraftTreeRoot) {
             craftTreeContent.innerHTML = `<ul>${renderCraftTree(currentCraftTreeRoot)}</ul>`;
             craftTreeDisplay.classList.remove('hidden');
@@ -556,52 +698,31 @@ calculateBtn.addEventListener('click', async () => {
     }
 });
 
-function toggleFrozenAndChildrenHighlight(startNodeId, add) {
-    const node = nodeMap.get(startNodeId);
-    if (!node) return;
+saveStateBtn.addEventListener('click', saveStateToJson);
 
-    const listItem = document.querySelector(`li[data-node-id="${node.nodeId}"]`);
-    if (listItem) {
-        if (add) {
-            listItem.classList.add('frozen-path-highlight');
-            listItem.classList.remove('hover-temp-highlight');
-        } else {
-            listItem.classList.remove('frozen-path-highlight');
-        }
+loadStateBtn.addEventListener('click', () => {
+    loadFileInput.click();
+});
+
+loadFileInput.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    if (file) {
+        loadingSpinner.style.display = 'block';
+        const reader = new FileReader();
+
+        reader.onload = (e) => {
+            loadStateFromJson(e.target.result);
+        };
+
+        reader.onerror = (e) => {
+            console.error("File reading error:", e);
+            resultsDiv.innerHTML = '<p class="error-message">Failed to read file.</p>';
+            loadingSpinner.style.display = 'none';
+        };
+
+        reader.readAsText(file);
     }
-    for (const child of node.children) {
-        toggleFrozenAndChildrenHighlight(child.nodeId, add);
-    }
-}
-
-function clearAllFrozenPathHighlights() {
-    document.querySelectorAll('#craftTreeDisplay li.frozen-path-highlight').forEach(li => {
-        li.classList.remove('frozen-path-highlight');
-    });
-}
-
-function clearAllHoverTempHighlights() {
-    document.querySelectorAll('#craftTreeDisplay li.hover-temp-highlight').forEach(li => {
-        li.classList.remove('hover-temp-highlight');
-    });
-}
-
-function applyTemporaryHoverHighlight(startNodeId, add) {
-    const node = nodeMap.get(startNodeId);
-    if (!node) return;
-
-    const listItem = document.querySelector(`li[data-node-id="${node.nodeId}"]`);
-    if (listItem) {
-        if (add) {
-            listItem.classList.add('hover-temp-highlight');
-        } else {
-            listItem.classList.remove('hover-temp-highlight');
-        }
-    }
-    for (const child of node.children) {
-        applyTemporaryHoverHighlight(child.nodeId, add);
-    }
-}
+});
 
 
 function attachCraftTreeListeners() {
@@ -611,7 +732,8 @@ function attachCraftTreeListeners() {
             const targetId = this.dataset.targetId;
             const targetUl = document.getElementById(targetId);
             if (targetUl) {
-                const node = nodeMap.get(targetId.replace('tree-node-', ''));
+                const nodeId = targetId.replace('tree-node-', '');
+                const node = nodeMap.get(nodeId);
                 if (node) {
                     node.isCollapsed = !node.isCollapsed;
                     targetUl.style.display = node.isCollapsed ? 'none' : 'block';
@@ -620,6 +742,7 @@ function attachCraftTreeListeners() {
             }
         });
     });
+
     craftTreeContent.querySelectorAll('.craft-checkbox').forEach(checkbox => {
         checkbox.addEventListener('change', function () {
             const nodeId = this.dataset.nodeId;
@@ -630,6 +753,7 @@ function attachCraftTreeListeners() {
             }
         });
     });
+
     craftTreeContent.querySelectorAll('.current-quantity-input').forEach(input => {
         input.addEventListener('input', function () {
             const nodeId = this.dataset.nodeId;
@@ -640,6 +764,7 @@ function attachCraftTreeListeners() {
             }
         });
     });
+
     craftTreeContent.querySelectorAll('.packs-quantity-input').forEach(input => {
         input.addEventListener('input', function () {
             const nodeId = this.dataset.nodeId;
@@ -650,6 +775,7 @@ function attachCraftTreeListeners() {
             }
         });
     });
+
     craftTreeContent.addEventListener('mouseover', function (event) {
         const listItem = event.target.closest('li[data-node-id]');
         if (listItem) {
@@ -668,6 +794,7 @@ function attachCraftTreeListeners() {
             }
         }
     });
+
     craftTreeContent.addEventListener('click', function (event) {
         const listItem = event.target.closest('li[data-node-id]');
         if (!listItem) return;
