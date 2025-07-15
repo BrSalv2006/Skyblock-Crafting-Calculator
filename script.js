@@ -244,7 +244,6 @@ function calculateNetRequiredResources(node, quantityRequiredForNode) {
     return netNeededMap;
 }
 
-
 function renderCraftTree(node, level = 0) {
     let html = `<li data-node-id="${node.nodeId}">`;
     let uniqueId = `tree-node-${node.nodeId}`;
@@ -292,8 +291,16 @@ function renderCraftTree(node, level = 0) {
 function recalculateAndRenderResources() {
     resultsDiv.innerHTML = '';
     const totalResources = {};
-    if (currentCraftTreeRoot) {
-        const netNeededMap = calculateNetRequiredResources(currentCraftTreeRoot, currentCraftTreeRoot.quantityNeeded);
+    let targetNode = currentCraftTreeRoot;
+    let targetQuantity = currentCraftTreeRoot ? currentCraftTreeRoot.quantityNeeded : 0;
+
+    if (frozenNodeId && nodeMap.has(frozenNodeId)) {
+        targetNode = nodeMap.get(frozenNodeId);
+        targetQuantity = targetNode.quantityNeeded;
+    }
+
+    if (targetNode) {
+        const netNeededMap = calculateNetRequiredResources(targetNode, targetQuantity);
         netNeededMap.forEach((quantity, resourceName) => {
             totalResources[resourceName] = quantity;
         });
@@ -478,6 +485,7 @@ function loadStateFromJson(jsonContent) {
 
         craftTreeContent.innerHTML = `<ul>${renderCraftTree(currentCraftTreeRoot)}</ul>`;
         craftTreeDisplay.classList.remove('hidden');
+        frozenNodeId = null;
         recalculateAndRenderResources();
         attachCraftTreeListeners();
     } catch (error) {
@@ -487,7 +495,6 @@ function loadStateFromJson(jsonContent) {
         loadingSpinner.style.display = 'none';
     }
 }
-
 
 itemNameInput.addEventListener('input', function () {
     const inputValue = this.value.toLowerCase().trim();
@@ -654,8 +661,7 @@ calculateBtn.addEventListener('click', async () => {
         }
 
         const initialRecipeInfo = await fetchRecipe(initialInternalName);
-
-        if (initialRecipeInfo.internalname !== initialInternalName) {
+        if (normalizeInternalName(initialRecipeInfo.internalname) !== normalizeInternalName(initialInternalName)) {
             resultsDiv.innerHTML = `<p class="error-message">
                         Recipe for "${itemNameInputVal}" not found.
                         Please ensure you've entered the correct <b>INTERNAL NAME</b> (e.g., TITANIUM_DRILL_1)
@@ -807,6 +813,7 @@ function attachCraftTreeListeners() {
             event.stopPropagation();
             return;
         }
+
         clearAllFrozenPathHighlights();
         clearAllHoverTempHighlights();
 
@@ -816,5 +823,6 @@ function attachCraftTreeListeners() {
             toggleFrozenAndChildrenHighlight(clickedNodeId, true);
             frozenNodeId = clickedNodeId;
         }
+        recalculateAndRenderResources();
     });
 }
