@@ -12,7 +12,6 @@ const saveStateBtn = document.getElementById('saveStateBtn');
 const loadStateBtn = document.getElementById('loadStateBtn');
 const loadFileInput = document.getElementById('loadFileInput');
 
-
 const RECIPES_BASE_URL = 'https://raw.githubusercontent.com/NotEnoughUpdates/NotEnoughUpdates-REPO/master/items/';
 const DISPLAY_NAME_LOOKUP_FILE = './skyblock_displayname_map.json';
 const PACK_SIZE = 64;
@@ -783,6 +782,9 @@ function attachCraftTreeListeners() {
     });
 
     craftTreeContent.addEventListener('mouseover', function (event) {
+        if (event.target.classList.contains('current-quantity-input') || event.target.classList.contains('packs-quantity-input')) {
+            return;
+        }
         const listItem = event.target.closest('li[data-node-id]');
         if (listItem) {
             const nodeId = listItem.dataset.nodeId;
@@ -792,6 +794,9 @@ function attachCraftTreeListeners() {
         }
     });
     craftTreeContent.addEventListener('mouseout', function (event) {
+        if (event.target.classList.contains('current-quantity-input') || event.target.classList.contains('packs-quantity-input')) {
+            return;
+        }
         const listItem = event.target.closest('li[data-node-id]');
         if (listItem) {
             const nodeId = listItem.dataset.nodeId;
@@ -802,6 +807,13 @@ function attachCraftTreeListeners() {
     });
 
     craftTreeContent.addEventListener('click', function (event) {
+        if (event.target.classList.contains('craft-checkbox') ||
+            event.target.classList.contains('current-quantity-input') ||
+            event.target.classList.contains('packs-quantity-input')) {
+            event.stopPropagation();
+            return;
+        }
+
         const listItem = event.target.closest('li[data-node-id]');
         if (!listItem) return;
 
@@ -809,10 +821,6 @@ function attachCraftTreeListeners() {
         const clickedNode = nodeMap.get(clickedNodeId);
 
         if (!clickedNode) return;
-        if (event.target.classList.contains('craft-checkbox')) {
-            event.stopPropagation();
-            return;
-        }
 
         clearAllFrozenPathHighlights();
         clearAllHoverTempHighlights();

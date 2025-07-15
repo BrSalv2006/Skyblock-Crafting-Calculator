@@ -1,60 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skyblock Crafting Calculator</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="./style.css">
-</head>
-<body>
-    <div class="container">
-        <h1 class="text-3xl font-bold mb-6 text-white">Skyblock Crafting Calculator</h1>
-
-        <div class="mb-4 relative">
-            <input type="text" id="itemName" placeholder="Enter item name (type and press TAB for suggestions)"
-                   class="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-gray-100
-                          focus:outline-none focus:ring-2 focus:ring-blue-400">
-            <div id="autocomplete-list" class="hidden"></div>
-        </div>
-        <div class="mb-4">
-            <input type="number" id="itemQuantity" placeholder="Quantity (default 1)" value="1" min="1"
-                   class="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-gray-100
-                          focus:outline-none focus:ring-2 focus:ring-blue-400 appearance-none">
-        </div>
-        <button id="calculateBtn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out mb-6" disabled>
-            Calculate Resources
-        </button>
-
-        <div class="flex flex-col sm:flex-row gap-4 mb-4">
-            <button id="saveStateBtn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out w-full sm:w-1/2">
-                Save State
-            </button>
-            <button id="loadStateBtn" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out w-full sm:w-1/2">
-                Load State
-            </button>
-            <input type="file" id="loadFileInput" accept=".json" class="hidden">
-        </div>
-
-        <div class="loading-spinner" id="loadingSpinner"></div>
-
-        <div id="results" class="mt-6 p-4 bg-gray-800 rounded-lg text-left">
-            <p class="text-gray-400" id="initialMessage">Loading item data for search... Please wait.</p>
-            <p class="text-gray-400 mt-2 text-sm">
-                <b>Recipes are fetched live from the NotEnoughUpdates REPO GitHub repository.</b>
-                This requires an internet connection and may be subject to GitHub's rate limits.
-            </p>
-        </div>
-
-        <div id="craftTreeDisplay" class="mt-6 p-4 bg-gray-800 rounded-lg text-left hidden">
-            <h2 class="text-xl font-bold mb-4 text-white">Crafting Steps:</h2>
-            <div class="quantity-labels-row">
-                <span class="quantity-label">Items</span>
-                <span class="quantity-label">Packs</span>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Skyblock Crafting Calculator</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="./style.css">
+    </head>
+    <body>
+        <div class="container">
+            <h1 class="text-3xl font-bold mb-6 text-white">Skyblock Crafting Calculator</h1>
+            <div class="mb-4 relative">
+                <input type="text" id="itemName" placeholder="Enter item name (type and press TAB for suggestions)" class="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <div id="autocomplete-list" class="hidden"></div>
             </div>
-            <div id="craftTreeContent"></div>
+            <div class="mb-4">
+                <input type="number" id="itemQuantity" placeholder="Quantity (default 1)" value="1" min="1" class="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-400 appearance-none">
+            </div>
+            <button id="calculateBtn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out mb-6" disabled> Calculate Resources </button>
+            <div class="flex flex-col sm:flex-row gap-4 mb-4">
+                <button id="saveStateBtn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out w-full sm:w-1/2"> Save State </button>
+                <button id="loadStateBtn" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out w-full sm:w-1/2"> Load State </button>
+                <input type="file" id="loadFileInput" accept=".json" class="hidden">
+            </div>
+            <div class="loading-spinner" id="loadingSpinner"></div>
+            <div id="results" class="mt-6 p-4 bg-gray-800 rounded-lg text-left">
+                <p class="text-gray-400" id="initialMessage">Loading item data for search... Please wait.</p>
+                <p class="text-gray-400 mt-2 text-sm">
+                    <b>Recipes are fetched live from the NotEnoughUpdates REPO GitHub repository.</b> This requires an internet connection and may be subject to GitHub's rate limits.
+                </p>
+            </div>
+            <div id="craftTreeDisplay" class="mt-6 p-4 bg-gray-800 rounded-lg text-left hidden">
+                <h2 class="text-xl font-bold mb-4 text-white">Crafting Steps:</h2>
+                <div class="quantity-labels-row">
+                    <span class="quantity-label">Items</span>
+                    <span class="quantity-label">Packs</span>
+                </div>
+                <div id="craftTreeContent"></div>
+            </div>
         </div>
-    </div>
-    <script src="./script.js"></script>
-</body>
+        <script src="./script.js"></script>
+    </body>
 </html>
