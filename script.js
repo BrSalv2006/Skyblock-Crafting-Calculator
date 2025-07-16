@@ -258,11 +258,11 @@ function renderCraftTree(node, level = 0) {
     html += `<div class="main-content-flex">`;
     html += `<div class="item-text-content">`;
     html += `<span class="craft-step">${node.name}</span>`;
-    html += `<span class="craft-step-details"> (Need: ${node.quantityNeeded}`;
+    html += `<span class="craft-step-details"> (Need: ${node.quantityNeeded.toLocaleString()}`;
 
     if (node.ingredients.length > 0) {
-        html += `, Crafts: ${node.numCraftsRequired}`;
-        html += `, Yield: ${node.quantityProducedPerCraft} per craft)`;
+        html += `, Crafts: ${node.numCraftsRequired.toLocaleString()}`;
+        html += `, Yield: ${node.quantityProducedPerCraft.toLocaleString()} per craft)`;
     } else {
         html += `)`;
     }
@@ -308,10 +308,32 @@ function recalculateAndRenderResources() {
     if (Object.keys(totalResources).length === 0) {
         resultsDiv.innerHTML = '<p class="text-gray-400">No base resources found (all items might be marked as completed or you have enough).</p>';
     } else {
+        const header = document.createElement('div');
+        header.classList.add('results-header');
+        header.innerHTML = `
+            <span class="item-name-header">Resource</span>
+            <div class="quantity-headers">
+                <span class="item-quantity-header">Quantity</span>
+                <span class="complete-buy-order-header">Complete Buy Orders</span>
+                <span class="rest-buy-order-header">Rest Buy Order</span>
+            </div>
+        `;
+        resultsDiv.appendChild(header);
+
         const ul = document.createElement('ul');
+        const BUY_ORDER_MAX = 71680;
+
         Object.entries(totalResources).sort(([nameA], [nameB]) => nameA.localeCompare(nameB)).forEach(([resourceName, quantity]) => {
+            const completeBuyOrders = Math.floor(quantity / BUY_ORDER_MAX);
+            const restBuyOrders = Math.floor(quantity % BUY_ORDER_MAX);
             const li = document.createElement('li');
-            li.innerHTML = `<span class="item-name">${resourceName}</span> <span class="item-quantity">${quantity}</span>`;
+            li.innerHTML = `
+                <span class="item-name">${resourceName}</span>
+                <div class="quantity-values">
+                    <span class="item-quantity">${quantity.toLocaleString()}</span>
+                    <span class="complete-buy-order-quantity">${completeBuyOrders.toLocaleString()}</span>
+                    <span class="rest-buy-order-quantity">${restBuyOrders.toLocaleString()}</span>
+                </div>`;
             ul.appendChild(li);
         });
         resultsDiv.appendChild(ul);
@@ -516,7 +538,7 @@ itemNameInput.addEventListener('input', function () {
     matchingDisplayNames.sort();
 
     if (matchingDisplayNames.length > 0) {
-        matchingDisplayNames.forEach(displayName => {
+        matchingDisplayNames.slice(0, 100).forEach(displayName => {
             const div = document.createElement('div');
             div.textContent = displayName;
             div.addEventListener('click', function () {
@@ -565,7 +587,7 @@ itemNameInput.addEventListener('keydown', function (e) {
             const matchingDisplayNames = [];
             for (const internalName in ORIGINAL_DISPLAY_NAMES_BY_INTERNAL_NAME) {
                 const originalDisplayName = ORIGINAL_DISPLAY_NAMES_BY_INTERNAL_NAME[internalName];
-                if (originalDisplayName.toLowerCase().includes(inputValue)) {
+                if (originalDisplayName.toLowerCase().startsWith(inputValue)) {
                     matchingDisplayNames.push(originalDisplayName);
                 }
             }
@@ -586,36 +608,8 @@ itemNameInput.addEventListener('keydown', function (e) {
 
 itemNameInput.addEventListener('focus', function () {
     const inputValue = this.value.toLowerCase().trim();
-    autocompleteList.innerHTML = '';
-    autocompleteList.classList.add('hidden');
-    currentAutocompleteIndex = -1;
-
-    if (inputValue.length === 0) {
-        return;
-    }
-
-    const matchingDisplayNames = [];
-    for (const internalName in ORIGINAL_DISPLAY_NAMES_BY_INTERNAL_NAME) {
-        const originalDisplayName = ORIGINAL_DISPLAY_NAMES_BY_INTERNAL_NAME[internalName];
-        if (originalDisplayName.toLowerCase().includes(inputValue)) {
-            matchingDisplayNames.push(originalDisplayName);
-        }
-    }
-
-    matchingDisplayNames.sort();
-
-    if (matchingDisplayNames.length > 0) {
-        matchingDisplayNames.forEach(displayName => {
-            const div = document.createElement('div');
-            div.textContent = displayName;
-            div.addEventListener('click', function () {
-                itemNameInput.value = this.textContent;
-                autocompleteList.classList.add('hidden');
-                itemNameInput.focus();
-            });
-            autocompleteList.appendChild(div);
-        });
-        autocompleteList.classList.remove('hidden');
+    if (inputValue.length > 0) {
+        itemNameInput.dispatchEvent(new Event('input'));
     }
 });
 
@@ -641,7 +635,7 @@ calculateBtn.addEventListener('click', async () => {
     currentCraftTreeRoot = null;
 
     if (!itemNameInputVal) {
-        resultsDiv.innerHTML = '<p class="error-message">Please enter an item <b>INTERNAL NAME</b> or <b>DISPLAY NAME</b>.</p>';
+        resultsDiv.innerHTML = '<p class="error-message">Please enter an item name.</p>';
         loadingSpinner.style.display = 'none';
         return;
     }
@@ -663,10 +657,7 @@ calculateBtn.addEventListener('click', async () => {
         if (normalizeInternalName(initialRecipeInfo.internalname) !== normalizeInternalName(initialInternalName)) {
             resultsDiv.innerHTML = `<p class="error-message">
                         Recipe for "${itemNameInputVal}" not found.
-                        Please ensure you've entered the correct <b>INTERNAL NAME</b> (e.g., TITANIUM_DRILL_1)
-                        or a recognized <b>DISPLAY NAME</b> (e.g., Aspect of the End)
-                        and that its corresponding JSON file (e.g., \`/items/TITANIUM_DRILL_1.json\`) exists
-                        and is accessible on the NotEnoughUpdates GitHub repository.
+                        Please ensure you've entered a recognized display name or a correct internal name.
                         <br>
                         <b>Check your browser's console (F12 -> Network/Console tabs) for specific errors (e.g., 404 Not Found).</b>
                      </p>`;
@@ -678,7 +669,6 @@ calculateBtn.addEventListener('click', async () => {
         if (initialRecipeInfo.ingredients.length === 0 && initialRecipeInfo.isVanilla === false) {
             resultsDiv.innerHTML = `<p class="error-message">
                         The item "${cleanDisplayName(initialRecipeInfo.output)}" is not craftable or its recipe is unknown.
-                        Please check the recipe definition in its JSON file on GitHub.
                     </p>`;
             loadingSpinner.style.display = 'none';
             craftTreeDisplay.classList.add('hidden');
@@ -728,7 +718,6 @@ loadFileInput.addEventListener('change', (event) => {
         reader.readAsText(file);
     }
 });
-
 
 function attachCraftTreeListeners() {
     craftTreeContent.querySelectorAll('.toggle-arrow').forEach(arrow => {

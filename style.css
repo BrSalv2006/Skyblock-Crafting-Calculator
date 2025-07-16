@@ -486,3 +486,77 @@ input[type="number"] {
         font-size: 0.8rem;
     }
 }
+
+.item-name {
+    text-align: left;
+}
+
+.quantity-values {
+    display: flex;
+    gap: 1rem;
+    min-width: 220px;
+    justify-content: space-between;
+}
+
+.item-quantity {
+    text-align: right;
+    width: 100px;
+}
+
+.rest-buy-order-quantity {
+    text-align: right;
+    width: 124px;
+    color: #a0aec0;
+    font-size: 1.05rem;
+}
+
+.complete-buy-order-quantity {
+    text-align: right;
+    width: 173px;
+    color: #a0aec0;
+    font-size: 1.05rem;
+}
+
+.results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    color: #90cdf4;
+    padding: 0.6rem 0;
+    border-bottom: 2px solid #4a5568;
+    font-size: 1.05rem;
+    width: 100%;
+}
+
+.item-name-header {
+    text-align: left;
+}
+
+.quantity-headers {
+    display: flex;
+    gap: 1rem;
+    min-width: 220px;
+    justify-content: space-between;
+}
+
+.item-quantity-header {
+    text-align: right;
+    width: 100px;
+}
+
+.rest-buy-order-header {
+    text-align: right;
+    width: 124px;
+}
+
+.complete-buy-order-header {
+    text-align: right;
+    width: 173px;
+}
+
+#results {
+    display: block;
+    align-items: initial;
+    justify-content: initial;
+}
