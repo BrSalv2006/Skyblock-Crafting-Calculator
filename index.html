@@ -19,15 +19,17 @@
             </div>
             <button id="calculateBtn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out mb-6" disabled> Calculate Resources </button>
             <div class="flex flex-col sm:flex-row gap-4 mb-4">
-                <button id="saveStateBtn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out w-full sm:w-1/2"> Save State </button>
-                <button id="loadStateBtn" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out w-full sm:w-1/2"> Load State </button>
+                <button id="saveStateBtn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out w-full sm:w-1/3"> Save State </button>
+                <button id="loadStateBtn" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out w-full sm:w-1/3"> Load State </button>
+                <button id="refreshCostsBtn" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out w-full sm:w-1/3"> Refresh Costs </button>
                 <input type="file" id="loadFileInput" accept=".json" class="hidden">
             </div>
             <div class="loading-spinner" id="loadingSpinner"></div>
             <div id="results" class="mt-6 p-4 bg-gray-800 rounded-lg text-left">
                 <p class="text-gray-400" id="initialMessage">Loading item data for search... Please wait.</p>
                 <p class="text-gray-400 mt-2 text-sm">
-                    <b>Recipes are fetched live from the NotEnoughUpdates REPO GitHub repository.</b> This requires an internet connection and may be subject to GitHub's rate limits.
+                    <b>Recipes are fetched live from the NotEnoughUpdates REPO GitHub repository.</b><br>
+                    <b>Costs are fetched live from the Skyblockers API.</b>
                 </p>
             </div>
             <div id="craftTreeDisplay" class="mt-6 p-4 bg-gray-800 rounded-lg text-left hidden">

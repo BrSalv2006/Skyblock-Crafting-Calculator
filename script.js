@@ -10,14 +10,22 @@ const autocompleteList = document.getElementById('autocomplete-list');
 
 const saveStateBtn = document.getElementById('saveStateBtn');
 const loadStateBtn = document.getElementById('loadStateBtn');
+const refreshCostsBtn = document.getElementById('refreshCostsBtn');
 const loadFileInput = document.getElementById('loadFileInput');
 
 const RECIPES_BASE_URL = 'https://raw.githubusercontent.com/NotEnoughUpdates/NotEnoughUpdates-REPO/master/items/';
 const DISPLAY_NAME_LOOKUP_FILE = './skyblock_displayname_map.json';
+const BAZAAR_API_URL = 'https://corsproxy.io/?' + encodeURIComponent('https://hysky.de/api/bazaar');
+const AUCTION_API_URL = 'https://corsproxy.io/?' + encodeURIComponent('https://hysky.de/api/auctions');
 const PACK_SIZE = 64;
+const SKYBLOCK_COIN_COST = 1;
 
 let DISPLAY_NAME_LOOKUP = {};
 let ORIGINAL_DISPLAY_NAMES_BY_INTERNAL_NAME = {};
+let INTERNAL_NAME_BY_CLEAN_DISPLAY_NAME = {};
+let bazaarData = {};
+let auctionData = {};
+
 let currentCraftTreeRoot = null;
 let nodeMap = new Map();
 let frozenNodeId = null;
@@ -31,6 +39,44 @@ function cleanDisplayName(name) {
     return name ? name.replace(/§[0-9a-fklmnor]/g, '').trim() : '';
 }
 
+async function fetchPriceData(isInitialLoad = false) {
+    try {
+        if (isInitialLoad) initialMessage.textContent = 'Fetching bazaar prices...';
+        const bazaarResponse = await fetch(BAZAAR_API_URL);
+        if (!bazaarResponse.ok) {
+            console.error(`Bazaar API request failed: ${bazaarResponse.status}`);
+            if (isInitialLoad) initialMessage.innerHTML += '<br><span class="error-message">Could not fetch bazaar prices.</span>';
+        } else {
+            bazaarData = await bazaarResponse.json();
+        }
+
+        if (isInitialLoad) initialMessage.textContent = 'Fetching auction prices...';
+        const auctionResponse = await fetch(AUCTION_API_URL);
+        if (!auctionResponse.ok) {
+            console.error(`Auction API request failed: ${auctionResponse.status}`);
+            if (isInitialLoad) initialMessage.innerHTML += '<br><span class="error-message">Could not fetch auction prices.</span>';
+        } else {
+            const auctionList = await auctionResponse.json();
+            auctionData = {};
+            auctionList.forEach(item => {
+                if (item.id) {
+                    auctionData[item.id] = item;
+                }
+            });
+        }
+
+        if (isInitialLoad) initialMessage.textContent = 'Item data and prices loaded. Enter an item to calculate.';
+
+    } catch (error) {
+        console.error('Error fetching price data:', error);
+        if (isInitialLoad) {
+            initialMessage.innerHTML += '<br><span class="error-message">An error occurred while fetching prices. Some costs may be N/A.</span>';
+            initialMessage.textContent = 'Item data loaded (prices failed). Enter an item to calculate.';
+        }
+    }
+}
+
+
 async function loadDisplayNameLookup() {
     try {
         initialMessage.textContent = 'Fetching item name lookup data...';
@@ -43,12 +89,14 @@ async function loadDisplayNameLookup() {
         for (const displayName in rawLookup) {
             const internalName = rawLookup[displayName];
             const cleanedLowerDisplayName = cleanDisplayName(displayName).toLowerCase();
+            const cleanedDisplayName = cleanDisplayName(displayName);
             DISPLAY_NAME_LOOKUP[cleanedLowerDisplayName] = internalName;
-            ORIGINAL_DISPLAY_NAMES_BY_INTERNAL_NAME[internalName] = cleanDisplayName(displayName);
+            ORIGINAL_DISPLAY_NAMES_BY_INTERNAL_NAME[internalName] = cleanedDisplayName;
+            INTERNAL_NAME_BY_CLEAN_DISPLAY_NAME[cleanedDisplayName] = internalName;
         }
 
-        initialMessage.textContent = 'Item data loaded. Enter an item to calculate.';
         calculateBtn.disabled = false;
+        await fetchPriceData(true);
     } catch (error) {
         console.error(`Error loading display name lookup: ${error.message}`);
         initialMessage.innerHTML = `<span class="error-message">Error loading item data: ${error.message}. Display name search may not work.</span>`;
@@ -98,6 +146,8 @@ async function fetchRecipe(internalName) {
             };
         }
 
+        INTERNAL_NAME_BY_CLEAN_DISPLAY_NAME[cleanDisplayName(recipeRecord.displayname)] = recipeRecord.internalname;
+
         const ingredientsMap = {};
         let outputCount = 1;
 
@@ -106,8 +156,9 @@ async function fetchRecipe(internalName) {
                 if (primaryRecipe) {
                     if (primaryRecipe.inputs && Array.isArray(primaryRecipe.inputs)) {
                         primaryRecipe.inputs.forEach(inputString => {
-                            const [ingInternalName, quantityStr] = inputString.split(':');
-                            const quantity = parseInt(quantityStr, 10);
+                            const parts = inputString.split(':');
+                            const ingInternalName = parts[0];
+                            const quantity = parseInt(parts[parts.length - 1], 10);
                             if (ingInternalName && !isNaN(quantity) && quantity > 0) {
                                 ingredientsMap[ingInternalName] = (ingredientsMap[ingInternalName] || 0) + quantity;
                             }
@@ -121,8 +172,9 @@ async function fetchRecipe(internalName) {
                         gridSlots.forEach(slot => {
                             const ingredientString = primaryRecipe[slot];
                             if (ingredientString) {
-                                const [ingInternalName, quantityStr] = ingredientString.split(':');
-                                const quantity = parseInt(quantityStr, 10);
+                                const parts = ingredientString.split(':');
+                                const ingInternalName = parts[0];
+                                const quantity = parseInt(parts[parts.length - 1], 10);
                                 if (ingInternalName && !isNaN(quantity) && quantity > 0) {
                                     ingredientsMap[ingInternalName] = (ingredientsMap[ingInternalName] || 0) + quantity;
                                 }
@@ -137,8 +189,9 @@ async function fetchRecipe(internalName) {
             for (const slot in recipeRecord.recipe) {
                 const ingredientString = recipeRecord.recipe[slot];
                 if (ingredientString) {
-                    const [ingInternalName, quantityStr] = ingredientString.split(':');
-                    const quantity = parseInt(quantityStr, 10);
+                    const parts = ingredientString.split(':');
+                    const ingInternalName = parts[0];
+                    const quantity = parseInt(parts[parts.length - 1], 10);
                     if (ingInternalName && !isNaN(quantity) && quantity > 0) {
                         ingredientsMap[ingInternalName] = (ingredientsMap[ingInternalName] || 0) + quantity;
                     }
@@ -249,7 +302,7 @@ function renderCraftTree(node, level = 0) {
     const isCompletedClass = node.completed ? 'completed-item' : '';
 
     html += `<div class="craft-step-header ${isCompletedClass}">`;
-    html += `<input type="checkbox" class="craft-checkbox" data-node-id="${node.nodeId}" ${node.completed ? 'checked' : ''}>`;
+    html += `<input type="checkbox" id="checkbox-${node.nodeId}" class="craft-checkbox" data-node-id="${node.nodeId}" ${node.completed ? 'checked' : ''}>`;
     if (node.children && node.children.length > 0) {
         html += `<span class="toggle-arrow" data-target-id="${uniqueId}">${node.isCollapsed ? '►' : '▼'}</span> `;
     } else {
@@ -308,35 +361,117 @@ function recalculateAndRenderResources() {
     if (Object.keys(totalResources).length === 0) {
         resultsDiv.innerHTML = '<p class="text-gray-400">No base resources found (all items might be marked as completed or you have enough).</p>';
     } else {
+        let grandTotalCost = 0;
         const header = document.createElement('div');
         header.classList.add('results-header');
         header.innerHTML = `
             <span class="item-name-header">Resource</span>
             <div class="quantity-headers">
                 <span class="item-quantity-header">Quantity</span>
-                <span class="complete-buy-order-header">Complete Buy Orders</span>
-                <span class="rest-buy-order-header">Rest Buy Order</span>
-            </div>
-        `;
-        resultsDiv.appendChild(header);
+                <span class="unit-cost-header">Unit Cost</span>
+                <span class="total-cost-header">Total Cost</span>
+            </div>`;
 
         const ul = document.createElement('ul');
-        const BUY_ORDER_MAX = 71680;
 
         Object.entries(totalResources).sort(([nameA], [nameB]) => nameA.localeCompare(nameB)).forEach(([resourceName, quantity]) => {
-            const completeBuyOrders = Math.floor(quantity / BUY_ORDER_MAX);
-            const restBuyOrders = Math.floor(quantity % BUY_ORDER_MAX);
+            const internalName = resourceName === 'Skyblock Coins' ? "SKYBLOCK_COIN" : INTERNAL_NAME_BY_CLEAN_DISPLAY_NAME[resourceName];
+            let price = 0;
+            let itemTotalCost = 0;
+            let source = 'N/A';
+
+            if (resourceName === "Skyblock Coins") {
+                price = SKYBLOCK_COIN_COST;
+                source = 'Fixed';
+            } else if (internalName) {
+                if (bazaarData) {
+                    const bazaarKey = Object.keys(bazaarData).find(key => key === internalName || key.startsWith(internalName + ':'));
+                    if (bazaarKey && bazaarData[bazaarKey] && bazaarData[bazaarKey].buyPrice) {
+                        price = bazaarData[bazaarKey].buyPrice;
+                        source = 'Bazaar';
+                    }
+                }
+
+                if (price === 0 && auctionData && auctionData[internalName]) {
+                    const auctionItem = auctionData[internalName];
+                    if (auctionItem.sales && auctionItem.sales.length > 0) {
+                        const sortedSales = auctionItem.sales.sort((a, b) => a.price - b.price);
+                        const totalAvailableCount = sortedSales.reduce((sum, sale) => sum + sale.count, 0);
+
+                        let quantityNeeded = quantity;
+                        let calculatedCost = 0;
+
+                        if (quantityNeeded <= totalAvailableCount) {
+                            for (const sale of sortedSales) {
+                                if (quantityNeeded <= 0) break;
+                                const itemsToTake = Math.min(quantityNeeded, sale.count);
+                                calculatedCost += itemsToTake * sale.price;
+                                quantityNeeded -= itemsToTake;
+                            }
+                        } else {
+                            calculatedCost = sortedSales.reduce((sum, sale) => sum + (sale.price * sale.count), 0);
+                            const mostExpensivePrice = sortedSales[sortedSales.length - 1].price;
+                            const remainingQuantity = quantity - totalAvailableCount;
+                            calculatedCost += remainingQuantity * mostExpensivePrice;
+                        }
+
+                        if (calculatedCost > 0) {
+                            itemTotalCost = calculatedCost;
+                            price = itemTotalCost / quantity;
+                            source = 'Auction';
+                        }
+                    }
+                }
+            }
+
+            if (source === 'Bazaar' || source === 'Fixed') {
+                itemTotalCost = quantity * price;
+            }
+
+            grandTotalCost += itemTotalCost;
+
             const li = document.createElement('li');
+            if (internalName) {
+                li.id = internalName;
+            }
             li.innerHTML = `
                 <span class="item-name">${resourceName}</span>
                 <div class="quantity-values">
                     <span class="item-quantity">${quantity.toLocaleString()}</span>
-                    <span class="complete-buy-order-quantity">${completeBuyOrders.toLocaleString()}</span>
-                    <span class="rest-buy-order-quantity">${restBuyOrders.toLocaleString()}</span>
+                    <span class="unit-cost">${price > 0 ? price.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 }) : 'N/A'}</span>
+                    <span class="total-cost">${itemTotalCost > 0 ? Math.round(itemTotalCost).toLocaleString() : 'N/A'}</span>
                 </div>`;
             ul.appendChild(li);
         });
+
+        resultsDiv.appendChild(header);
         resultsDiv.appendChild(ul);
+
+        const allValueCells = resultsDiv.querySelectorAll('.item-quantity, .unit-cost, .total-cost, .item-quantity-header, .unit-cost-header, .total-cost-header');
+
+        let maxWidth = 0;
+
+        allValueCells.forEach(cell => {
+            const cellWidth = cell.scrollWidth;
+            if (cellWidth > maxWidth) {
+                maxWidth = cellWidth;
+            }
+        });
+
+        const finalWidth = maxWidth + 5;
+        allValueCells.forEach(cell => {
+            cell.style.width = `${finalWidth}px`;
+        });
+
+        if (grandTotalCost > 0) {
+            const totalDiv = document.createElement('div');
+            totalDiv.classList.add('grand-total');
+            totalDiv.innerHTML = `
+                <span class="grand-total-label">Grand Total Estimated Cost:</span>
+                <span class="grand-total-value">${Math.round(grandTotalCost).toLocaleString()} coins</span>
+            `;
+            resultsDiv.appendChild(totalDiv);
+        }
     }
 }
 
@@ -698,6 +833,24 @@ saveStateBtn.addEventListener('click', saveStateToJson);
 loadStateBtn.addEventListener('click', () => {
     loadFileInput.click();
 });
+
+refreshCostsBtn.addEventListener('click', async () => {
+    if (!currentCraftTreeRoot) {
+        resultsDiv.innerHTML = '<p class="error-message">Calculate an item first before refreshing costs.</p>';
+        return;
+    }
+
+    const originalText = refreshCostsBtn.textContent;
+    refreshCostsBtn.textContent = 'Refreshing...';
+    refreshCostsBtn.disabled = true;
+
+    await fetchPriceData();
+    recalculateAndRenderResources();
+
+    refreshCostsBtn.textContent = originalText;
+    refreshCostsBtn.disabled = false;
+});
+
 
 loadFileInput.addEventListener('change', (event) => {
     const file = event.target.files[0];

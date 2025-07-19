@@ -60,8 +60,6 @@ button:active {
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     min-height: 5rem;
 }
 
@@ -94,11 +92,8 @@ button:active {
     font-weight: bold;
     color: #90cdf4;
     font-size: 1.05rem;
-}
-
-.item-quantity {
-    color: #a0aec0;
-    font-size: 1.05rem;
+    flex-grow: 1;
+    text-align: left;
 }
 
 .error-message {
@@ -166,6 +161,8 @@ button:active {
 #craftTreeDisplay li {
     background-color: #3a4252;
     border-radius: 0.5rem;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
     margin-bottom: 0.75rem;
     padding: 0.75rem 1rem;
     padding-right: 0rem;
@@ -417,6 +414,67 @@ input[type="number"] {
     color: #e2e8f0;
 }
 
+.quantity-values {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    flex-shrink: 0;
+}
+
+.item-quantity,
+.unit-cost,
+.total-cost {
+    text-align: right;
+    color: #a0aec0;
+    font-size: 1.05rem;
+}
+
+.results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    color: #90cdf4;
+    padding: 0.6rem 0;
+    border-bottom: 2px solid #4a5568;
+    font-size: 1.05rem;
+    width: 100%;
+}
+
+.item-name-header {
+    text-align: left;
+    flex-grow: 1;
+}
+
+.quantity-headers {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    flex-shrink: 0;
+}
+
+.item-quantity-header,
+.unit-cost-header,
+.total-cost-header {
+    text-align: right;
+}
+
+.grand-total {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 2px solid #4a5568;
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #e2e8f0;
+}
+
+.grand-total-value {
+    color: #68d391;
+}
+
+
 @media (max-width: 640px) {
     .container {
         padding: 1.5rem;
@@ -443,7 +501,9 @@ input[type="number"] {
     }
 
     .item-name,
-    .item-quantity {
+    .item-quantity,
+    .unit-cost,
+    .total-cost {
         font-size: 0.95rem;
     }
 
@@ -485,78 +545,52 @@ input[type="number"] {
         padding: 0.2rem 0.4rem;
         font-size: 0.8rem;
     }
-}
 
-.item-name {
-    text-align: left;
-}
+    .results-header {
+        display: none;
+    }
 
-.quantity-values {
-    display: flex;
-    gap: 1rem;
-    min-width: 220px;
-    justify-content: space-between;
-}
+    #results li {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
 
-.item-quantity {
-    text-align: right;
-    width: 100px;
-}
+    .quantity-values {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+        padding-top: 0.5rem;
+        border-top: 1px dashed #4a5568;
+    }
 
-.rest-buy-order-quantity {
-    text-align: right;
-    width: 124px;
-    color: #a0aec0;
-    font-size: 1.05rem;
-}
+    .item-quantity,
+    .unit-cost,
+    .total-cost {
+        width: auto;
+        text-align: left;
+    }
 
-.complete-buy-order-quantity {
-    text-align: right;
-    width: 173px;
-    color: #a0aec0;
-    font-size: 1.05rem;
-}
+    .item-quantity::before {
+        content: 'Qty: ';
+        color: #90cdf4;
+        font-weight: bold;
+    }
 
-.results-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: bold;
-    color: #90cdf4;
-    padding: 0.6rem 0;
-    border-bottom: 2px solid #4a5568;
-    font-size: 1.05rem;
-    width: 100%;
-}
+    .unit-cost::before {
+        content: 'Cost/ea: ';
+        color: #90cdf4;
+        font-weight: bold;
+    }
 
-.item-name-header {
-    text-align: left;
-}
+    .total-cost {
+        grid-column: 1 / -1;
+    }
 
-.quantity-headers {
-    display: flex;
-    gap: 1rem;
-    min-width: 220px;
-    justify-content: space-between;
-}
-
-.item-quantity-header {
-    text-align: right;
-    width: 100px;
-}
-
-.rest-buy-order-header {
-    text-align: right;
-    width: 124px;
-}
-
-.complete-buy-order-header {
-    text-align: right;
-    width: 173px;
-}
-
-#results {
-    display: block;
-    align-items: initial;
-    justify-content: initial;
+    .total-cost::before {
+        content: 'Total Cost: ';
+        color: #90cdf4;
+        font-weight: bold;
+    }
 }
