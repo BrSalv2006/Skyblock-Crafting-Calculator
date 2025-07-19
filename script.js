@@ -135,7 +135,7 @@ async function fetchRecipe(internalName) {
 
         const isVanillaItem = recipeRecord.vanilla === true;
 
-        if (isVanillaItem) {
+        if (isVanillaItem && !recipeRecord.recipe) {
             const displayOutput = ORIGINAL_DISPLAY_NAMES_BY_INTERNAL_NAME[recipeRecord.internalname] || cleanDisplayName(recipeRecord.displayname || internalName);
             return {
                 output: displayOutput,
@@ -187,6 +187,7 @@ async function fetchRecipe(internalName) {
             }
         } else if (recipeRecord.recipe && Object.keys(recipeRecord.recipe).length > 0) {
             for (const slot in recipeRecord.recipe) {
+                if (slot === 'count') continue;
                 const ingredientString = recipeRecord.recipe[slot];
                 if (ingredientString) {
                     const parts = ingredientString.split(':');
@@ -197,7 +198,7 @@ async function fetchRecipe(internalName) {
                     }
                 }
             }
-            outputCount = 1;
+            outputCount = recipeRecord.recipe.count || 1;
         }
 
         const ingredientsArray = Object.entries(ingredientsMap).map(([ingInternalName, quantity]) => {
@@ -212,7 +213,7 @@ async function fetchRecipe(internalName) {
             ingredients: ingredientsArray,
             internalname: recipeRecord.internalname,
             count: outputCount,
-            isVanilla: false
+            isVanilla: isVanillaItem
         };
 
     } catch (error) {
@@ -222,9 +223,32 @@ async function fetchRecipe(internalName) {
     }
 }
 
-async function buildCraftTree(itemInternalName, quantityNeeded, parentId = null) {
+async function buildCraftTree(itemInternalName, quantityNeeded, parentId = null, ancestors = new Map()) {
     const recipeInfo = await fetchRecipe(itemInternalName);
     const nodeId = crypto.randomUUID();
+
+    if (ancestors.has(recipeInfo.internalname)) {
+        const cycleNode = {
+            name: recipeInfo.output,
+            internalName: recipeInfo.internalname,
+            quantityNeeded: quantityNeeded,
+            nodeId: nodeId,
+            parentId: parentId,
+            isCycle: true,
+            cycleTargetNodeId: ancestors.get(recipeInfo.internalname),
+            children: [],
+            quantityProducedPerCraft: 1,
+            numCraftsRequired: 0,
+            ingredients: [],
+            completed: false,
+            isCollapsed: false,
+            currentQuantity: 0,
+            packsQuantity: 0
+        };
+        nodeMap.set(nodeId, cycleNode);
+        return cycleNode;
+    }
+
     const node = {
         name: recipeInfo.output,
         internalName: recipeInfo.internalname,
@@ -238,7 +262,8 @@ async function buildCraftTree(itemInternalName, quantityNeeded, parentId = null)
         completed: false,
         isCollapsed: false,
         currentQuantity: 0,
-        packsQuantity: 0
+        packsQuantity: 0,
+        isCycle: false
     };
     nodeMap.set(nodeId, node);
 
@@ -246,18 +271,22 @@ async function buildCraftTree(itemInternalName, quantityNeeded, parentId = null)
         return node;
     }
 
+    const newAncestors = new Map(ancestors);
+    newAncestors.set(node.internalName, node.nodeId);
+
     const numCrafts = Math.ceil(quantityNeeded / recipeInfo.count);
     node.quantityProducedPerCraft = recipeInfo.count;
     node.numCraftsRequired = numCrafts;
     node.ingredients = recipeInfo.ingredients;
 
     for (const ingredient of recipeInfo.ingredients) {
-        const childNode = await buildCraftTree(ingredient.internalName, ingredient.quantity * numCrafts, node.nodeId);
+        const childNode = await buildCraftTree(ingredient.internalName, ingredient.quantity * numCrafts, node.nodeId, newAncestors);
         node.children.push(childNode);
     }
 
     return node;
 }
+
 
 function calculateNetRequiredResources(node, quantityRequiredForNode) {
     const netNeededMap = new Map();
@@ -298,6 +327,18 @@ function calculateNetRequiredResources(node, quantityRequiredForNode) {
 
 function renderCraftTree(node, level = 0) {
     let html = `<li data-node-id="${node.nodeId}">`;
+
+    if (node.isCycle) {
+        html += `<div class="craft-step-header">`;
+        html += `<span class="toggle-arrow" style="cursor: default; color: #f6e05e;">&#8634;</span> `;
+        html += `<div class="main-content-flex">`;
+        html += `<div class="item-text-content">`;
+        html += `<span class="craft-step" style="color: #f6e05e;">${node.name}</span>`;
+        html += `<span class="craft-step-details" style="color: #f6e05e; font-style: italic;"> (Recursive requirement)</span>`;
+        html += `</div></div></div></li>`;
+        return html;
+    }
+
     let uniqueId = `tree-node-${node.nodeId}`;
     const isCompletedClass = node.completed ? 'completed-item' : '';
 
@@ -311,8 +352,8 @@ function renderCraftTree(node, level = 0) {
     html += `<div class="main-content-flex">`;
     html += `<div class="item-text-content">`;
     html += `<span class="craft-step">${node.name}</span>`;
-    html += `<span class="craft-step-details"> (Need: ${node.quantityNeeded.toLocaleString()}`;
 
+    html += `<span class="craft-step-details"> (Need: ${node.quantityNeeded.toLocaleString()}`;
     if (node.ingredients.length > 0) {
         html += `, Crafts: ${node.numCraftsRequired.toLocaleString()}`;
         html += `, Yield: ${node.quantityProducedPerCraft.toLocaleString()} per craft)`;
@@ -320,6 +361,7 @@ function renderCraftTree(node, level = 0) {
         html += `)`;
     }
     html += `</span>`;
+
     html += `</div>`;
     html += `<div class="quantity-inputs-row">`;
     html += `<input type="number" class="current-quantity-input" id="have-${node.nodeId}" min="0" value="${node.currentQuantity}" data-node-id="${node.nodeId}" ${node.completed ? 'disabled' : ''}>`;
@@ -810,7 +852,36 @@ calculateBtn.addEventListener('click', async () => {
             return;
         }
 
-        currentCraftTreeRoot = await buildCraftTree(initialInternalName, itemQuantity);
+        currentCraftTreeRoot = await buildCraftTree(initialInternalName, itemQuantity, null, new Map());
+
+        function findAndPruneCycles(node) {
+            if (!node) return;
+            const cycleNodes = [];
+            function findCycles(n) {
+                if (!n) return;
+                if (n.isCycle) {
+                    cycleNodes.push(n);
+                }
+                if (n.children) {
+                    for (const child of n.children) {
+                        findCycles(child);
+                    }
+                }
+            }
+            findCycles(node);
+
+            for (const cycleNode of cycleNodes) {
+                const targetNode = nodeMap.get(cycleNode.cycleTargetNodeId);
+                if (targetNode) {
+                    targetNode.children = [];
+                    targetNode.ingredients = [];
+                    targetNode.prunedDueToCycle = true;
+                }
+            }
+        }
+
+        findAndPruneCycles(currentCraftTreeRoot);
+
         recalculateAndRenderResources();
 
         if (currentCraftTreeRoot) {
