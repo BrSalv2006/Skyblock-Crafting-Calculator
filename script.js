@@ -30,6 +30,7 @@ let currentCraftTreeRoot = null;
 let nodeMap = new Map();
 let frozenNodeId = null;
 let currentAutocompleteIndex = -1;
+let priceMode = 'buy';
 
 function normalizeInternalName(name) {
     return name.toUpperCase().trim();
@@ -365,6 +366,22 @@ function recalculateAndRenderResources() {
         resultsDiv.innerHTML = '<p class="text-gray-400">No base resources found (all items might be marked as completed or you have enough).</p>';
     } else {
         let grandTotalCost = 0;
+
+        const headerWrapper = document.createElement('div');
+        headerWrapper.classList.add('results-header-wrapper');
+
+        const toggleContainer = document.createElement('div');
+        toggleContainer.classList.add('price-toggle-container');
+        toggleContainer.innerHTML = `
+            <span class="toggle-label">Sell Price</span>
+            <label class="switch">
+                <input type="checkbox" id="priceToggle" ${priceMode === 'buy' ? 'checked' : ''}>
+                <span class="slider round"></span>
+            </label>
+            <span class="toggle-label">Buy Price</span>
+        `;
+        headerWrapper.appendChild(toggleContainer);
+
         const header = document.createElement('div');
         header.classList.add('results-header');
         header.innerHTML = `
@@ -374,6 +391,7 @@ function recalculateAndRenderResources() {
                 <span class="unit-cost-header">Unit Cost</span>
                 <span class="total-cost-header">Total Cost</span>
             </div>`;
+        headerWrapper.appendChild(header);
 
         const ul = document.createElement('ul');
 
@@ -391,9 +409,13 @@ function recalculateAndRenderResources() {
             } else if (internalName) {
                 if (bazaarData) {
                     const bazaarKey = Object.keys(bazaarData).find(key => key === internalName || key.startsWith(internalName + ':'));
-                    if (bazaarKey && bazaarData[bazaarKey] && bazaarData[bazaarKey].buyPrice) {
-                        price = bazaarData[bazaarKey].buyPrice;
-                        source = 'Bazaar';
+                    if (bazaarKey && bazaarData[bazaarKey]) {
+                        const itemPrices = bazaarData[bazaarKey];
+                        const priceKey = priceMode === 'buy' ? 'buyPrice' : 'sellPrice';
+                        if (itemPrices[priceKey]) {
+                            price = itemPrices[priceKey];
+                            source = 'Bazaar';
+                        }
                     }
                 }
 
@@ -449,8 +471,13 @@ function recalculateAndRenderResources() {
             ul.appendChild(li);
         });
 
-        resultsDiv.appendChild(header);
+        resultsDiv.appendChild(headerWrapper);
         resultsDiv.appendChild(ul);
+
+        document.getElementById('priceToggle').addEventListener('change', function () {
+            priceMode = this.checked ? 'buy' : 'sell';
+            recalculateAndRenderResources();
+        });
 
         const allValueCells = resultsDiv.querySelectorAll('.item-quantity, .unit-cost, .total-cost, .item-quantity-header, .unit-cost-header, .total-cost-header');
 
@@ -724,7 +751,7 @@ itemNameInput.addEventListener('keydown', function (e) {
             itemNameInput.focus();
         } else {
             const inputValue = this.value.toLowerCase().trim();
-            
+
             const matchingDisplayNames = [];
             for (const internalName in ORIGINAL_DISPLAY_NAMES_BY_INTERNAL_NAME) {
                 const originalDisplayName = ORIGINAL_DISPLAY_NAMES_BY_INTERNAL_NAME[internalName];
