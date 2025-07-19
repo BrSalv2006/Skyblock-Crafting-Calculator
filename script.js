@@ -30,7 +30,7 @@ let currentCraftTreeRoot = null;
 let nodeMap = new Map();
 let frozenNodeId = null;
 let currentAutocompleteIndex = -1;
-let priceMode = 'buy';
+let priceMode = 'sell';
 
 function normalizeInternalName(name) {
     return name.toUpperCase().trim();
