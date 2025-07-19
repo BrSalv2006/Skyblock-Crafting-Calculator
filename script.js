@@ -275,7 +275,15 @@ function calculateNetRequiredResources(node, quantityRequiredForNode) {
         }
 
         if (currentNode.ingredients.length === 0) {
-            netNeededMap.set(currentNode.name, (netNeededMap.get(currentNode.name) || 0) + netOutputNeeded);
+            const existing = netNeededMap.get(currentNode.internalName);
+            if (existing) {
+                existing.quantity += netOutputNeeded;
+            } else {
+                netNeededMap.set(currentNode.internalName, {
+                    name: currentNode.name,
+                    quantity: netOutputNeeded
+                });
+            }
             return;
         }
 
@@ -286,8 +294,6 @@ function calculateNetRequiredResources(node, quantityRequiredForNode) {
             const childNode = currentNode.children.find(child => child.internalName === ingredient.internalName);
             if (childNode) {
                 traverseAndCalculate(childNode, quantityForChild);
-            } else {
-                netNeededMap.set(ingredient.name, (netNeededMap.get(ingredient.name) || 0) + quantityForChild);
             }
         }
     }
@@ -342,7 +348,7 @@ function renderCraftTree(node, level = 0) {
 
 function recalculateAndRenderResources() {
     resultsDiv.innerHTML = '';
-    const totalResources = {};
+    let totalResources = new Map();
     let targetNode = currentCraftTreeRoot;
     let targetQuantity = currentCraftTreeRoot ? currentCraftTreeRoot.quantityNeeded : 0;
 
@@ -352,13 +358,10 @@ function recalculateAndRenderResources() {
     }
 
     if (targetNode) {
-        const netNeededMap = calculateNetRequiredResources(targetNode, targetQuantity);
-        netNeededMap.forEach((quantity, resourceName) => {
-            totalResources[resourceName] = quantity;
-        });
+        totalResources = calculateNetRequiredResources(targetNode, targetQuantity);
     }
 
-    if (Object.keys(totalResources).length === 0) {
+    if (totalResources.size === 0) {
         resultsDiv.innerHTML = '<p class="text-gray-400">No base resources found (all items might be marked as completed or you have enough).</p>';
     } else {
         let grandTotalCost = 0;
@@ -374,13 +377,15 @@ function recalculateAndRenderResources() {
 
         const ul = document.createElement('ul');
 
-        Object.entries(totalResources).sort(([nameA], [nameB]) => nameA.localeCompare(nameB)).forEach(([resourceName, quantity]) => {
-            const internalName = (resourceName === 'Skyblock Coins') ? "SKYBLOCK_COIN" : INTERNAL_NAME_BY_CLEAN_DISPLAY_NAME[resourceName];
+        const sortedResources = Array.from(totalResources.entries()).sort(([, a], [, b]) => a.name.localeCompare(b.name));
+
+        sortedResources.forEach(([internalName, resourceData]) => {
+            const { name: resourceName, quantity } = resourceData;
             let price = 0;
             let itemTotalCost = 0;
             let source = 'N/A';
 
-            if (resourceName === "Skyblock Coins") {
+            if (internalName === "SKYBLOCK_COIN") {
                 price = SKYBLOCK_COIN_COST;
                 source = 'Fixed';
             } else if (internalName) {
@@ -719,6 +724,7 @@ itemNameInput.addEventListener('keydown', function (e) {
             itemNameInput.focus();
         } else {
             const inputValue = this.value.toLowerCase().trim();
+            
             const matchingDisplayNames = [];
             for (const internalName in ORIGINAL_DISPLAY_NAMES_BY_INTERNAL_NAME) {
                 const originalDisplayName = ORIGINAL_DISPLAY_NAMES_BY_INTERNAL_NAME[internalName];
