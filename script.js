@@ -133,9 +133,11 @@ async function fetchRecipe(internalName) {
             throw new Error(`Invalid recipe data for ${internalName}`);
         }
 
+        INTERNAL_NAME_BY_CLEAN_DISPLAY_NAME[cleanDisplayName(recipeRecord.displayname)] = recipeRecord.internalname;
+
         const isVanillaItem = recipeRecord.vanilla === true;
 
-        /*if (isVanillaItem) {
+        if (isVanillaItem) {
             const displayOutput = ORIGINAL_DISPLAY_NAMES_BY_INTERNAL_NAME[recipeRecord.internalname] || cleanDisplayName(recipeRecord.displayname || internalName);
             return {
                 output: displayOutput,
@@ -144,9 +146,7 @@ async function fetchRecipe(internalName) {
                 count: 1,
                 isVanilla: true
             };
-        }*/
-
-        INTERNAL_NAME_BY_CLEAN_DISPLAY_NAME[cleanDisplayName(recipeRecord.displayname)] = recipeRecord.internalname;
+        }
 
         const ingredientsMap = {};
         let outputCount = 1;
@@ -189,7 +189,6 @@ async function fetchRecipe(internalName) {
             for (const slot in recipeRecord.recipe) {
                 const ingredientString = recipeRecord.recipe[slot];
                 if (ingredientString) {
-                    console.log(ingredientString);
                     const parts = ingredientString.split(':');
                     const ingInternalName = parts[0];
                     const quantity = parseInt(parts[parts.length - 1], 10);
@@ -376,7 +375,7 @@ function recalculateAndRenderResources() {
         const ul = document.createElement('ul');
 
         Object.entries(totalResources).sort(([nameA], [nameB]) => nameA.localeCompare(nameB)).forEach(([resourceName, quantity]) => {
-            const internalName = resourceName === 'Skyblock Coins' ? "SKYBLOCK_COIN" : INTERNAL_NAME_BY_CLEAN_DISPLAY_NAME[resourceName];
+            const internalName = (resourceName === 'Skyblock Coins') ? "SKYBLOCK_COIN" : INTERNAL_NAME_BY_CLEAN_DISPLAY_NAME[resourceName];
             let price = 0;
             let itemTotalCost = 0;
             let source = 'N/A';
