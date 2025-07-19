@@ -125,7 +125,7 @@
             const GITHUB_RAW_CONTENT_URL = `https://raw.githubusercontent.com/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/${GITHUB_BRANCH}/${ITEMS_FOLDER_PATH}`;
 
             function cleanAndNormalizeDisplayName(name) {
-                return name ? name.replace(/§[0-9a-fklmnor]/g, '').trim() : '';
+                return name ? name.replace(/\[Lvl {LVL}\] /g, '').replace(/§[0-9a-fklmnor]/g, '').trim() : '';
             }
 
             async function fetchItemInternalNames() {
