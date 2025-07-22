@@ -7,6 +7,7 @@ const craftTreeDisplay = document.getElementById('craftTreeDisplay');
 const craftTreeContent = document.getElementById('craftTreeContent');
 const initialMessage = document.getElementById('initialMessage');
 const autocompleteList = document.getElementById('autocomplete-list');
+const tabsContainer = document.getElementById('tabs-container');
 
 const saveStateBtn = document.getElementById('saveStateBtn');
 const loadStateBtn = document.getElementById('loadStateBtn');
@@ -26,11 +27,13 @@ let INTERNAL_NAME_BY_CLEAN_DISPLAY_NAME = {};
 let bazaarData = {};
 let auctionData = {};
 
-let currentCraftTreeRoot = null;
+let craftingItems = [];
+let activeItemId = null;
 let nodeMap = new Map();
 let frozenNodeId = null;
 let currentAutocompleteIndex = -1;
 let priceMode = 'sell';
+let draggedItem = null;
 
 function normalizeInternalName(name) {
     return name.toUpperCase().trim();
@@ -241,7 +244,6 @@ async function buildCraftTree(itemInternalName, quantityNeeded, parentId = null)
         currentQuantity: 0,
         packsQuantity: 0
     };
-    nodeMap.set(nodeId, node);
 
     if (recipeInfo.ingredients.length === 0) {
         return node;
@@ -262,6 +264,16 @@ async function buildCraftTree(itemInternalName, quantityNeeded, parentId = null)
 
 function calculateNetRequiredResources(node, quantityRequiredForNode) {
     const netNeededMap = new Map();
+    const localNodeMap = new Map();
+
+    function buildLocalNodeMap(startNode) {
+        localNodeMap.set(startNode.nodeId, startNode);
+        for (const child of startNode.children) {
+            buildLocalNodeMap(child);
+        }
+    }
+    buildLocalNodeMap(node);
+
 
     function traverseAndCalculate(currentNode, currentQuantityRequired) {
         if (currentNode.completed) {
@@ -347,20 +359,30 @@ function renderCraftTree(node, level = 0) {
     return html;
 }
 
+function getActiveItem() {
+    return craftingItems.find(item => item.id === activeItemId);
+}
+
 function recalculateAndRenderResources() {
     resultsDiv.innerHTML = '';
+    const activeItem = getActiveItem();
+
+    if (!activeItem) {
+        resultsDiv.innerHTML = '<p class="text-gray-400" id="initialMessage">Add an item to begin.</p>';
+        craftTreeDisplay.classList.add('hidden');
+        return;
+    }
+
     let totalResources = new Map();
-    let targetNode = currentCraftTreeRoot;
-    let targetQuantity = currentCraftTreeRoot ? currentCraftTreeRoot.quantityNeeded : 0;
+    let targetNode = activeItem.craftTree;
+    let targetQuantity = activeItem.craftTree.quantityNeeded;
 
     if (frozenNodeId && nodeMap.has(frozenNodeId)) {
         targetNode = nodeMap.get(frozenNodeId);
         targetQuantity = targetNode.quantityNeeded;
     }
 
-    if (targetNode) {
-        totalResources = calculateNetRequiredResources(targetNode, targetQuantity);
-    }
+    totalResources = calculateNetRequiredResources(targetNode, targetQuantity);
 
     if (totalResources.size === 0) {
         resultsDiv.innerHTML = '<p class="text-gray-400">No base resources found (all items might be marked as completed or you have enough).</p>';
@@ -632,15 +654,14 @@ function rebuildNodeMapFromTree(node) {
 }
 
 function saveStateToJson() {
-    if (!currentCraftTreeRoot) {
-        resultsDiv.innerHTML = '<p class="error-message">No crafting tree to save. Please calculate an item first.</p>';
+    if (craftingItems.length === 0) {
+        resultsDiv.innerHTML = '<p class="error-message">No crafting items to save.</p>';
         return;
     }
 
     const state = {
-        itemName: itemNameInput.value.trim(),
-        itemQuantity: parseInt(itemQuantityInput.value, 10),
-        craftTree: currentCraftTreeRoot
+        craftingItems,
+        activeItemId
     };
 
     const jsonString = JSON.stringify(state, null, 2);
@@ -649,7 +670,7 @@ function saveStateToJson() {
 
     const a = document.createElement('a');
     a.href = url;
-    a.download = `skyblock_crafting_state_${state.itemName.replace(/\s/g, '_').toLowerCase()}.json`;
+    a.download = `skyblock_crafting_state.json`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -660,25 +681,19 @@ function loadStateFromJson(jsonContent) {
     try {
         const state = JSON.parse(jsonContent);
 
-        if (!state.itemName || isNaN(state.itemQuantity) || !state.craftTree) {
-            throw new Error("Invalid state file format. Missing item name, quantity, or craft tree data.");
+        if (!state.craftingItems || !state.activeItemId) {
+            throw new Error("Invalid state file format.");
         }
 
-        itemNameInput.value = state.itemName;
-        itemQuantityInput.value = state.itemQuantity;
+        craftingItems = state.craftingItems;
+        activeItemId = state.activeItemId;
 
-        currentCraftTreeRoot = state.craftTree;
-        nodeMap.clear();
-        rebuildNodeMapFromTree(currentCraftTreeRoot);
+        renderTabs();
+        renderActiveItem();
 
-        craftTreeContent.innerHTML = `<ul>${renderCraftTree(currentCraftTreeRoot)}</ul>`;
-        craftTreeDisplay.classList.remove('hidden');
-        frozenNodeId = null;
-        recalculateAndRenderResources();
-        attachCraftTreeListeners();
     } catch (error) {
         console.error("Error loading state:", error);
-        resultsDiv.innerHTML = `<p class="error-message">Error loading state: ${error.message}. Please ensure you selected a valid JSON state file.</p>`;
+        resultsDiv.innerHTML = `<p class="error-message">Error loading state: ${error.message}.</p>`;
     } finally {
         loadingSpinner.style.display = 'none';
     }
@@ -798,10 +813,6 @@ calculateBtn.addEventListener('click', async () => {
     loadingSpinner.style.display = 'block';
     autocompleteList.classList.add('hidden');
 
-    nodeMap.clear();
-    frozenNodeId = null;
-    currentCraftTreeRoot = null;
-
     if (!itemNameInputVal) {
         resultsDiv.innerHTML = '<p class="error-message">Please enter an item name.</p>';
         loadingSpinner.style.display = 'none';
@@ -823,43 +834,184 @@ calculateBtn.addEventListener('click', async () => {
 
         const initialRecipeInfo = await fetchRecipe(initialInternalName);
         if (normalizeInternalName(initialRecipeInfo.internalname) !== normalizeInternalName(initialInternalName)) {
-            resultsDiv.innerHTML = `<p class="error-message">
-                        Recipe for "${itemNameInputVal}" not found.
-                        Please ensure you've entered a recognized display name or a correct internal name.
-                        <br>
-                        <b>Check your browser's console (F12 -> Network/Console tabs) for specific errors (e.g., 404 Not Found).</b>
-                     </p>`;
+            resultsDiv.innerHTML = `<p class="error-message">Recipe for "${itemNameInputVal}" not found.</p>`;
             loadingSpinner.style.display = 'none';
-            craftTreeDisplay.classList.add('hidden');
+            renderActiveItem();
             return;
         }
 
         if (initialRecipeInfo.ingredients.length === 0 && initialRecipeInfo.isVanilla === false) {
-            resultsDiv.innerHTML = `<p class="error-message">
-                        The item "${cleanDisplayName(initialRecipeInfo.output)}" is not craftable or its recipe is unknown.
-                    </p>`;
+            resultsDiv.innerHTML = `<p class="error-message">The item "${cleanDisplayName(initialRecipeInfo.output)}" is not craftable.</p>`;
             loadingSpinner.style.display = 'none';
-            craftTreeDisplay.classList.add('hidden');
+            renderActiveItem();
             return;
         }
 
-        currentCraftTreeRoot = await buildCraftTree(initialInternalName, itemQuantity);
-        recalculateAndRenderResources();
+        const craftTree = await buildCraftTree(initialInternalName, itemQuantity);
 
-        if (currentCraftTreeRoot) {
-            craftTreeContent.innerHTML = `<ul>${renderCraftTree(currentCraftTreeRoot)}</ul>`;
-            craftTreeDisplay.classList.remove('hidden');
+        const newItem = {
+            id: crypto.randomUUID(),
+            name: cleanDisplayName(initialRecipeInfo.output),
+            quantity: itemQuantity,
+            craftTree: craftTree,
+        };
 
-            attachCraftTreeListeners();
-        }
+        craftingItems.push(newItem);
+        activeItemId = newItem.id;
+
+        renderTabs();
+        renderActiveItem();
+
+        itemNameInput.value = '';
+        itemQuantityInput.value = '1';
 
     } catch (error) {
         console.error(`Error calculating resources: ${error.message}`);
-        resultsDiv.innerHTML = `<p class="error-message">An unexpected error occurred: ${error.message}. Please check your browser's console for details.`;
+        resultsDiv.innerHTML = `<p class="error-message">An unexpected error occurred: ${error.message}.</p>`;
     } finally {
         loadingSpinner.style.display = 'none';
     }
 });
+
+function renderTabs() {
+    tabsContainer.innerHTML = '';
+    craftingItems.forEach(item => {
+        const tab = document.createElement('div');
+        tab.className = 'tab';
+        tab.dataset.itemId = item.id;
+        tab.setAttribute('draggable', 'true');
+
+        if (item.id === activeItemId) {
+            tab.classList.add('active');
+        }
+
+        const tabName = document.createElement('span');
+        tabName.textContent = `${item.name} (x${item.quantity})`;
+        tab.appendChild(tabName);
+
+        const closeBtn = document.createElement('button');
+        closeBtn.className = 'tab-close-btn';
+        closeBtn.innerHTML = '&times;';
+        closeBtn.dataset.itemId = item.id;
+
+        tab.appendChild(closeBtn);
+
+        tab.addEventListener('click', (e) => {
+            if (e.target === closeBtn) return;
+            activeItemId = item.id;
+            renderTabs();
+            renderActiveItem();
+        });
+
+        closeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const itemIdToRemove = e.target.dataset.itemId;
+            craftingItems = craftingItems.filter(i => i.id !== itemIdToRemove);
+
+            if (activeItemId === itemIdToRemove) {
+                activeItemId = craftingItems.length > 0 ? craftingItems[0].id : null;
+            }
+
+            renderTabs();
+            renderActiveItem();
+        });
+
+        tab.addEventListener('dragstart', handleDragStart);
+        tab.addEventListener('dragend', handleDragEnd);
+        tab.addEventListener('dragover', handleDragOver);
+        tab.addEventListener('dragleave', handleDragLeave);
+        tab.addEventListener('drop', handleDrop);
+
+        tabsContainer.appendChild(tab);
+    });
+}
+
+function handleDragStart(e) {
+    draggedItem = e.target;
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', e.target.dataset.itemId);
+    setTimeout(() => {
+        e.target.classList.add('dragging');
+    }, 0);
+}
+
+function handleDragEnd(e) {
+    e.target.classList.remove('dragging');
+    draggedItem = null;
+}
+
+function handleDragOver(e) {
+    e.preventDefault();
+    const targetTab = e.target.closest('.tab');
+    if (targetTab && targetTab !== draggedItem) {
+        const rect = targetTab.getBoundingClientRect();
+        const offset = e.clientX - rect.left;
+
+        document.querySelectorAll('.tab').forEach(t => {
+            t.classList.remove('drag-over-before', 'drag-over-after');
+        });
+
+        if (offset < rect.width / 2) {
+            targetTab.classList.add('drag-over-before');
+        } else {
+            targetTab.classList.add('drag-over-after');
+        }
+    }
+}
+
+function handleDragLeave(e) {
+    e.target.closest('.tab')?.classList.remove('drag-over-before', 'drag-over-after');
+}
+
+function handleDrop(e) {
+    e.preventDefault();
+    const targetTab = e.target.closest('.tab');
+    if (!targetTab || targetTab === draggedItem) return;
+
+    const draggedId = e.dataTransfer.getData('text/plain');
+    const targetId = targetTab.dataset.itemId;
+
+    const draggedIndex = craftingItems.findIndex(item => item.id === draggedId);
+    let targetIndex = craftingItems.findIndex(item => item.id === targetId);
+
+    if (draggedIndex === -1 || targetIndex === -1) return;
+
+    const [dragged] = craftingItems.splice(draggedIndex, 1);
+
+    if (targetTab.classList.contains('drag-over-after')) {
+        targetIndex++;
+    }
+
+    craftingItems.splice(targetIndex, 0, dragged);
+
+    document.querySelectorAll('.tab').forEach(t => {
+        t.classList.remove('drag-over-before', 'drag-over-after');
+    });
+
+    renderTabs();
+}
+
+
+function renderActiveItem() {
+    const activeItem = getActiveItem();
+    nodeMap.clear();
+    frozenNodeId = null;
+
+    if (!activeItem) {
+        resultsDiv.innerHTML = '<p class="text-gray-400" id="initialMessage">Add an item to begin calculating resources.</p>';
+        craftTreeDisplay.classList.add('hidden');
+        craftTreeContent.innerHTML = '';
+        return;
+    }
+
+    rebuildNodeMapFromTree(activeItem.craftTree);
+    recalculateAndRenderResources();
+
+    craftTreeContent.innerHTML = `<ul>${renderCraftTree(activeItem.craftTree)}</ul>`;
+    craftTreeDisplay.classList.remove('hidden');
+    attachCraftTreeListeners();
+}
+
 
 saveStateBtn.addEventListener('click', saveStateToJson);
 
@@ -868,8 +1020,8 @@ loadStateBtn.addEventListener('click', () => {
 });
 
 refreshCostsBtn.addEventListener('click', async () => {
-    if (!currentCraftTreeRoot) {
-        resultsDiv.innerHTML = '<p class="error-message">Calculate an item first before refreshing costs.</p>';
+    if (craftingItems.length === 0) {
+        resultsDiv.innerHTML = '<p class="error-message">Add an item first before refreshing costs.</p>';
         return;
     }
 
