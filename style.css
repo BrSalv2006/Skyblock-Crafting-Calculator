@@ -1,23 +1,25 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
 body {
     font-family: 'Inter', sans-serif;
     background-color: #1a202c;
     color: #e2e8f0;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    min-height: 100vh;
-    padding: 1rem;
 }
 
 .container {
     background-color: #2d3748;
-    border-radius: 1.5rem;
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
     padding: 2.5rem;
-    max-width: 95%;
-    width: 800px;
+    width: 100%;
+    min-height: 100vh;
     text-align: center;
-    border: 1px solid #4a5568;
+    box-sizing: border-box;
 }
 
 input[type="text"],
@@ -651,132 +653,6 @@ input:checked+.slider:before {
     color: #68d391;
 }
 
-
-@media (max-width: 640px) {
-    .container {
-        padding: 1.5rem;
-        border-radius: 1rem;
-    }
-
-    .input-group {
-        flex-direction: column;
-    }
-
-    input[type="text"],
-    input[type="number"],
-    button {
-        font-size: 0.95rem;
-        margin-bottom: 1rem;
-    }
-
-    .input-group #itemQuantity,
-    #calculateBtn {
-        width: 100%;
-    }
-
-    button {
-        padding: 0.75rem 1.5rem;
-        border-radius: 0.5rem;
-    }
-
-    #results,
-    #craftTreeDisplay {
-        padding: 1rem;
-        margin-top: 1rem;
-        border-radius: 0.5rem;
-    }
-
-    .item-name,
-    .item-quantity,
-    .unit-cost,
-    .total-cost {
-        font-size: 0.95rem;
-    }
-
-    .craft-step-details {
-        font-size: 0.85em;
-        margin-top: 0.1rem;
-    }
-
-    .quantity-labels-row {
-        display: none;
-    }
-
-    .craft-step-header {
-        flex-wrap: wrap;
-        align-items: flex-start;
-    }
-
-    .main-content-flex {
-        flex-direction: column;
-        align-items: flex-start;
-        flex-grow: 1;
-        width: 100%;
-        margin-top: 0.25rem;
-    }
-
-    .item-text-content {
-        width: 100%;
-    }
-
-    .quantity-inputs-row {
-        width: 100%;
-        justify-content: flex-start;
-        margin-top: 0.5rem;
-    }
-
-    .current-quantity-input,
-    .packs-quantity-input {
-        width: 3.5rem;
-        padding: 0.2rem 0.4rem;
-        font-size: 0.8rem;
-    }
-
-    .results-header {
-        display: none;
-    }
-
-    #results li {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
-    }
-
-    .quantity-values {
-        width: 100%;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 0.5rem;
-        padding-top: 0.5rem;
-        border-top: 1px dashed #4a5568;
-    }
-
-    .item-quantity,
-    .unit-cost,
-    .total-cost {
-        width: auto;
-        text-align: left;
-    }
-
-    .item-quantity::before {
-        content: 'Qty: ';
-        color: #90cdf4;
-        font-weight: bold;
-    }
-
-    .unit-cost::before {
-        content: 'Cost/ea: ';
-        color: #90cdf4;
-        font-weight: bold;
-    }
-
-    .total-cost {
-        grid-column: 1 / -1;
-    }
-
-    .total-cost::before {
-        content: 'Total Cost: ';
-        color: #90cdf4;
-        font-weight: bold;
-    }
+.container {
+    max-width: none !important;
 }

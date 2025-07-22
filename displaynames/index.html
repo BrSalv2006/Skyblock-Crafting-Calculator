@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Skyblock Display Name Mapper</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="./style.css">
+    </head>
+    <body>
+        <div class="container">
+            <h1 class="text-3xl font-bold mb-6 text-white">Skyblock Display Name Mapper</h1>
+            <p class="text-gray-400 mb-4"> Click the button below to attempt to fetch **all** item data from the NotEnoughUpdates GitHub repository, extract their display names and internal names, and combine them into a single JSON mapping for download. </p>
+            <p class="text-red-400 text-sm mb-4 font-bold"> **WARNING:** This script fetches data directly from GitHub's Git Tree API and raw content. It is subject to **rate limits** (e.g., 60 requests/hour) and potential **CORS issues**. If it fails, check your browser's console (F12) for network errors. Fetching all items can take a long time. </p>
+            <button id="collectDataBtn">Generate Display Name Map (All Items)</button>
+            <div class="loading-spinner" id="loadingSpinner"></div>
+            <div id="status" class="text-gray-300"> Click "Generate Display Name Map (All Items)" to begin. </div>
+            <a id="downloadLink" href="#" download="skyblock_displayname_map.json">Download Display Name Map</a>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>
