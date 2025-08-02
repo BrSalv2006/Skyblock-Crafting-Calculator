@@ -13,6 +13,7 @@ let woodSingularityPrice = 0;
 let divanPowderCoatingPrice = 0;
 let farmingForDummiesPrice = 0;
 let bookwormFavoriteBookPrice = 0;
+let polarvoidBookPrice = 0;
 let bookOfStatsPrice = 0;
 let hotPotatoBookPrice = 0;
 let fumingPotatoBookPrice = 0;
@@ -87,7 +88,9 @@ function handleSpinnerClick(event) {
 
     input.value = value;
 
-    const changeEvent = new Event('change', { bubbles: true });
+    const changeEvent = new Event('change', {
+        bubbles: true
+    });
     input.dispatchEvent(changeEvent);
 }
 
@@ -238,6 +241,11 @@ async function loadBazaarPrices() {
             bookwormFavoriteBookPrice = Math.round(bookwormFavoriteBookPriceData.buyPrice);
         }
 
+        const polarvoidBookPriceData = bazaarPrices[others.polarvoidBook.internalName];
+        if (polarvoidBookPriceData && polarvoidBookPriceData.buyPrice != null) {
+            polarvoidBookPrice = Math.round(polarvoidBookPriceData.buyPrice);
+        }
+
         const bookOfStatsPriceData = bazaarPrices[others.bookOfStats.internalName];
         if (bookOfStatsPriceData && bookOfStatsPriceData.buyPrice != null) {
             bookOfStatsPrice = Math.round(bookOfStatsPriceData.buyPrice);
@@ -280,7 +288,7 @@ function getEnchantmentPrice(name, level) {
         const silexPriceData = bazaarPrices[others.silex.internalName];
         return (silexPriceData?.buyPrice * (level - 5)) ?? null;
     }
-    if (name === "Bane Of Arthropods" && level == 7) {
+    if (name === "Bane of Arthropods" && level == 7) {
         const ensnaredSnailPriceData = bazaarPrices[`ENSNARED_SNAIL`];
         const priceData = bazaarPrices[`${details.id}6`];
         return (priceData?.buyPrice + ensnaredSnailPriceData?.buyPrice) ?? null;
@@ -295,7 +303,7 @@ function getEnchantmentPrice(name, level) {
         const priceData = bazaarPrices[`${details.id}6`];
         return (priceData?.buyPrice + severedPincerPriceData?.buyPrice) ?? null;
     }
-    if (name === "Luck Of The Sea" && level == 7) {
+    if (name === "Luck of the Sea" && level == 7) {
         const goldBottleCapPriceData = bazaarPrices[`GOLD_BOTTLE_CAP`];
         const priceData = bazaarPrices[`${details.id}6`];
         return (priceData?.buyPrice + goldBottleCapPriceData?.buyPrice) ?? null;
@@ -342,6 +350,31 @@ function getReforgeCategoryFromItem(item) {
     return item.category;
 }
 
+function toggleUpgradeSection(config) {
+    const section = document.getElementById(config.sectionId);
+    if (!section) return;
+
+    const input = document.getElementById(config.inputId);
+    const upgradeData = others[config.upgradeKey];
+
+    const isApplicable = (upgradeData.categories && upgradeData.categories.includes(config.itemCategory)) ||
+        (upgradeData.items && upgradeData.items.includes(config.itemId)) ||
+        (upgradeData.materials && upgradeData.materials.includes(config.itemMaterial));
+
+    if (isApplicable) {
+        section.style.display = 'block';
+    } else {
+        section.style.display = 'none';
+        if (input) {
+            if (input.type === 'checkbox') {
+                input.checked = false;
+            } else if (input.type === 'number') {
+                input.value = 0;
+            }
+        }
+    }
+}
+
 function updateItemDetails() {
     const calculatorBody = document.getElementById('calculator-body');
     const selectedItemId = document.getElementById('item-select').value;
@@ -361,96 +394,64 @@ function updateItemDetails() {
         updateReforgeDropdown(selectedItem);
 
         const itemCategory = getEnchantmentCategoryFromItem(selectedItem);
+        const itemId = selectedItem.id;
+        const itemMaterial = selectedItem.material;
 
-        const recombobulatorSection = document.getElementById('recomb-section');
-        const recombobulatorCheckbox = document.getElementById('recomb-checkbox');
-        if (others.recombobulator.categories.includes(itemCategory)) {
-            recombobulatorSection.style.display = 'block';
-        } else {
-            recombobulatorSection.style.display = 'none';
-            recombobulatorCheckbox.checked = false;
-        }
+        const upgradeConfigs = [{
+            sectionId: 'recomb-section',
+            inputId: 'recomb-checkbox',
+            upgradeKey: 'recombobulator'
+        }, {
+            sectionId: 'art-of-war-section',
+            inputId: 'art-of-war-checkbox',
+            upgradeKey: 'artOfWar'
+        }, {
+            sectionId: 'art-of-peace-section',
+            inputId: 'art-of-peace-checkbox',
+            upgradeKey: 'artOfPeace'
+        }, {
+            sectionId: 'wood-singularity-section',
+            inputId: 'wood-singularity-checkbox',
+            upgradeKey: 'woodSingularity'
+        }, {
+            sectionId: 'divan-powder-coating-section',
+            inputId: 'divan-powder-coating-checkbox',
+            upgradeKey: 'divanPowderCoating'
+        }, {
+            sectionId: 'farming-for-dummies-section',
+            inputId: 'farming-for-dummies',
+            upgradeKey: 'farmingForDummies'
+        }, {
+            sectionId: 'bookworm-favorite-book-section',
+            inputId: 'bookworm-favorite-book',
+            upgradeKey: 'bookwormBook'
+        }, {
+            sectionId: 'polarvoid-book-section',
+            inputId: 'polarvoid-book',
+            upgradeKey: 'polarvoidBook'
+        }, {
+            sectionId: 'book-of-stats-section',
+            inputId: 'book-of-stats-checkbox',
+            upgradeKey: 'bookOfStats'
+        }, {
+            sectionId: 'potato-books-section',
+            inputId: 'potato-books',
+            upgradeKey: 'potatoBooks'
+        }, {
+            sectionId: 'wet-book-section',
+            inputId: 'wet-book',
+            upgradeKey: 'wetBook'
+        },];
 
-        const artOfWarSection = document.getElementById('art-of-war-section');
-        const artOfWarCheckbox = document.getElementById('art-of-war-checkbox');
-        if (others.artOfWar.categories.includes(itemCategory)) {
-            artOfWarSection.style.display = 'block';
-        } else {
-            artOfWarSection.style.display = 'none';
-            artOfWarCheckbox.checked = false;
-        }
+        upgradeConfigs.forEach(config => {
+            toggleUpgradeSection({
+                ...config,
+                itemCategory,
+                itemId,
+                itemMaterial
+            });
+        });
 
-        const divanPowderCoatingSection = document.getElementById('divan-powder-coating-section');
-        const divanPowderCoatingCheckbox = document.getElementById('divan-powder-coating-checkbox');
-        if (others.divanPowderCoating.categories.includes(itemCategory) || others.divanPowderCoating.items.includes(selectedItemId)) {
-            divanPowderCoatingSection.style.display = 'block';
-        } else {
-            divanPowderCoatingSection.style.display = 'none';
-            divanPowderCoatingCheckbox.checked = false;
-        }
-
-        const artOfPeaceSection = document.getElementById('art-of-peace-section');
-        const artOfPeaceCheckbox = document.getElementById('art-of-peace-checkbox');
-        if (others.artOfPeace.categories.includes(itemCategory)) {
-            artOfPeaceSection.style.display = 'block';
-        } else {
-            artOfPeaceSection.style.display = 'none';
-            artOfPeaceCheckbox.checked = false;
-        }
-
-        const woodSingularitySection = document.getElementById('wood-singularity-section');
-        const woodSingularityCheckbox = document.getElementById('wood-singularity-checkbox');
-        if (others.woodSingularity.materials.includes(selectedItem.material)) {
-            woodSingularitySection.style.display = 'block';
-        } else {
-            woodSingularitySection.style.display = 'none';
-            woodSingularityCheckbox.checked = false;
-        }
-
-        const farmingForDummiesSection = document.getElementById('farming-for-dummies-section');
-        const farmingForDummiesInput = document.getElementById('farming-for-dummies');
-        if (others.farmingForDummies.categories.includes(itemCategory)) {
-            farmingForDummiesSection.style.display = 'block';
-        } else {
-            farmingForDummiesSection.style.display = 'none';
-            farmingForDummiesInput.value = 0;
-        }
-
-        const bookwormFavoriteBookSection = document.getElementById('bookworm-favorite-book-section');
-        const bookwormFavoriteBookInput = document.getElementById('bookworm-favorite-book');
-        if (others.bookwormBook.categories.includes(itemCategory)) {
-            bookwormFavoriteBookSection.style.display = 'block';
-        } else {
-            bookwormFavoriteBookSection.style.display = 'none';
-            bookwormFavoriteBookInput.value = 0;
-        }
-
-        const bookOfStatsSection = document.getElementById('book-of-stats-section');
-        const bookOfStatsCheckbox = document.getElementById('book-of-stats-checkbox');
-        if (others.bookOfStats.categories.includes(itemCategory)) {
-            bookOfStatsSection.style.display = 'block';
-        } else {
-            bookOfStatsSection.style.display = 'none';
-            bookOfStatsCheckbox.checked = false;
-        }
-
-        const potatoBooksSection = document.getElementById('potato-books-section');
-        const potatoBooksInput = document.getElementById('potato-books');
-        if (others.potatoBooks.categories.includes(itemCategory)) {
-            potatoBooksSection.style.display = 'block';
-        } else {
-            potatoBooksSection.style.display = 'none';
-            potatoBooksInput.value = 0;
-        }
-
-        const wetBookSection = document.getElementById('wet-book-section');
-        const wetBookInput = document.getElementById('wet-book');
-        if (others.wetBook.categories.includes(itemCategory)) {
-            wetBookSection.style.display = 'block';
-        } else {
-            wetBookSection.style.display = 'none';
-            wetBookInput.value = 0;
-        }
     } else {
         calculatorBody.classList.add('hidden');
     }
@@ -506,7 +507,10 @@ function updateReforgePrice(selectedItem) {
     const selectedReforgeName = reforgeSelect.value;
 
     if (selectedReforgeName && selectedReforgeName !== "") {
-        const allReforges = { ...reforges.basic_reforges, ...reforges.stone_reforges };
+        const allReforges = {
+            ...reforges.basic_reforges,
+            ...reforges.stone_reforges
+        };
         const reforge = Object.values(allReforges).find(r => r.name === selectedReforgeName);
         const reforgePrice = bazaarPrices[reforge.internalName] ? bazaarPrices[reforge.internalName].buyPrice : 0;
         const rarity = selectedItem.tier || 'COMMON';
@@ -795,6 +799,7 @@ function updateGemstoneSlots(selectedItem) {
 function calculateTotal() {
     const sumLabels = (selector) => Array.from(document.querySelectorAll(selector)).reduce((sum, label) => {
         const value = parseFloat(label.textContent.replace(/\s/g, '')) || 0;
+        console.log(label.textContent)
         return sum + value;
     }, 0);
 
@@ -804,6 +809,7 @@ function calculateTotal() {
     const fumingBooksCount = Math.max(0, potatoBooksCount - 10);
     const farmingForDummiesCount = parseFloat(document.getElementById('farming-for-dummies').value) || 0;
     const bookwormFavoriteBookCount = parseFloat(document.getElementById('bookworm-favorite-book').value) || 0;
+    const polarvoidBookCount = parseFloat(document.getElementById('polarvoid-book').value) || 0;
 
     const costs = {
         enchantments: sumLabels('#enchantments-container .price-label'),
@@ -817,14 +823,13 @@ function calculateTotal() {
         woodSingularity: document.getElementById('wood-singularity-checkbox').checked ? woodSingularityPrice : 0,
         farmingForDummies: (farmingForDummiesCount * farmingForDummiesPrice),
         bookwormFavoriteBook: (bookwormFavoriteBookCount * bookwormFavoriteBookPrice),
+        polarvoidBook: (polarvoidBookCount * polarvoidBookPrice),
         bookOfStats: document.getElementById('book-of-stats-checkbox').checked ? bookOfStatsPrice : 0,
         potatoBooks: (hotBooksCount * hotPotatoBookPrice) + (fumingBooksCount * fumingPotatoBookPrice),
         wetBook: (wetBookCount * wetBookPrice),
-        //masterStars: parseFloat(document.getElementById('master-star-price').value) || 0,
-        //other: parseFloat(document.getElementById('other-upgrades-price').value) || 0,
     };
 
-    costs.total = costs.enchantments + costs.ultimate + costs.gemstones + costs.reforge + costs.recomb + costs.artOfWar + costs.divanPowderCoating + costs.artOfPeace + costs.woodSingularity + costs.farmingForDummies + costs.bookwormFavoriteBook + costs.bookOfStats + costs.potatoBooks + costs.wetBook;// + costs.masterStars + costs.other;
+    costs.total = Object.values(costs).reduce((sum, cost) => sum + cost, 0);
 
     displayResults(costs);
 }
@@ -836,61 +841,82 @@ function displayResults(costs) {
 
     const format = (n) => n.toLocaleString('en-US');
 
-    let costDetailsHTML = '';
+    const costCategories = [{
+        key: 'enchantments',
+        label: 'Enchantments',
+        color: 'text-purple-300'
+    }, {
+        key: 'ultimate',
+        label: 'Ultimate Enchantment',
+        color: 'text-purple-300'
+    }, {
+        key: 'gemstones',
+        label: 'Gemstones',
+        color: 'text-teal-300'
+    }, {
+        key: 'reforge',
+        label: 'Reforge',
+        color: 'text-yellow-300'
+    }, {
+        key: 'recomb',
+        label: 'Recombobulator',
+        color: 'text-yellow-300'
+    }, {
+        key: 'artOfWar',
+        label: 'The Art of War',
+        color: 'text-yellow-300'
+    }, {
+        key: 'artOfPeace',
+        label: 'The Art of Peace',
+        color: 'text-yellow-300'
+    }, {
+        key: 'woodSingularity',
+        label: 'Wood Singularity',
+        color: 'text-yellow-300'
+    }, {
+        key: 'divanPowderCoating',
+        label: "Divan's Powder Coating",
+        color: 'text-yellow-300'
+    }, {
+        key: 'farmingForDummies',
+        label: 'Farming for Dummies',
+        color: 'text-yellow-300'
+    }, {
+        key: 'bookwormFavoriteBook',
+        label: "Bookworm's Favorite Book",
+        color: 'text-yellow-300'
+    }, {
+        key: 'polarvoidBook',
+        label: 'Polarvoid Book',
+        color: 'text-yellow-300'
+    }, {
+        key: 'bookOfStats',
+        label: 'Book of Stats',
+        color: 'text-yellow-300'
+    }, {
+        key: 'potatoBooks',
+        label: 'Potato Books',
+        color: 'text-yellow-300'
+    }, {
+        key: 'wetBook',
+        label: 'Wet Books',
+        color: 'text-yellow-300'
+    },];
 
-    if (costs.enchantments > 0) {
-        costDetailsHTML += `<div class="flex justify-between items-center"><span class="text-purple-300">Enchantments:</span><span class="font-semibold">${format(costs.enchantments)} coins</span></div>`;
-    }
-    if (costs.ultimate > 0) {
-        costDetailsHTML += `<div class="flex justify-between items-center"><span class="text-purple-300">Ultimate Enchantment:</span><span class="font-semibold">${format(costs.ultimate)} coins</span></div>`;
-    }
-    if (costs.gemstones > 0) {
-        costDetailsHTML += `<div class="flex justify-between items-center"><span class="text-teal-300">Gemstones:</span><span class="font-semibold">${format(costs.gemstones)} coins</span></div>`;
-    }
-    if (costs.reforge > 0) {
-        costDetailsHTML += `<div class="flex justify-between items-center"><span class="text-yellow-300">Reforge:</span><span class="font-semibold">${format(costs.reforge)} coins</span></div>`;
-    }
-    if (costs.recomb > 0) {
-        costDetailsHTML += `<div class="flex justify-between items-center"><span class="text-yellow-300">Recombobulator:</span><span class="font-semibold">${format(costs.recomb)} coins</span></div>`;
-    }
-    if (costs.artOfWar > 0) {
-        costDetailsHTML += `<div class="flex justify-between items-center"><span class="text-yellow-300">The Art of War:</span><span class="font-semibold">${format(costs.artOfWar)} coins</span></div>`;
-    }
-    if (costs.artOfPeace > 0) {
-        costDetailsHTML += `<div class="flex justify-between items-center"><span class="text-yellow-300">The Art Of Peace:</span><span class="font-semibold">${format(costs.artOfPeace)} coins</span></div>`;
-    }
-    if (costs.woodSingularity > 0) {
-        costDetailsHTML += `<div class="flex justify-between items-center"><span class="text-yellow-300">Wood Singularity:</span><span class="font-semibold">${format(costs.woodSingularity)} coins</span></div>`;
-    }
-    if (costs.divanPowderCoating > 0) {
-        costDetailsHTML += `<div class="flex justify-between items-center"><span class="text-yellow-300">Divan's Powder Coating:</span><span class="font-semibold">${format(costs.divanPowderCoating)} coins</span></div>`;
-    }
-    if (costs.farmingForDummies > 0) {
-        costDetailsHTML += `<div class="flex justify-between items-center"><span class="text-yellow-300">Farming for Dummies:</span><span class="font-semibold">${format(costs.farmingForDummies)} coins</span></div>`;
-    }
-    if (costs.bookwormFavoriteBook > 0) {
-        costDetailsHTML += `<div class="flex justify-between items-center"><span class="text-yellow-300">Bookworm's Favorite Book:</span><span class="font-semibold">${format(costs.bookwormFavoriteBook)} coins</span></div>`;
-    }
-    if (costs.bookOfStats > 0) {
-        costDetailsHTML += `<div class="flex justify-between items-center"><span class="text-yellow-300">Book of Stats:</span><span class="font-semibold">${format(costs.bookOfStats)} coins</span></div>`;
-    }
-    if (costs.potatoBooks > 0) {
-        costDetailsHTML += `<div class="flex justify-between items-center"><span class="text-yellow-300">Potato Books:</span><span class="font-semibold">${format(costs.potatoBooks)} coins</span></div>`;
-    }
-    if (costs.wetBook > 0) {
-        costDetailsHTML += `<div class="flex justify-between items-center"><span class="text-yellow-300">Wet Books:</span><span class="font-semibold">${format(costs.wetBook)} coins</span></div>`;
-    }
-    if (costs.masterStars > 0) {
-        costDetailsHTML += `<div class="flex justify-between items-center"><span class="text-yellow-300">Master Stars:</span><span class="font-semibold">${format(costs.masterStars)} coins</span></div>`;
-    }
-    if (costs.other > 0) {
-        costDetailsHTML += `<div class="flex justify-between items-center"><span class="text-yellow-300">Misc. Costs:</span><span class="font-semibold">${format(costs.other)} coins</span></div>`;
-    }
+    let costDetailsHTML = costCategories
+        .map(cat => {
+            if (costs[cat.key] > 0) {
+                return `<div class="flex justify-between items-center"><span class="${cat.color}">${cat.label}:</span><span class="font-semibold">${format(costs[cat.key])} coins</span></div>`;
+            }
+            return '';
+        })
+        .join('');
 
-    if (costDetailsHTML.trim() === '' && costs.total > 0) {
-        costDetailsHTML = `<p class="text-center text-gray-400">No specific upgrade costs were entered, but a total was calculated.</p>`;
-    } else if (costDetailsHTML.trim() === '') {
-        costDetailsHTML = '<p class="text-center text-gray-400">No upgrade costs were entered.</p>';
+
+    if (costDetailsHTML.trim() === '') {
+        costDetailsHTML = costs.total > 0 ?
+            `<p class="text-center text-gray-400">No specific upgrade costs were entered, but a total was calculated.</p>` :
+            '<p class="text-center text-gray-400">No upgrade costs were entered.</p>';
     }
 
     resultsDiv.innerHTML = `

@@ -113,6 +113,14 @@
         "materials": [],
         "internalName": "BOOKWORM_BOOK"
     },
+    "polarvoidBook": {
+        "categories": [
+            "DRILL"
+        ],
+        "items": [],
+        "materials": [],
+        "internalName": "POLARVOID_BOOK"
+    },
     "bookOfStats": {
         "categories": [
             "SWORD",
@@ -156,9 +164,7 @@
         ],
         "items": [],
         "materials": [],
-        "internalName": [
-            "SIL_EX"
-        ]
+        "internalName": "SIL_EX"
     },
     "reforge": {
         "categories": {

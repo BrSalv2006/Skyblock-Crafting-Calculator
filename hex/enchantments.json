@@ -74,7 +74,7 @@
             "items": [],
             "max_level": 7,
             "min_level": 1,
-            "name": "Bane Of Arthropods"
+            "name": "Bane of Arthropods"
         },
         "BIG_BRAIN": {
             "categories": [
@@ -803,7 +803,7 @@
             "items": [],
             "max_level": 7,
             "min_level": 1,
-            "name": "Luck Of The Sea"
+            "name": "Luck of the Sea"
         },
         "LURE": {
             "categories": [
