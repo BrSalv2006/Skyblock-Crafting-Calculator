@@ -1,0 +1,59 @@
+Power Scrolls
+Main article: Power Scrolls
+A Power Scroll can be applied to a Sword with a RIGHT CLICK Ability to give it a special effect when its Ability is used.
+
+Dungeon Stars
+Main article: Star Upgrades
+Certain Swords can be upgraded with Star Upgrades, which increase the stats of the Swords in Dungeons. Swords can be given Stars by upgrading them with Essence, or applying Master Stars to them.
+
+Fragments
+Some Weapons can be upgraded with specific fragments, which increases their Stats.
+You can upgrade your item with fragments by crafting them together in a Crafting Table.
+These upgrades are portrayed by a ⚚ in front of its name in the same color as its Rarity.
+
+MAYBE####Runes
+MAYBE####Runes apply cosmetic particles to your Weapons while in use.
+MAYBE####You can apply Runes to your items with the Runic Pedestal. Only a single Rune can be applied to any given item.
+MAYBE####Runes appear as ◆ Rune Name 1 under the Enchantments on your items.
+
+Attributes
+Attributes improve the overall effectiveness of your Armor by increasing its Stats and adding extra utility, such as increased ❁Damage and SkyBlock icons health.pngHealth.
+You can upgrade the Attributes on your items at a Blacksmith such as Igor or Alwin. Combining items of the same type with matching attributes and a level higher than or equal to the other will upgrade the level of the former and consume the latter.
+
+Enrichments
+Enrichments directly increase a specific Stat of your Accessories by a small amount, depending on the enrichment used. They can only be applied to Accessories that are either LEGENDARY, MYTHIC, SPECIAL or VERY SPECIAL rarity. This includes EPIC accessories that have been recombobulated to be LEGENDARY.
+Enrichments can be applied to your item with an Anvil. Once an item is enriched, the type of enrichment can be swapped freely with an Accessory Enrichment Swapper.
+Accessories with enrichments can be differentiated by the first line in the item's lore, which says "Enriched with Stat".
+
+Necron's Blade Scrolls
+
+Mana Disintegrator
+
+Polarvoid Book
+
+
+
+##########################################################
+
+
+SWORD
+
+PICKAXE
+
+DRILL
+
+GAUNTLET
+
+LONGSWORD
+
+BOOTS
+
+HELMET
+
+CHESTPLATE
+
+LEGGINGS
+
+WAND
+
+ACCESSORY

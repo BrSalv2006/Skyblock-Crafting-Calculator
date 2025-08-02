@@ -1,0 +1,1681 @@
+{
+    "basic_reforges": {
+        "ASTUTE": {
+            "name": "Astute",
+            "internalName": "",
+            "categories": [
+                "EQUIPMENT"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "AWKWARD": {
+            "name": "Awkward",
+            "internalName": "",
+            "categories": [
+                "BOW"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "BLENDED": {
+            "name": "Blended",
+            "internalName": "",
+            "categories": [
+                "EQUIPMENT"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "BRILLIANT": {
+            "name": "Brilliant",
+            "internalName": "",
+            "categories": [
+                "EQUIPMENT"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "CLEAN": {
+            "name": "Clean",
+            "internalName": "",
+            "categories": [
+                "ARMOR"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "COLOSSAL": {
+            "name": "Colossal",
+            "internalName": "",
+            "categories": [
+                "EQUIPMENT"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "DEADLY": {
+            "name": "Deadly",
+            "internalName": "",
+            "categories": [
+                "BOW"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "DOUBLE-BIT": {
+            "name": "Double-Bit",
+            "internalName": "",
+            "categories": [
+                "AXE"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "EPIC": {
+            "name": "Epic",
+            "internalName": "",
+            "categories": [
+                "FISHING_ROD",
+                "SWORD"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "EXCELLENT": {
+            "name": "Excellent",
+            "internalName": "",
+            "categories": [
+                "PICKAXE"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "FAIR": {
+            "name": "Fair",
+            "internalName": "",
+            "categories": [
+                "FISHING_ROD",
+                "SWORD"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "FAST": {
+            "name": "Fast",
+            "internalName": "",
+            "categories": [
+                "FISHING_ROD",
+                "SWORD"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "FIERCE": {
+            "name": "Fierce",
+            "internalName": "",
+            "categories": [
+                "ARMOR"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "FINE": {
+            "name": "Fine",
+            "internalName": "",
+            "categories": [
+                "BOW"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "FORTUNATE": {
+            "name": "Fortunate",
+            "internalName": "",
+            "categories": [
+                "PICKAXE"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "GENTLE": {
+            "name": "Gentle",
+            "internalName": "",
+            "categories": [
+                "FISHING_ROD",
+                "SWORD"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "GRAND": {
+            "name": "Grand",
+            "internalName": "",
+            "categories": [
+                "BOW"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "GREAT": {
+            "name": "Great",
+            "internalName": "",
+            "categories": [
+                "AXE"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "GREEN THUMB": {
+            "name": "Green Thumb",
+            "internalName": "",
+            "categories": [
+                "HOE"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "HASTY": {
+            "name": "Hasty",
+            "internalName": "",
+            "categories": [
+                "BOW"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "HEAVY": {
+            "name": "Heavy",
+            "internalName": "",
+            "categories": [
+                "ARMOR"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "HEFTY": {
+            "name": "Hefty",
+            "internalName": "",
+            "categories": [
+                "EQUIPMENT"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "HEROIC": {
+            "name": "Heroic",
+            "internalName": "",
+            "categories": [
+                "FISHING_ROD",
+                "SWORD"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "HONORED": {
+            "name": "Honored",
+            "internalName": "",
+            "categories": [
+                "EQUIPMENT"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "LEGENDARY": {
+            "name": "Legendary",
+            "internalName": "",
+            "categories": [
+                "FISHING_ROD",
+                "SWORD"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "LIGHT": {
+            "name": "Light",
+            "internalName": "",
+            "categories": [
+                "ARMOR"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "LUMBERJACK'S": {
+            "name": "Lumberjack's",
+            "internalName": "",
+            "categories": [
+                "AXE"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "LUSH": {
+            "name": "Lush",
+            "internalName": "",
+            "categories": [
+                "AXE"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "MENACING": {
+            "name": "Menacing",
+            "internalName": "",
+            "categories": [
+                "EQUIPMENT"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "MYTHIC": {
+            "name": "Mythic",
+            "internalName": "",
+            "categories": [
+                "ARMOR"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "NEAT": {
+            "name": "Neat",
+            "internalName": "",
+            "categories": [
+                "BOW"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "ODD": {
+            "name": "Odd",
+            "internalName": "",
+            "categories": [
+                "FISHING_ROD",
+                "SWORD"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "PEASANT'S": {
+            "name": "Peasant's",
+            "internalName": "",
+            "categories": [
+                "HOE"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "PROSPECTOR'S": {
+            "name": "Prospector's",
+            "internalName": "",
+            "categories": [
+                "PICKAXE"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "PURE": {
+            "name": "Pure",
+            "internalName": "",
+            "categories": [
+                "ARMOR"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "RAPID": {
+            "name": "Rapid",
+            "internalName": "",
+            "categories": [
+                "BOW"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "RICH": {
+            "name": "Rich",
+            "internalName": "",
+            "categories": [
+                "BOW"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "ROBUST": {
+            "name": "Robust",
+            "internalName": "",
+            "categories": [
+                "HOE"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "RUGGED": {
+            "name": "Rugged",
+            "internalName": "",
+            "categories": [
+                "AXE"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "SHARP": {
+            "name": "Sharp",
+            "internalName": "",
+            "categories": [
+                "FISHING_ROD",
+                "SWORD"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "SMART": {
+            "name": "Smart",
+            "internalName": "",
+            "categories": [
+                "ARMOR"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "SOFT": {
+            "name": "Soft",
+            "internalName": "",
+            "categories": [
+                "EQUIPMENT"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "SPICY": {
+            "name": "Spicy",
+            "internalName": "",
+            "categories": [
+                "FISHING_ROD",
+                "SWORD"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "STAINED": {
+            "name": "Stained",
+            "internalName": "",
+            "categories": [
+                "EQUIPMENT"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "STURDY": {
+            "name": "Sturdy",
+            "internalName": "",
+            "categories": [
+                "PICKAXE"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "TITANIC": {
+            "name": "Titanic",
+            "internalName": "",
+            "categories": [
+                "ARMOR"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "UNREAL": {
+            "name": "Unreal",
+            "internalName": "",
+            "categories": [
+                "BOW"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "UNYIELDING": {
+            "name": "Unyielding",
+            "internalName": "",
+            "categories": [
+                "PICKAXE"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "WISE": {
+            "name": "Wise",
+            "internalName": "",
+            "categories": [
+                "ARMOR"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        },
+        "ZOOMING": {
+            "name": "Zooming",
+            "internalName": "",
+            "categories": [
+                "HOE"
+            ],
+            "items": [],
+            "reforgeCosts": {}
+        }
+    },
+    "stone_reforges": {
+        "AMBERED": {
+            "name": "Ambered",
+            "internalName": "AMBER_MATERIAL",
+            "categories": [
+                "PICKAXE"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 20000,
+                "UNCOMMON": 40000,
+                "RARE": 80000,
+                "EPIC": 150000,
+                "LEGENDARY": 300000,
+                "MYTHIC": 600000,
+                "DIVINE": 800000
+            }
+        },
+        "ANCIENT": {
+            "name": "Ancient",
+            "internalName": "PRECURSOR_GEAR",
+            "categories": [
+                "ARMOR"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 10000,
+                "UNCOMMON": 20000,
+                "RARE": 30000,
+                "EPIC": 40000,
+                "LEGENDARY": 50000,
+                "MYTHIC": 60000
+            }
+        },
+        "AUSPICIOUS": {
+            "name": "Auspicious",
+            "internalName": "ROCK_GEMSTONE",
+            "categories": [
+                "PICKAXE"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 20000,
+                "UNCOMMON": 40000,
+                "RARE": 80000,
+                "EPIC": 150000,
+                "LEGENDARY": 300000,
+                "MYTHIC": 600000,
+                "DIVINE": 600000
+            }
+        },
+        "BEADY": {
+            "name": "Beady",
+            "internalName": "BEADY_EYES",
+            "categories": [
+                "VACUUM"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 10000,
+                "UNCOMMON": 20000,
+                "RARE": 50000,
+                "EPIC": 75000,
+                "LEGENDARY": 100000,
+                "MYTHIC": 150000
+            }
+        },
+        "BLAZING": {
+            "name": "Blazing",
+            "internalName": "BLAZEN_SPHERE",
+            "categories": [
+                "EQUIPMENT"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 20000,
+                "UNCOMMON": 40000,
+                "RARE": 80000,
+                "EPIC": 150000,
+                "LEGENDARY": 300000,
+                "MYTHIC": 300000,
+                "DIVINE": 300000
+            }
+        },
+        "BLESSED": {
+            "name": "Blessed",
+            "internalName": "BLESSED_FRUIT",
+            "categories": [
+                "AXE",
+                "HOE"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 10000,
+                "UNCOMMON": 10000,
+                "RARE": 10000,
+                "EPIC": 10000,
+                "LEGENDARY": 10000,
+                "MYTHIC": 10000
+            }
+        },
+        "BLOOD-SOAKED": {
+            "name": "Blood-Soaked",
+            "internalName": "PRESUMED_GALLON_OF_RED_PAINT",
+            "categories": [
+                "CLOAK"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 7500,
+                "UNCOMMON": 15000,
+                "RARE": 30000,
+                "EPIC": 75000,
+                "LEGENDARY": 150000,
+                "MYTHIC": 300000,
+                "DIVINE": 400000
+            }
+        },
+        "BLOOMING": {
+            "name": "Blooming",
+            "internalName": "FLOWERING_BOUQUET",
+            "categories": [
+                "EQUIPMENT"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 5000,
+                "UNCOMMON": 10000,
+                "RARE": 20000,
+                "EPIC": 50000,
+                "LEGENDARY": 100000,
+                "MYTHIC": 200000
+            }
+        },
+        "BOUNTIFUL": {
+            "name": "Bountiful",
+            "internalName": "GOLDEN_BALL",
+            "categories": [
+                "AXE",
+                "HOE"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 20000,
+                "UNCOMMON": 40000,
+                "RARE": 80000,
+                "EPIC": 150000,
+                "LEGENDARY": 300000,
+                "MYTHIC": 600000
+            }
+        },
+        "BULKY": {
+            "name": "Bulky",
+            "internalName": "BULKY_STONE",
+            "categories": [
+                "SWORD"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 20000,
+                "UNCOMMON": 40000,
+                "RARE": 80000,
+                "EPIC": 150000,
+                "LEGENDARY": 300000,
+                "MYTHIC": 600000
+            }
+        },
+        "BUSTLING": {
+            "name": "Bustling",
+            "internalName": "SKYMART_BROCHURE",
+            "categories": [
+                "ARMOR"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 1000,
+                "UNCOMMON": 2000,
+                "RARE": 3000,
+                "EPIC": 6000,
+                "LEGENDARY": 10000,
+                "MYTHIC": 15000
+            }
+        },
+        "BUZZING": {
+            "name": "Buzzing",
+            "internalName": "CLIPPED_WINGS",
+            "categories": [
+                "VACUUM"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 10000,
+                "UNCOMMON": 20000,
+                "RARE": 50000,
+                "EPIC": 75000,
+                "LEGENDARY": 100000,
+                "MYTHIC": 150000,
+                "DIVINE": 250000
+            }
+        },
+        "CALCIFIED": {
+            "name": "Calcified",
+            "internalName": "CALCIFIED_HEART",
+            "categories": [
+                "ARMOR"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 20000,
+                "UNCOMMON": 40000,
+                "RARE": 80000,
+                "EPIC": 150000,
+                "LEGENDARY": 300000,
+                "MYTHIC": 600000,
+                "DIVINE": 800000
+            }
+        },
+        "CANDIED": {
+            "name": "Candied",
+            "internalName": "CANDY_CORN",
+            "categories": [
+                "ARMOR"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 20000,
+                "UNCOMMON": 40000,
+                "RARE": 80000,
+                "EPIC": 150000,
+                "LEGENDARY": 300000,
+                "MYTHIC": 600000
+            }
+        },
+        "CHOMP": {
+            "name": "Chomp",
+            "internalName": "KUUDRA_MANDIBLE",
+            "categories": [
+                "FISHING_ROD"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 20000,
+                "UNCOMMON": 40000,
+                "RARE": 80000,
+                "EPIC": 150000,
+                "LEGENDARY": 300000,
+                "MYTHIC": 600000
+            }
+        },
+        "COLDFUSED": {
+            "name": "Coldfused",
+            "internalName": "ENTROPY_SUPPRESSOR",
+            "categories": [],
+            "items": [
+                "DEATHRIPPER_DAGGER",
+                "FIREDUST_DAGGER",
+                "KINDLEBANE_DAGGER",
+                "MAWDREDGE_DAGGER",
+                "PYROCHAOS_DAGGER",
+                "TWILIGHT_DAGGER"
+            ],
+            "reforgeCosts": {
+                "COMMON": 60000,
+                "UNCOMMON": 125000,
+                "RARE": 250000,
+                "EPIC": 500000,
+                "LEGENDARY": 1000000,
+                "MYTHIC": 2000000
+            }
+        },
+        "CUBIC": {
+            "name": "Cubic",
+            "internalName": "MOLTEN_CUBE",
+            "categories": [
+                "ARMOR"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 4000,
+                "UNCOMMON": 7500,
+                "RARE": 15000,
+                "EPIC": 40000,
+                "LEGENDARY": 75000,
+                "MYTHIC": 150000
+            }
+        },
+        "DIMENSIONAL": {
+            "name": "Dimensional",
+            "internalName": "TITANIUM_TESSERACT",
+            "categories": [
+                "ARMOR"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 15000,
+                "UNCOMMON": 30000,
+                "RARE": 60000,
+                "EPIC": 125000,
+                "LEGENDARY": 250000,
+                "MYTHIC": 500000,
+                "DIVINE": 500000
+            }
+        },
+        "DIRTY": {
+            "name": "Dirty",
+            "internalName": "DIRT_BOTTLE",
+            "categories": [
+                "FISHING_ROD",
+                "SWORD"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 1000,
+                "UNCOMMON": 5000,
+                "RARE": 10000,
+                "EPIC": 15000,
+                "LEGENDARY": 50000,
+                "MYTHIC": 75000
+            }
+        },
+        "EARTHLY": {
+            "name": "Earthly",
+            "internalName": "LARGE_WALNUT",
+            "categories": [
+                "AXE"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 5000,
+                "UNCOMMON": 10000,
+                "RARE": 20000,
+                "EPIC": 50000,
+                "LEGENDARY": 100000,
+                "MYTHIC": 200000
+            }
+        },
+        "EMPOWERED": {
+            "name": "Empowered",
+            "internalName": "SADAN_BROOCH",
+            "categories": [
+                "ARMOR"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 60000,
+                "UNCOMMON": 125000,
+                "RARE": 250000,
+                "EPIC": 500000,
+                "LEGENDARY": 1000000,
+                "MYTHIC": 2000000
+            }
+        },
+        "FABLED": {
+            "name": "Fabled",
+            "internalName": "DRAGON_CLAW",
+            "categories": [
+                "SWORD"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 60000,
+                "UNCOMMON": 125000,
+                "RARE": 250000,
+                "EPIC": 500000,
+                "LEGENDARY": 1000000,
+                "MYTHIC": 2000000
+            }
+        },
+        "FANGED": {
+            "name": "Fanged",
+            "internalName": "FULL_JAW_FANGING_KIT",
+            "categories": [
+                "SWORD"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 10000,
+                "UNCOMMON": 12500,
+                "RARE": 25000,
+                "EPIC": 50000,
+                "LEGENDARY": 100000,
+                "MYTHIC": 250000
+            }
+        },
+        "FESTIVE": {
+            "name": "Festive",
+            "internalName": "FROZEN_BAUBLE",
+            "categories": [
+                "ARMOR"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 25000,
+                "UNCOMMON": 75000,
+                "RARE": 150000,
+                "EPIC": 250000,
+                "LEGENDARY": 400000,
+                "MYTHIC": 600000
+            }
+        },
+        "FLEET": {
+            "name": "Fleet",
+            "internalName": "DIAMONITE",
+            "categories": [
+                "PICKAXE"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 15000,
+                "UNCOMMON": 30000,
+                "RARE": 60000,
+                "EPIC": 125000,
+                "LEGENDARY": 250000,
+                "MYTHIC": 500000,
+                "DIVINE": 500000
+            }
+        },
+        "FORTIFIED": {
+            "name": "Fortified",
+            "internalName": "METEOR_SHARD",
+            "categories": [
+                "EQUIPMENT"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 7500,
+                "UNCOMMON": 15000,
+                "RARE": 30000,
+                "EPIC": 75000,
+                "LEGENDARY": 150000,
+                "MYTHIC": 300000,
+                "DIVINE": 400000
+            }
+        },
+        "FRUITFUL": {
+            "name": "Fruitful",
+            "internalName": "ONYX",
+            "categories": [
+                "PICKAXE"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 100,
+                "UNCOMMON": 250,
+                "RARE": 500,
+                "EPIC": 1000,
+                "LEGENDARY": 2500,
+                "MYTHIC": 5000,
+                "DIVINE": 10000
+            }
+        },
+        "GIANT": {
+            "name": "Giant",
+            "internalName": "GIANT_TOOTH",
+            "categories": [
+                "ARMOR"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 60000,
+                "UNCOMMON": 125000,
+                "RARE": 250000,
+                "EPIC": 500000,
+                "LEGENDARY": 1000000,
+                "MYTHIC": 2000000
+            }
+        },
+        "GILDED": {
+            "name": "Gilded",
+            "internalName": "MIDAS_JEWEL",
+            "categories": [],
+            "items": [
+                "MIDAS_STAFF",
+                "MIDAS_SWORD",
+                "STARRED_MIDAS_STAFF",
+                "STARRED_MIDAS_SWORD"
+            ],
+            "reforgeCosts": {
+                "LEGENDARY": 5000000,
+                "MYTHIC": 10000000
+            }
+        },
+        "GLACIAL": {
+            "name": "Glacial",
+            "internalName": "FRIGID_HUSK",
+            "categories": [
+                "PICKAXE"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 20000,
+                "UNCOMMON": 40000,
+                "RARE": 80000,
+                "EPIC": 150000,
+                "LEGENDARY": 300000,
+                "MYTHIC": 600000,
+                "DIVINE": 800000
+            }
+        },
+        "GLISTENING": {
+            "name": "Glistening",
+            "internalName": "SHINY_PRISM",
+            "categories": [
+                "EQUIPMENT"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 7500,
+                "UNCOMMON": 15000,
+                "RARE": 30000,
+                "EPIC": 75000,
+                "LEGENDARY": 150000,
+                "MYTHIC": 300000,
+                "DIVINE": 400000
+            }
+        },
+        "GREATER SPOOK": {
+            "name": "Greater Spook",
+            "internalName": "BOO_STONE",
+            "categories": [],
+            "items": [
+                "GREAT_SPOOK_BELT",
+                "GREAT_SPOOK_BOOTS",
+                "GREAT_SPOOK_CHESTPLATE",
+                "GREAT_SPOOK_CLOAK",
+                "GREAT_SPOOK_GLOVES",
+                "GREAT_SPOOK_HELMET",
+                "GREAT_SPOOK_LEGGINGS",
+                "GREAT_SPOOK_NECKLACE"
+            ],
+            "reforgeCosts": {
+                "EPIC": 10000,
+                "LEGENDARY": 10000
+            }
+        },
+        "GROOVY": {
+            "name": "Groovy",
+            "internalName": "MANGROVE_GEM",
+            "categories": [
+                "ARMOR"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 10000,
+                "UNCOMMON": 15000,
+                "RARE": 20000,
+                "EPIC": 30000,
+                "LEGENDARY": 40000,
+                "MYTHIC": 50000,
+                "DIVINE": 50000
+            }
+        },
+        "HEADSTRONG": {
+            "name": "Headstrong",
+            "internalName": "SALMON_OPAL",
+            "categories": [
+                "BOW"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 15000,
+                "UNCOMMON": 30000,
+                "RARE": 60000,
+                "EPIC": 125000,
+                "LEGENDARY": 250000,
+                "MYTHIC": 500000
+            }
+        },
+        "HEATED": {
+            "name": "Heated",
+            "internalName": "HOT_STUFF",
+            "categories": [
+                "PICKAXE"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 20000,
+                "UNCOMMON": 40000,
+                "RARE": 80000,
+                "EPIC": 150000,
+                "LEGENDARY": 300000,
+                "MYTHIC": 600000,
+                "DIVINE": 600000
+            }
+        },
+        "HYPER": {
+            "name": "Hyper",
+            "internalName": "ENDSTONE_GEODE",
+            "categories": [
+                "ARMOR"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 5000,
+                "UNCOMMON": 10000,
+                "RARE": 20000,
+                "EPIC": 50000,
+                "LEGENDARY": 100000,
+                "MYTHIC": 200000
+            }
+        },
+        "JADED": {
+            "name": "Jaded",
+            "internalName": "JADERALD",
+            "categories": [
+                "ARMOR"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 20000,
+                "UNCOMMON": 40000,
+                "RARE": 80000,
+                "EPIC": 150000,
+                "LEGENDARY": 300000,
+                "MYTHIC": 600000
+            }
+        },
+        "JERRY'S": {
+            "name": "Jerry's",
+            "internalName": "JERRY_STONE",
+            "categories": [],
+            "items": [
+                "ASPECT_OF_THE_JERRY",
+                "ASPECT_OF_THE_JERRY_SIGNATURE"
+            ],
+            "reforgeCosts": {
+                "COMMON": 1,
+                "UNCOMMON": 2,
+                "RARE": 3
+            }
+        },
+        "LOVING": {
+            "name": "Loving",
+            "internalName": "RED_SCARF",
+            "categories": [
+                "CHESTPLATE"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 30000,
+                "UNCOMMON": 75000,
+                "RARE": 150000,
+                "EPIC": 300000,
+                "LEGENDARY": 600000,
+                "MYTHIC": 1200000
+            }
+        },
+        "LUCKY": {
+            "name": "Lucky",
+            "internalName": "LUCKY_DICE",
+            "categories": [
+                "FISHING_ROD"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 20000,
+                "UNCOMMON": 40000,
+                "RARE": 80000,
+                "EPIC": 150000,
+                "LEGENDARY": 300000,
+                "MYTHIC": 600000
+            }
+        },
+        "LUSTROUS": {
+            "name": "Lustrous",
+            "internalName": "GLEAMING_CRYSTAL",
+            "categories": [
+                "PICKAXE"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 20000,
+                "UNCOMMON": 40000,
+                "RARE": 80000,
+                "EPIC": 150000,
+                "LEGENDARY": 300000,
+                "MYTHIC": 600000,
+                "DIVINE": 800000
+            }
+        },
+        "MAGNETIC": {
+            "name": "Magnetic",
+            "internalName": "LAPIS_CRYSTAL",
+            "categories": [
+                "PICKAXE"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 250,
+                "UNCOMMON": 500,
+                "RARE": 1000,
+                "EPIC": 2500,
+                "LEGENDARY": 5000,
+                "MYTHIC": 10000,
+                "DIVINE": 15000
+            }
+        },
+        "MITHRAIC": {
+            "name": "Mithraic",
+            "internalName": "PURE_MITHRIL",
+            "categories": [
+                "PICKAXE"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 15000,
+                "UNCOMMON": 30000,
+                "RARE": 60000,
+                "EPIC": 125000,
+                "LEGENDARY": 250000,
+                "MYTHIC": 500000,
+                "DIVINE": 500000
+            }
+        },
+        "MOIL": {
+            "name": "Moil",
+            "internalName": "MOIL_LOG",
+            "categories": [
+                "AXE"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 1000,
+                "UNCOMMON": 5000,
+                "RARE": 10000,
+                "EPIC": 15000,
+                "LEGENDARY": 50000,
+                "MYTHIC": 75000
+            }
+        },
+        "MOONGLADE": {
+            "name": "Moonglade",
+            "internalName": "MOONGLADE_JEWEL",
+            "categories": [
+                "AXE"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 10000,
+                "UNCOMMON": 15000,
+                "RARE": 20000,
+                "EPIC": 30000,
+                "LEGENDARY": 40000,
+                "MYTHIC": 50000,
+                "DIVINE": 50000
+            }
+        },
+        "MOSSY": {
+            "name": "Mossy",
+            "internalName": "OVERGROWN_GRASS",
+            "categories": [
+                "ARMOR"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 20000,
+                "UNCOMMON": 40000,
+                "RARE": 80000,
+                "EPIC": 150000,
+                "LEGENDARY": 300000,
+                "MYTHIC": 600000
+            }
+        },
+        "NECROTIC": {
+            "name": "Necrotic",
+            "internalName": "NECROMANCER_BROOCH",
+            "categories": [
+                "ARMOR"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 20000,
+                "UNCOMMON": 40000,
+                "RARE": 80000,
+                "EPIC": 150000,
+                "LEGENDARY": 300000,
+                "MYTHIC": 1000000
+            }
+        },
+        "PERFECT": {
+            "name": "Perfect",
+            "internalName": "DIAMOND_ATOM",
+            "categories": [
+                "ARMOR"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 25000,
+                "UNCOMMON": 50000,
+                "RARE": 150000,
+                "EPIC": 300000,
+                "LEGENDARY": 600000,
+                "MYTHIC": 800000
+            }
+        },
+        "PITCHIN'": {
+            "name": "Pitchin'",
+            "internalName": "PITCHIN_KOI",
+            "categories": [
+                "FISHING_ROD"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 5000,
+                "UNCOMMON": 20000,
+                "RARE": 40000,
+                "EPIC": 80000,
+                "LEGENDARY": 120000,
+                "MYTHIC": 280000
+            }
+        },
+        "PRECISE": {
+            "name": "Precise",
+            "internalName": "OPTICAL_LENS",
+            "categories": [
+                "BOW"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 30000,
+                "UNCOMMON": 75000,
+                "RARE": 150000,
+                "EPIC": 300000,
+                "LEGENDARY": 600000,
+                "MYTHIC": 1200000
+            }
+        },
+        "REFINED": {
+            "name": "Refined",
+            "internalName": "REFINED_AMBER",
+            "categories": [
+                "PICKAXE"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 10000,
+                "UNCOMMON": 10000,
+                "RARE": 10000,
+                "EPIC": 10000,
+                "MYTHIC": 10000,
+                "LEGENDARY": 10000,
+                "DIVINE": 10000
+            }
+        },
+        "REINFORCED": {
+            "name": "Reinforced",
+            "internalName": "RARE_DIAMOND",
+            "categories": [
+                "ARMOR"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 2500,
+                "UNCOMMON": 5000,
+                "RARE": 10000,
+                "EPIC": 25000,
+                "LEGENDARY": 50000,
+                "MYTHIC": 100000
+            }
+        },
+        "RENOWNED": {
+            "name": "Renowned",
+            "internalName": "DRAGON_HORN",
+            "categories": [
+                "ARMOR"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 60000,
+                "UNCOMMON": 125000,
+                "RARE": 250000,
+                "EPIC": 500000,
+                "LEGENDARY": 1000000,
+                "MYTHIC": 2000000
+            }
+        },
+        "RIDICULOUS": {
+            "name": "Ridiculous",
+            "internalName": "RED_NOSE",
+            "categories": [
+                "HELMET"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 7500,
+                "UNCOMMON": 15000,
+                "RARE": 30000,
+                "EPIC": 75000,
+                "LEGENDARY": 150000,
+                "MYTHIC": 300000
+            }
+        },
+        "ROOTED": {
+            "name": "Rooted",
+            "internalName": "BURROWING_SPORES",
+            "categories": [
+                "EQUIPMENT"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 20000,
+                "UNCOMMON": 40000,
+                "RARE": 80000,
+                "EPIC": 150000,
+                "LEGENDARY": 300000,
+                "MYTHIC": 600000
+            }
+        },
+        "ROYAL": {
+            "name": "Royal",
+            "internalName": "DWARVEN_TREASURE",
+            "categories": [
+                "EQUIPMENT"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 5000,
+                "UNCOMMON": 10000,
+                "RARE": 20000,
+                "EPIC": 50000,
+                "LEGENDARY": 100000,
+                "MYTHIC": 100000,
+                "DIVINE": 100000
+            }
+        },
+        "SALTY": {
+            "name": "Salty",
+            "internalName": "SALT_CUBE",
+            "categories": [
+                "FISHING_ROD"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 2500,
+                "UNCOMMON": 10000,
+                "RARE": 20000,
+                "EPIC": 40000,
+                "LEGENDARY": 80000,
+                "MYTHIC": 120000
+            }
+        },
+        "SCRAPED": {
+            "name": "Scraped",
+            "internalName": "POCKET_ICEBERG",
+            "categories": [
+                "PICKAXE"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 15000,
+                "UNCOMMON": 30000,
+                "RARE": 60000,
+                "EPIC": 125000,
+                "LEGENDARY": 250000,
+                "MYTHIC": 500000,
+                "DIVINE": 500000
+            }
+        },
+        "SNOWY": {
+            "name": "Snowy",
+            "internalName": "TERRY_SNOWGLOBE",
+            "categories": [
+                "EQUIPMENT"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 10000,
+                "UNCOMMON": 25000,
+                "RARE": 50000,
+                "EPIC": 100000,
+                "LEGENDARY": 200000,
+                "MYTHIC": 300000
+            }
+        },
+        "SPIKED": {
+            "name": "Spiked",
+            "internalName": "DRAGON_SCALE",
+            "categories": [
+                "ARMOR"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 30000,
+                "UNCOMMON": 75000,
+                "RARE": 150000,
+                "EPIC": 300000,
+                "LEGENDARY": 600000,
+                "MYTHIC": 2000000
+            }
+        },
+        "SPIRITUAL": {
+            "name": "Spiritual",
+            "internalName": "SPIRIT_DECOY",
+            "categories": [
+                "BOW"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 60000,
+                "UNCOMMON": 125000,
+                "RARE": 250000,
+                "EPIC": 500000,
+                "LEGENDARY": 1000000,
+                "MYTHIC": 2000000
+            }
+        },
+        "SQUEAKY": {
+            "name": "Squeaky",
+            "internalName": "SQUEAKY_TOY",
+            "categories": [
+                "EQUIPMENT"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 7500,
+                "UNCOMMON": 15000,
+                "RARE": 30000,
+                "EPIC": 75000,
+                "LEGENDARY": 150000,
+                "MYTHIC": 150000,
+                "DIVINE": 150000
+            }
+        },
+        "STELLAR": {
+            "name": "Stellar",
+            "internalName": "PETRIFIED_STARFALL",
+            "categories": [
+                "PICKAXE"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 25000,
+                "UNCOMMON": 50000,
+                "RARE": 100000,
+                "EPIC": 200000,
+                "LEGENDARY": 400000,
+                "MYTHIC": 800000,
+                "DIVINE": 800000
+            }
+        },
+        "STIFF": {
+            "name": "Stiff",
+            "internalName": "HARDENED_WOOD",
+            "categories": [
+                "FISHING_ROD"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 4000,
+                "UNCOMMON": 7500,
+                "RARE": 15000,
+                "EPIC": 40000,
+                "LEGENDARY": 75000,
+                "MYTHIC": 150000
+            }
+        },
+        "STRENGTHENED": {
+            "name": "Strengthened",
+            "internalName": "SEARING_STONE",
+            "categories": [
+                "EQUIPMENT"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 7500,
+                "UNCOMMON": 15000,
+                "RARE": 30000,
+                "EPIC": 75000,
+                "LEGENDARY": 150000,
+                "MYTHIC": 300000,
+                "DIVINE": 400000
+            }
+        },
+        "SUBMERGED": {
+            "name": "Submerged",
+            "internalName": "DEEP_SEA_ORB",
+            "categories": [
+                "ARMOR"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 50000,
+                "UNCOMMON": 150000,
+                "RARE": 350000,
+                "EPIC": 600000,
+                "LEGENDARY": 750000,
+                "MYTHIC": 800000
+            }
+        },
+        "SUSPICIOUS": {
+            "name": "Suspicious",
+            "internalName": "SUSPICIOUS_VIAL",
+            "categories": [
+                "SWORD"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 60000,
+                "UNCOMMON": 125000,
+                "RARE": 250000,
+                "EPIC": 500000,
+                "LEGENDARY": 1000000,
+                "MYTHIC": 2000000
+            }
+        },
+        "TOIL": {
+            "name": "Toil",
+            "internalName": "TOIL_LOG",
+            "categories": [
+                "AXE"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 10000,
+                "UNCOMMON": 10000,
+                "RARE": 10000,
+                "EPIC": 10000,
+                "LEGENDARY": 10000,
+                "MYTHIC": 10000
+            }
+        },
+        "TRASHY": {
+            "name": "Trashy",
+            "internalName": "OVERFLOWING_TRASH_CAN",
+            "categories": [
+                "FISHING_ROD"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 2500,
+                "UNCOMMON": 10000,
+                "RARE": 20000,
+                "EPIC": 40000,
+                "LEGENDARY": 80000,
+                "MYTHIC": 120000,
+                "DIVINE": 500000
+            }
+        },
+        "TREACHEROUS": {
+            "name": "Treacherous",
+            "internalName": "RUSTY_ANCHOR",
+            "categories": [
+                "FISHING_ROD"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 5000,
+                "UNCOMMON": 20000,
+                "RARE": 40000,
+                "EPIC": 80000,
+                "LEGENDARY": 120000,
+                "MYTHIC": 280000
+            }
+        },
+        "UNDEAD": {
+            "name": "Undead",
+            "internalName": "PREMIUM_FLESH",
+            "categories": [
+                "ARMOR"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 5000,
+                "UNCOMMON": 15000,
+                "RARE": 30000,
+                "EPIC": 75000,
+                "LEGENDARY": 150000,
+                "MYTHIC": 300000
+            }
+        },
+        "WARPED": {
+            "name": "Warped",
+            "internalName": "AOTE_STONE",
+            "categories": [],
+            "items": [
+                "ASPECT_OF_THE_END",
+                "ASPECT_OF_THE_VOID"
+            ],
+            "reforgeCosts": {
+                "RARE": 5000000,
+                "EPIC": 5000000,
+                "LEGENDARY": 5000000
+            }
+        },
+        "WAXED": {
+            "name": "Waxed",
+            "internalName": "BLAZE_WAX",
+            "categories": [
+                "EQUIPMENT"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 7500,
+                "UNCOMMON": 15000,
+                "RARE": 30000,
+                "EPIC": 75000,
+                "LEGENDARY": 150000,
+                "MYTHIC": 300000,
+                "DIVINE": 400000
+            }
+        },
+        "WITHERED": {
+            "name": "Withered",
+            "internalName": "WITHER_BLOOD",
+            "categories": [
+                "SWORD"
+            ],
+            "items": [],
+            "reforgeCosts": {
+                "COMMON": 10000,
+                "UNCOMMON": 20000,
+                "RARE": 30000,
+                "EPIC": 40000,
+                "LEGENDARY": 50000,
+                "MYTHIC": 60000
+            }
+        }
+    }
+}

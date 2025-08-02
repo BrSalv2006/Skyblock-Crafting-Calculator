@@ -1,0 +1,2695 @@
+{
+    "enchantments": {
+        "ABSORB": {
+            "categories": [
+                "AXE"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 10,
+            "min_level": 1,
+            "name": "Absorb"
+        },
+        "AIMING": {
+            "categories": [
+                "BOW"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Dragon Tracer"
+        },
+        "ANGLER": {
+            "categories": [
+                "FISHING_ROD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 6,
+            "min_level": 1,
+            "name": "Angler"
+        },
+        "AQUA_AFFINITY": {
+            "categories": [
+                "HELMET"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 1,
+            "min_level": 1,
+            "name": "Aqua Affinity"
+        },
+        "ARCANE": {
+            "categories": [
+                "AXE"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Arcane"
+        },
+        "BANE_OF_ARTHROPODS": {
+            "categories": [
+                "GAUNTLET",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "SHARPNESS",
+                "SMITE",
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 7,
+            "min_level": 1,
+            "name": "Bane Of Arthropods"
+        },
+        "BIG_BRAIN": {
+            "categories": [
+                "HELMET"
+            ],
+            "incompatibilities": [
+                "SMALL_BRAIN",
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 3,
+            "name": "Big Brain"
+        },
+        "BLAST_PROTECTION": {
+            "categories": [
+                "BOOTS",
+                "CHESTPLATE",
+                "HELMET",
+                "LEGGINGS",
+                "CARNIVAL_MASK"
+            ],
+            "incompatibilities": [
+                "FIRE_PROTECTION",
+                "PROJECTILE_PROTECTION",
+                "PROTECTION",
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 7,
+            "min_level": 1,
+            "name": "Blast Protection"
+        },
+        "BLESSING": {
+            "categories": [
+                "FISHING_ROD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 6,
+            "min_level": 1,
+            "name": "Blessing"
+        },
+        "CASTER": {
+            "categories": [
+                "FISHING_ROD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 6,
+            "min_level": 1,
+            "name": "Caster"
+        },
+        "CAYENNE": {
+            "categories": [
+                "BELT",
+                "BRACELET",
+                "CLOAK",
+                "GLOVES",
+                "NECKLACE"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 4,
+            "name": "Cayenne"
+        },
+        "CHAMPION": {
+            "categories": [
+                "GAUNTLET",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 10,
+            "min_level": 1,
+            "name": "Champion"
+        },
+        "CHANCE": {
+            "categories": [
+                "BOW"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Chance"
+        },
+        "CHARM": {
+            "categories": [
+                "FISHING_ROD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 6,
+            "min_level": 1,
+            "name": "Charm"
+        },
+        "CLEAVE": {
+            "categories": [
+                "GAUNTLET",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 6,
+            "min_level": 1,
+            "name": "Cleave"
+        },
+        "COMPACT": {
+            "categories": [
+                "DRILL",
+                "GAUNTLET",
+                "PICKAXE"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 10,
+            "min_level": 1,
+            "name": "Compact"
+        },
+        "CORRUPTION": {
+            "categories": [
+                "FISHING_ROD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Corruption"
+        },
+        "COUNTER_STRIKE": {
+            "categories": [
+                "CHESTPLATE"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 3,
+            "name": "Counter Strike"
+        },
+        "CRITICAL": {
+            "categories": [
+                "GAUNTLET",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 7,
+            "min_level": 1,
+            "name": "Critical"
+        },
+        "CUBISM": {
+            "categories": [
+                "BOW",
+                "GAUNTLET",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 6,
+            "min_level": 1,
+            "name": "Cubism"
+        },
+        "CULTIVATING": {
+            "categories": [
+                "AXE",
+                "HOE"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 10,
+            "min_level": 1,
+            "name": "Cultivating"
+        },
+        "DEDICATION": {
+            "categories": [
+                "AXE",
+                "HOE"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 4,
+            "min_level": 1,
+            "name": "Dedication"
+        },
+        "DELICATE": {
+            "categories": [
+                "AXE",
+                "HOE"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 5,
+            "name": "Delicate"
+        },
+        "DEPTH_STRIDER": {
+            "categories": [
+                "BOOTS"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 3,
+            "min_level": 1,
+            "name": "Depth Strider"
+        },
+        "DIVINE_GIFT": {
+            "categories": [
+                "BOW",
+                "GAUNTLET",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 3,
+            "min_level": 1,
+            "name": "Divine Gift"
+        },
+        "DRAGON_HUNTER": {
+            "categories": [
+                "BOW",
+                "GAUNTLET",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Dragon Hunter"
+        },
+        "EFFICIENCY": {
+            "categories": [
+                "AXE",
+                "DRILL",
+                "GAUNTLET",
+                "HOE",
+                "PICKAXE",
+                "SHEARS",
+                "SPADE"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 10,
+            "min_level": 1,
+            "name": "Efficiency"
+        },
+        "ENDER_SLAYER": {
+            "categories": [
+                "GAUNTLET",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 7,
+            "min_level": 1,
+            "name": "Ender Slayer"
+        },
+        "EXECUTE": {
+            "categories": [
+                "GAUNTLET",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "PROSECUTE",
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 6,
+            "min_level": 1,
+            "name": "Execute"
+        },
+        "EXPERIENCE": {
+            "categories": [
+                "DRILL",
+                "GAUNTLET",
+                "LONGSWORD",
+                "PICKAXE",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Experience"
+        },
+        "EXPERTISE": {
+            "categories": [
+                "FISHING_ROD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 10,
+            "min_level": 1,
+            "name": "Expertise"
+        },
+        "FEATHER_FALLING": {
+            "categories": [
+                "BOOTS"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 10,
+            "min_level": 1,
+            "name": "Feather Falling"
+        },
+        "FEROCIOUS_MANA": {
+            "categories": [
+                "BOOTS",
+                "CHESTPLATE",
+                "HELMET",
+                "LEGGINGS",
+                "CARNIVAL_MASK"
+            ],
+            "incompatibilities": [
+                "HARDENED_MANA",
+                "MANA_VAMPIRE",
+                "STRONG_MANA",
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 10,
+            "min_level": 1,
+            "name": "Ferocious Mana"
+        },
+        "FIRE_ASPECT": {
+            "categories": [
+                "GAUNTLET",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 3,
+            "min_level": 1,
+            "name": "Fire Aspect"
+        },
+        "FIRE_PROTECTION": {
+            "categories": [
+                "BOOTS",
+                "CHESTPLATE",
+                "HELMET",
+                "LEGGINGS",
+                "CARNIVAL_MASK"
+            ],
+            "incompatibilities": [
+                "BLAST_PROTECTION",
+                "PROJECTILE_PROTECTION",
+                "PROTECTION",
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 7,
+            "min_level": 1,
+            "name": "Fire Protection"
+        },
+        "FIRST_STRIKE": {
+            "categories": [
+                "GAUNTLET",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "TRIPLE_STRIKE",
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "First Strike"
+        },
+        "FLAME": {
+            "categories": [
+                "BOW"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 2,
+            "min_level": 1,
+            "name": "Flame"
+        },
+        "FOREST_PLEDGE": {
+            "categories": [
+                "BOOTS",
+                "CHESTPLATE",
+                "HELMET",
+                "LEGGINGS",
+                "CARNIVAL_MASK"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 3,
+            "name": "Forest Pledge"
+        },
+        "FORTUNE": {
+            "categories": [
+                "DRILL",
+                "GAUNTLET",
+                "PICKAXE"
+            ],
+            "incompatibilities": [
+                "SILK_TOUCH",
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 4,
+            "min_level": 1,
+            "name": "Fortune"
+        },
+        "FRAIL": {
+            "categories": [
+                "FISHING_ROD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 7,
+            "min_level": 1,
+            "name": "Frail"
+        },
+        "GIANT_KILLER": {
+            "categories": [
+                "GAUNTLET",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "TITAN_KILLER",
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 7,
+            "min_level": 1,
+            "name": "Giant Killer"
+        },
+        "GREAT_SPOOK": {
+            "categories": [],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [
+                "GREAT_SPOOK_HELMET",
+                "GREAT_SPOOK_CHESTPLATE",
+                "GREAT_SPOOK_LEGGINGS",
+                "GREAT_SPOOK_BOOTS"
+            ],
+            "max_level": 1,
+            "min_level": 1,
+            "name": "Great Spook"
+        },
+        "GREEN_THUMB": {
+            "categories": [
+                "BELT",
+                "BRACELET",
+                "CLOAK",
+                "GLOVES",
+                "NECKLACE"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Green Thumb"
+        },
+        "GROWTH": {
+            "categories": [
+                "BOOTS",
+                "CHESTPLATE",
+                "HELMET",
+                "LEGGINGS",
+                "CARNIVAL_MASK"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 7,
+            "min_level": 1,
+            "name": "Growth"
+        },
+        "HARDENED_MANA": {
+            "categories": [
+                "BOOTS",
+                "CHESTPLATE",
+                "HELMET",
+                "LEGGINGS",
+                "CARNIVAL_MASK"
+            ],
+            "incompatibilities": [
+                "FEROCIOUS_MANA",
+                "MANA_VAMPIRE",
+                "STRONG_MANA",
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 10,
+            "min_level": 1,
+            "name": "Hardened Mana"
+        },
+        "HARVESTING": {
+            "categories": [
+                "HOE"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 6,
+            "min_level": 1,
+            "name": "Harvesting"
+        },
+        "HECATOMB": {
+            "categories": [
+                "HELMET"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 10,
+            "min_level": 1,
+            "name": "Hecatomb"
+        },
+        "ICE_COLD": {
+            "categories": [
+                "BOOTS",
+                "CHESTPLATE",
+                "HELMET",
+                "LEGGINGS",
+                "CARNIVAL_MASK"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Ice Cold"
+        },
+        "IMPALING": {
+            "categories": [
+                "BOW",
+                "FISHING_ROD",
+                "GAUNTLET",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 3,
+            "min_level": 1,
+            "name": "Impaling"
+        },
+        "INFINITE_QUIVER": {
+            "categories": [
+                "BOW"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 10,
+            "min_level": 1,
+            "name": "Infinite Quiver"
+        },
+        "KNOCKBACK": {
+            "categories": [
+                "GAUNTLET",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 2,
+            "min_level": 1,
+            "name": "Knockback"
+        },
+        "LAPIDARY": {
+            "categories": [
+                "DRILL",
+                "GAUNTLET",
+                "PICKAXE"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Lapidary"
+        },
+        "LETHALITY": {
+            "categories": [
+                "GAUNTLET",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 6,
+            "min_level": 1,
+            "name": "Lethality"
+        },
+        "LIFE_STEAL": {
+            "categories": [
+                "GAUNTLET",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "MANA_STEAL",
+                "SYPHON",
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Life Steal"
+        },
+        "LOOTING": {
+            "categories": [
+                "FISHING_ROD",
+                "GAUNTLET",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Looting"
+        },
+        "LUCK": {
+            "categories": [
+                "GAUNTLET",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 7,
+            "min_level": 1,
+            "name": "Luck"
+        },
+        "LUCK_OF_THE_SEA": {
+            "categories": [
+                "FISHING_ROD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 7,
+            "min_level": 1,
+            "name": "Luck Of The Sea"
+        },
+        "LURE": {
+            "categories": [
+                "FISHING_ROD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 6,
+            "min_level": 1,
+            "name": "Lure"
+        },
+        "MAGNET": {
+            "categories": [
+                "FISHING_ROD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 6,
+            "min_level": 1,
+            "name": "Magnet"
+        },
+        "MANA_STEAL": {
+            "categories": [
+                "GAUNTLET",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "LIFE_STEAL",
+                "SYPHON",
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 3,
+            "min_level": 1,
+            "name": "Mana Steal"
+        },
+        "MANA_VAMPIRE": {
+            "categories": [
+                "BOOTS",
+                "CHESTPLATE",
+                "HELMET",
+                "LEGGINGS",
+                "CARNIVAL_MASK"
+            ],
+            "incompatibilities": [
+                "FEROCIOUS_MANA",
+                "HARDENED_MANA",
+                "STRONG_MANA",
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 10,
+            "min_level": 1,
+            "name": "Mana Vampire"
+        },
+        "OVERLOAD": {
+            "categories": [
+                "BOW"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Overload"
+        },
+        "PALEONTOLOGIST": {
+            "categories": [
+                "DRILL",
+                "GAUNTLET",
+                "PICKAXE"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Paleontologist"
+        },
+        "PESTERMINATOR": {
+            "categories": [
+                "BOOTS",
+                "CHESTPLATE",
+                "HELMET",
+                "LEGGINGS",
+                "CARNIVAL_MASK"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 6,
+            "min_level": 1,
+            "name": "Pesterminator"
+        },
+        "PIERCING": {
+            "categories": [
+                "BOW"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 1,
+            "min_level": 1,
+            "name": "Piercing"
+        },
+        "PISCARY": {
+            "categories": [
+                "FISHING_ROD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 7,
+            "min_level": 1,
+            "name": "Piscary"
+        },
+        "POWER": {
+            "categories": [
+                "BOW"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 7,
+            "min_level": 1,
+            "name": "Power"
+        },
+        "PRISTINE": {
+            "categories": [
+                "DRILL",
+                "GAUNTLET",
+                "PICKAXE"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Prismatic"
+        },
+        "PROJECTILE_PROTECTION": {
+            "categories": [
+                "BOOTS",
+                "CHESTPLATE",
+                "HELMET",
+                "LEGGINGS",
+                "CARNIVAL_MASK"
+            ],
+            "incompatibilities": [
+                "BLAST_PROTECTION",
+                "FIRE_PROTECTION",
+                "PROTECTION",
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 7,
+            "min_level": 1,
+            "name": "Projectile Protection"
+        },
+        "PROSECUTE": {
+            "categories": [
+                "GAUNTLET",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "EXECUTE",
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 6,
+            "min_level": 1,
+            "name": "Prosecute"
+        },
+        "PROSPERITY": {
+            "categories": [
+                "BELT",
+                "BRACELET",
+                "CLOAK",
+                "GLOVES",
+                "NECKLACE"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Prosperity"
+        },
+        "PROTECTION": {
+            "categories": [
+                "BOOTS",
+                "CHESTPLATE",
+                "HELMET",
+                "LEGGINGS",
+                "CARNIVAL_MASK"
+            ],
+            "incompatibilities": [
+                "BLAST_PROTECTION",
+                "FIRE_PROTECTION",
+                "PROJECTILE_PROTECTION",
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 7,
+            "min_level": 1,
+            "name": "Protection"
+        },
+        "PUNCH": {
+            "categories": [
+                "BOW"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 2,
+            "min_level": 1,
+            "name": "Punch"
+        },
+        "QUANTUM": {
+            "categories": [
+                "NECKLACE"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 3,
+            "name": "Quantum"
+        },
+        "QUICK_BITE": {
+            "categories": [
+                "FISHING_ROD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Quick Bite"
+        },
+        "RAINBOW": {
+            "categories": [
+                "SHEARS"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 3,
+            "min_level": 1,
+            "name": "Rainbow"
+        },
+        "REFLECTION": {
+            "categories": [
+                "CHESTPLATE"
+            ],
+            "incompatibilities": [
+                "THORNS",
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Reflection"
+        },
+        "REJUVENATE": {
+            "categories": [
+                "BOOTS",
+                "CHESTPLATE",
+                "HELMET",
+                "LEGGINGS",
+                "CARNIVAL_MASK"
+            ],
+            "incompatibilities": [
+                "RESPITE",
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Rejuvenate"
+        },
+        "REPLENISH": {
+            "categories": [
+                "AXE",
+                "HOE"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 1,
+            "min_level": 1,
+            "name": "Replenish"
+        },
+        "RESPIRATION": {
+            "categories": [
+                "HELMET"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 4,
+            "min_level": 1,
+            "name": "Respiration"
+        },
+        "RESPITE": {
+            "categories": [
+                "BOOTS",
+                "CHESTPLATE",
+                "HELMET",
+                "LEGGINGS",
+                "CARNIVAL_MASK"
+            ],
+            "incompatibilities": [
+                "REJUVENATE",
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Respite"
+        },
+        "SCAVENGER": {
+            "categories": [
+                "GAUNTLET",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 6,
+            "min_level": 1,
+            "name": "Scavenger"
+        },
+        "SCUBA": {
+            "categories": [
+                "BOOTS",
+                "CHESTPLATE",
+                "HELMET",
+                "LEGGINGS",
+                "CARNIVAL_MASK"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Scuba"
+        },
+        "SHARPNESS": {
+            "categories": [
+                "GAUNTLET",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "BANE_OF_ARTHROPODS",
+                "SMITE",
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 7,
+            "min_level": 1,
+            "name": "Sharpness"
+        },
+        "SILK_TOUCH": {
+            "categories": [
+                "AXE",
+                "DRILL",
+                "GAUNTLET",
+                "HOE",
+                "PICKAXE",
+                "SHEARS",
+                "SPADE"
+            ],
+            "incompatibilities": [
+                "FORTUNE",
+                "SMELTING_TOUCH",
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 1,
+            "min_level": 1,
+            "name": "Silk Touch"
+        },
+        "SMALL_BRAIN": {
+            "categories": [
+                "HELMET"
+            ],
+            "incompatibilities": [
+                "BIG_BRAIN",
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 3,
+            "name": "Small Brain"
+        },
+        "SMARTY_PANTS": {
+            "categories": [
+                "LEGGINGS"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Smarty Pants"
+        },
+        "SMELTING_TOUCH": {
+            "categories": [
+                "AXE",
+                "DRILL",
+                "GAUNTLET",
+                "HOE",
+                "PICKAXE",
+                "SPADE"
+            ],
+            "incompatibilities": [
+                "SILK_TOUCH",
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 1,
+            "min_level": 1,
+            "name": "Smelting Touch"
+        },
+        "SMITE": {
+            "categories": [
+                "GAUNTLET",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "BANE_OF_ARTHROPODS",
+                "SHARPNESS",
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 7,
+            "min_level": 1,
+            "name": "Smite"
+        },
+        "SMOLDERING": {
+            "categories": [
+                "BOW",
+                "GAUNTLET",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Smoldering"
+        },
+        "SNIPE": {
+            "categories": [
+                "BOW"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 4,
+            "min_level": 1,
+            "name": "Snipe"
+        },
+        "SPIKED_HOOK": {
+            "categories": [
+                "FISHING_ROD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 7,
+            "min_level": 1,
+            "name": "Spiked Hook"
+        },
+        "STEALTH": {
+            "categories": [
+                "BOOTS"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 1,
+            "min_level": 1,
+            "name": "Stealth"
+        },
+        "STRONG_MANA": {
+            "categories": [
+                "BOOTS",
+                "CHESTPLATE",
+                "HELMET",
+                "LEGGINGS",
+                "CARNIVAL_MASK"
+            ],
+            "incompatibilities": [
+                "FEROCIOUS_MANA",
+                "HARDENED_MANA",
+                "MANA_VAMPIRE",
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 10,
+            "min_level": 1,
+            "name": "Strong Mana"
+        },
+        "SUGAR_RUSH": {
+            "categories": [
+                "BOOTS"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 3,
+            "min_level": 1,
+            "name": "Sugar Rush"
+        },
+        "SUNDER": {
+            "categories": [
+                "AXE"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 6,
+            "min_level": 1,
+            "name": "Sunder"
+        },
+        "SYPHON": {
+            "categories": [
+                "GAUNTLET",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "LIFE_STEAL",
+                "MANA_STEAL",
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Drain"
+        },
+        "TABASCO": {
+            "categories": [
+                "AXE",
+                "BOW",
+                "FISHING_ROD",
+                "GAUNTLET",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 3,
+            "min_level": 2,
+            "name": "Tabasco"
+        },
+        "THORNS": {
+            "categories": [
+                "BOOTS",
+                "CHESTPLATE",
+                "HELMET",
+                "LEGGINGS",
+                "CARNIVAL_MASK"
+            ],
+            "incompatibilities": [
+                "REFLECTION",
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 3,
+            "min_level": 1,
+            "name": "Thorns"
+        },
+        "THUNDERBOLT": {
+            "categories": [
+                "GAUNTLET",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "THUNDERLORD",
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 7,
+            "min_level": 1,
+            "name": "Thunderbolt"
+        },
+        "THUNDERLORD": {
+            "categories": [
+                "GAUNTLET",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "THUNDERBOLT",
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 7,
+            "min_level": 1,
+            "name": "Thunderlord"
+        },
+        "TIDAL": {
+            "categories": [
+                "LEGGINGS"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 3,
+            "min_level": 1,
+            "name": "Tidal"
+        },
+        "TITAN_KILLER": {
+            "categories": [
+                "GAUNTLET",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "GIANT_KILLER",
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 7,
+            "min_level": 1,
+            "name": "Titan Killer"
+        },
+        "TOXOPHILITE": {
+            "categories": [
+                "BOW"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 10,
+            "min_level": 1,
+            "name": "Toxophilite"
+        },
+        "TRANSYLVANIAN": {
+            "categories": [
+                "HELMET"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 4,
+            "name": "Transylvanian"
+        },
+        "TRIPLE_STRIKE": {
+            "categories": [
+                "GAUNTLET",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "FIRST_STRIKE",
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Triple Strike"
+        },
+        "TRUE_PROTECTION": {
+            "categories": [
+                "CHESTPLATE"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 1,
+            "min_level": 1,
+            "name": "True Protection"
+        },
+        "TURBO_CACTUS": {
+            "categories": [
+                "AXE",
+                "HOE"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Turbo Cacti"
+        },
+        "TURBO_CANE": {
+            "categories": [
+                "HOE"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Turbo Cane"
+        },
+        "TURBO_CARROT": {
+            "categories": [
+                "HOE"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Turbo Carrot"
+        },
+        "TURBO_COCO": {
+            "categories": [
+                "AXE"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Turbo Cocoa"
+        },
+        "TURBO_MELON": {
+            "categories": [
+                "AXE"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Turbo Melon"
+        },
+        "TURBO_MUSHROOMS": {
+            "categories": [
+                "HOE"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Turbo Mushrooms"
+        },
+        "TURBO_POTATO": {
+            "categories": [
+                "HOE"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Turbo Potato"
+        },
+        "TURBO_PUMPKIN": {
+            "categories": [
+                "AXE"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Turbo Pumpkin"
+        },
+        "TURBO_WARTS": {
+            "categories": [
+                "HOE"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Turbo Warts"
+        },
+        "TURBO_WHEAT": {
+            "categories": [
+                "HOE"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Turbo Wheat"
+        },
+        "VAMPIRISM": {
+            "categories": [
+                "GAUNTLET",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 6,
+            "min_level": 1,
+            "name": "Vampirism"
+        },
+        "VENOMOUS": {
+            "categories": [
+                "GAUNTLET",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 6,
+            "min_level": 1,
+            "name": "Venomous"
+        },
+        "VICIOUS": {
+            "categories": [
+                "BOW",
+                "GAUNTLET",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_ONE_FOR_ALL"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 3,
+            "name": "Vicious"
+        }
+    },
+    "ultimate_enchantments": {
+        "ULTIMATE_BANK": {
+            "categories": [
+                "BOOTS",
+                "CHESTPLATE",
+                "HELMET",
+                "LEGGINGS",
+                "CARNIVAL_MASK"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_BOBBIN_TIME",
+                "ULTIMATE_CHIMERA",
+                "ULTIMATE_COMBO",
+                "ULTIMATE_FATAL_TEMPO",
+                "ULTIMATE_FIRST_IMPRESSION",
+                "ULTIMATE_FLASH",
+                "ULTIMATE_FLOWSTATE",
+                "ULTIMATE_HABANERO_TACTICS",
+                "ULTIMATE_INFERNO",
+                "ULTIMATE_JERRY",
+                "ULTIMATE_LAST_STAND",
+                "ULTIMATE_LEGION",
+                "ULTIMATE_MISSILE",
+                "ULTIMATE_NO_PAIN_NO_GAIN",
+                "ULTIMATE_ONE_FOR_ALL",
+                "ULTIMATE_REFRIGERATE",
+                "ULTIMATE_REITERATE",
+                "ULTIMATE_REND",
+                "ULTIMATE_SOUL_EATER",
+                "ULTIMATE_SWARM",
+                "ULTIMATE_THE_ONE",
+                "ULTIMATE_WISDOM",
+                "ULTIMATE_WISE"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Bank"
+        },
+        "ULTIMATE_BOBBIN_TIME": {
+            "categories": [
+                "BOOTS",
+                "CHESTPLATE",
+                "HELMET",
+                "LEGGINGS",
+                "CARNIVAL_MASK"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_BANK",
+                "ULTIMATE_CHIMERA",
+                "ULTIMATE_COMBO",
+                "ULTIMATE_FATAL_TEMPO",
+                "ULTIMATE_FIRST_IMPRESSION",
+                "ULTIMATE_FLASH",
+                "ULTIMATE_FLOWSTATE",
+                "ULTIMATE_HABANERO_TACTICS",
+                "ULTIMATE_INFERNO",
+                "ULTIMATE_JERRY",
+                "ULTIMATE_LAST_STAND",
+                "ULTIMATE_LEGION",
+                "ULTIMATE_MISSILE",
+                "ULTIMATE_NO_PAIN_NO_GAIN",
+                "ULTIMATE_ONE_FOR_ALL",
+                "ULTIMATE_REFRIGERATE",
+                "ULTIMATE_REITERATE",
+                "ULTIMATE_REND",
+                "ULTIMATE_SOUL_EATER",
+                "ULTIMATE_SWARM",
+                "ULTIMATE_THE_ONE",
+                "ULTIMATE_WISDOM",
+                "ULTIMATE_WISE"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 3,
+            "name": "Bobbin Time"
+        },
+        "ULTIMATE_CHIMERA": {
+            "categories": [
+                "GAUNTLET",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_BANK",
+                "ULTIMATE_BOBBIN_TIME",
+                "ULTIMATE_COMBO",
+                "ULTIMATE_FATAL_TEMPO",
+                "ULTIMATE_FIRST_IMPRESSION",
+                "ULTIMATE_FLASH",
+                "ULTIMATE_FLOWSTATE",
+                "ULTIMATE_HABANERO_TACTICS",
+                "ULTIMATE_INFERNO",
+                "ULTIMATE_JERRY",
+                "ULTIMATE_LAST_STAND",
+                "ULTIMATE_LEGION",
+                "ULTIMATE_MISSILE",
+                "ULTIMATE_NO_PAIN_NO_GAIN",
+                "ULTIMATE_ONE_FOR_ALL",
+                "ULTIMATE_REFRIGERATE",
+                "ULTIMATE_REITERATE",
+                "ULTIMATE_REND",
+                "ULTIMATE_SOUL_EATER",
+                "ULTIMATE_SWARM",
+                "ULTIMATE_THE_ONE",
+                "ULTIMATE_WISDOM",
+                "ULTIMATE_WISE"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Chimera"
+        },
+        "ULTIMATE_COMBO": {
+            "categories": [
+                "GAUNTLET",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_BANK",
+                "ULTIMATE_BOBBIN_TIME",
+                "ULTIMATE_CHIMERA",
+                "ULTIMATE_FATAL_TEMPO",
+                "ULTIMATE_FIRST_IMPRESSION",
+                "ULTIMATE_FLASH",
+                "ULTIMATE_FLOWSTATE",
+                "ULTIMATE_HABANERO_TACTICS",
+                "ULTIMATE_INFERNO",
+                "ULTIMATE_JERRY",
+                "ULTIMATE_LAST_STAND",
+                "ULTIMATE_LEGION",
+                "ULTIMATE_MISSILE",
+                "ULTIMATE_NO_PAIN_NO_GAIN",
+                "ULTIMATE_ONE_FOR_ALL",
+                "ULTIMATE_REFRIGERATE",
+                "ULTIMATE_REITERATE",
+                "ULTIMATE_REND",
+                "ULTIMATE_SOUL_EATER",
+                "ULTIMATE_SWARM",
+                "ULTIMATE_THE_ONE",
+                "ULTIMATE_WISDOM",
+                "ULTIMATE_WISE"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Combo"
+        },
+        "ULTIMATE_FATAL_TEMPO": {
+            "categories": [
+                "AXE",
+                "BOW",
+                "FISHING_ROD",
+                "GAUNTLET",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_BANK",
+                "ULTIMATE_BOBBIN_TIME",
+                "ULTIMATE_CHIMERA",
+                "ULTIMATE_COMBO",
+                "ULTIMATE_FIRST_IMPRESSION",
+                "ULTIMATE_FLASH",
+                "ULTIMATE_FLOWSTATE",
+                "ULTIMATE_HABANERO_TACTICS",
+                "ULTIMATE_INFERNO",
+                "ULTIMATE_JERRY",
+                "ULTIMATE_LAST_STAND",
+                "ULTIMATE_LEGION",
+                "ULTIMATE_MISSILE",
+                "ULTIMATE_NO_PAIN_NO_GAIN",
+                "ULTIMATE_ONE_FOR_ALL",
+                "ULTIMATE_REFRIGERATE",
+                "ULTIMATE_REITERATE",
+                "ULTIMATE_REND",
+                "ULTIMATE_SOUL_EATER",
+                "ULTIMATE_SWARM",
+                "ULTIMATE_THE_ONE",
+                "ULTIMATE_WISDOM",
+                "ULTIMATE_WISE"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Fatal Tempo"
+        },
+        "ULTIMATE_FIRST_IMPRESSION": {
+            "categories": [
+                "AXE"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_BANK",
+                "ULTIMATE_BOBBIN_TIME",
+                "ULTIMATE_CHIMERA",
+                "ULTIMATE_COMBO",
+                "ULTIMATE_FATAL_TEMPO",
+                "ULTIMATE_FLASH",
+                "ULTIMATE_FLOWSTATE",
+                "ULTIMATE_HABANERO_TACTICS",
+                "ULTIMATE_INFERNO",
+                "ULTIMATE_JERRY",
+                "ULTIMATE_LAST_STAND",
+                "ULTIMATE_LEGION",
+                "ULTIMATE_MISSILE",
+                "ULTIMATE_NO_PAIN_NO_GAIN",
+                "ULTIMATE_ONE_FOR_ALL",
+                "ULTIMATE_REFRIGERATE",
+                "ULTIMATE_REITERATE",
+                "ULTIMATE_REND",
+                "ULTIMATE_SOUL_EATER",
+                "ULTIMATE_SWARM",
+                "ULTIMATE_THE_ONE",
+                "ULTIMATE_WISDOM",
+                "ULTIMATE_WISE"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "First Impression"
+        },
+        "ULTIMATE_FLASH": {
+            "categories": [
+                "FISHING_ROD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_BANK",
+                "ULTIMATE_BOBBIN_TIME",
+                "ULTIMATE_CHIMERA",
+                "ULTIMATE_COMBO",
+                "ULTIMATE_FATAL_TEMPO",
+                "ULTIMATE_FIRST_IMPRESSION",
+                "ULTIMATE_FLOWSTATE",
+                "ULTIMATE_HABANERO_TACTICS",
+                "ULTIMATE_INFERNO",
+                "ULTIMATE_JERRY",
+                "ULTIMATE_LAST_STAND",
+                "ULTIMATE_LEGION",
+                "ULTIMATE_MISSILE",
+                "ULTIMATE_NO_PAIN_NO_GAIN",
+                "ULTIMATE_ONE_FOR_ALL",
+                "ULTIMATE_REFRIGERATE",
+                "ULTIMATE_REITERATE",
+                "ULTIMATE_REND",
+                "ULTIMATE_SOUL_EATER",
+                "ULTIMATE_SWARM",
+                "ULTIMATE_THE_ONE",
+                "ULTIMATE_WISDOM",
+                "ULTIMATE_WISE"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Flash"
+        },
+        "ULTIMATE_FLOWSTATE": {
+            "categories": [
+                "DRILL",
+                "GAUNTLET",
+                "PICKAXE"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_BANK",
+                "ULTIMATE_BOBBIN_TIME",
+                "ULTIMATE_CHIMERA",
+                "ULTIMATE_COMBO",
+                "ULTIMATE_FATAL_TEMPO",
+                "ULTIMATE_FIRST_IMPRESSION",
+                "ULTIMATE_FLASH",
+                "ULTIMATE_HABANERO_TACTICS",
+                "ULTIMATE_INFERNO",
+                "ULTIMATE_JERRY",
+                "ULTIMATE_LAST_STAND",
+                "ULTIMATE_LEGION",
+                "ULTIMATE_MISSILE",
+                "ULTIMATE_NO_PAIN_NO_GAIN",
+                "ULTIMATE_ONE_FOR_ALL",
+                "ULTIMATE_REFRIGERATE",
+                "ULTIMATE_REITERATE",
+                "ULTIMATE_REND",
+                "ULTIMATE_SOUL_EATER",
+                "ULTIMATE_SWARM",
+                "ULTIMATE_THE_ONE",
+                "ULTIMATE_WISDOM",
+                "ULTIMATE_WISE"
+            ],
+            "items": [],
+            "max_level": 3,
+            "min_level": 1,
+            "name": "Flowstate"
+        },
+        "ULTIMATE_HABANERO_TACTICS": {
+            "categories": [
+                "BOOTS",
+                "CHESTPLATE",
+                "HELMET",
+                "LEGGINGS",
+                "CARNIVAL_MASK"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_BANK",
+                "ULTIMATE_BOBBIN_TIME",
+                "ULTIMATE_CHIMERA",
+                "ULTIMATE_COMBO",
+                "ULTIMATE_FATAL_TEMPO",
+                "ULTIMATE_FIRST_IMPRESSION",
+                "ULTIMATE_FLASH",
+                "ULTIMATE_FLOWSTATE",
+                "ULTIMATE_INFERNO",
+                "ULTIMATE_JERRY",
+                "ULTIMATE_LAST_STAND",
+                "ULTIMATE_LEGION",
+                "ULTIMATE_MISSILE",
+                "ULTIMATE_NO_PAIN_NO_GAIN",
+                "ULTIMATE_ONE_FOR_ALL",
+                "ULTIMATE_REFRIGERATE",
+                "ULTIMATE_REITERATE",
+                "ULTIMATE_REND",
+                "ULTIMATE_SOUL_EATER",
+                "ULTIMATE_SWARM",
+                "ULTIMATE_THE_ONE",
+                "ULTIMATE_WISDOM",
+                "ULTIMATE_WISE"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 4,
+            "name": "Habanero Tactics"
+        },
+        "ULTIMATE_INFERNO": {
+            "categories": [
+                "AXE",
+                "BOW",
+                "FISHING_ROD",
+                "GAUNTLET",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_BANK",
+                "ULTIMATE_BOBBIN_TIME",
+                "ULTIMATE_CHIMERA",
+                "ULTIMATE_COMBO",
+                "ULTIMATE_FATAL_TEMPO",
+                "ULTIMATE_FIRST_IMPRESSION",
+                "ULTIMATE_FLASH",
+                "ULTIMATE_FLOWSTATE",
+                "ULTIMATE_HABANERO_TACTICS",
+                "ULTIMATE_JERRY",
+                "ULTIMATE_LAST_STAND",
+                "ULTIMATE_LEGION",
+                "ULTIMATE_MISSILE",
+                "ULTIMATE_NO_PAIN_NO_GAIN",
+                "ULTIMATE_ONE_FOR_ALL",
+                "ULTIMATE_REFRIGERATE",
+                "ULTIMATE_REITERATE",
+                "ULTIMATE_REND",
+                "ULTIMATE_SOUL_EATER",
+                "ULTIMATE_SWARM",
+                "ULTIMATE_THE_ONE",
+                "ULTIMATE_WISDOM",
+                "ULTIMATE_WISE"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Inferno"
+        },
+        "ULTIMATE_JERRY": {
+            "categories": [],
+            "incompatibilities": [
+                "ULTIMATE_BANK",
+                "ULTIMATE_BOBBIN_TIME",
+                "ULTIMATE_CHIMERA",
+                "ULTIMATE_COMBO",
+                "ULTIMATE_FATAL_TEMPO",
+                "ULTIMATE_FIRST_IMPRESSION",
+                "ULTIMATE_FLASH",
+                "ULTIMATE_FLOWSTATE",
+                "ULTIMATE_HABANERO_TACTICS",
+                "ULTIMATE_INFERNO",
+                "ULTIMATE_LAST_STAND",
+                "ULTIMATE_LEGION",
+                "ULTIMATE_MISSILE",
+                "ULTIMATE_NO_PAIN_NO_GAIN",
+                "ULTIMATE_ONE_FOR_ALL",
+                "ULTIMATE_REFRIGERATE",
+                "ULTIMATE_REITERATE",
+                "ULTIMATE_REND",
+                "ULTIMATE_SOUL_EATER",
+                "ULTIMATE_SWARM",
+                "ULTIMATE_THE_ONE",
+                "ULTIMATE_WISDOM",
+                "ULTIMATE_WISE"
+            ],
+            "items": [
+                "ASPECT_OF_THE_JERRY",
+                "ASPECT_OF_THE_JERRY_SIGNATURE"
+            ],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Ultimate Jerry"
+        },
+        "ULTIMATE_LAST_STAND": {
+            "categories": [
+                "BOOTS",
+                "CHESTPLATE",
+                "HELMET",
+                "LEGGINGS",
+                "CARNIVAL_MASK"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_BANK",
+                "ULTIMATE_BOBBIN_TIME",
+                "ULTIMATE_CHIMERA",
+                "ULTIMATE_COMBO",
+                "ULTIMATE_FATAL_TEMPO",
+                "ULTIMATE_FIRST_IMPRESSION",
+                "ULTIMATE_FLASH",
+                "ULTIMATE_FLOWSTATE",
+                "ULTIMATE_HABANERO_TACTICS",
+                "ULTIMATE_INFERNO",
+                "ULTIMATE_JERRY",
+                "ULTIMATE_LEGION",
+                "ULTIMATE_MISSILE",
+                "ULTIMATE_NO_PAIN_NO_GAIN",
+                "ULTIMATE_ONE_FOR_ALL",
+                "ULTIMATE_REFRIGERATE",
+                "ULTIMATE_REITERATE",
+                "ULTIMATE_REND",
+                "ULTIMATE_SOUL_EATER",
+                "ULTIMATE_SWARM",
+                "ULTIMATE_THE_ONE",
+                "ULTIMATE_WISDOM",
+                "ULTIMATE_WISE"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Last Stand"
+        },
+        "ULTIMATE_LEGION": {
+            "categories": [
+                "BOOTS",
+                "CHESTPLATE",
+                "HELMET",
+                "LEGGINGS",
+                "CARNIVAL_MASK"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_BANK",
+                "ULTIMATE_BOBBIN_TIME",
+                "ULTIMATE_CHIMERA",
+                "ULTIMATE_COMBO",
+                "ULTIMATE_FATAL_TEMPO",
+                "ULTIMATE_FIRST_IMPRESSION",
+                "ULTIMATE_FLASH",
+                "ULTIMATE_FLOWSTATE",
+                "ULTIMATE_HABANERO_TACTICS",
+                "ULTIMATE_INFERNO",
+                "ULTIMATE_JERRY",
+                "ULTIMATE_LAST_STAND",
+                "ULTIMATE_MISSILE",
+                "ULTIMATE_NO_PAIN_NO_GAIN",
+                "ULTIMATE_ONE_FOR_ALL",
+                "ULTIMATE_REFRIGERATE",
+                "ULTIMATE_REITERATE",
+                "ULTIMATE_REND",
+                "ULTIMATE_SOUL_EATER",
+                "ULTIMATE_SWARM",
+                "ULTIMATE_THE_ONE",
+                "ULTIMATE_WISDOM",
+                "ULTIMATE_WISE"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Legion"
+        },
+        "ULTIMATE_MISSILE": {
+            "categories": [
+                "AXE"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_BANK",
+                "ULTIMATE_BOBBIN_TIME",
+                "ULTIMATE_CHIMERA",
+                "ULTIMATE_COMBO",
+                "ULTIMATE_FATAL_TEMPO",
+                "ULTIMATE_FIRST_IMPRESSION",
+                "ULTIMATE_FLASH",
+                "ULTIMATE_FLOWSTATE",
+                "ULTIMATE_HABANERO_TACTICS",
+                "ULTIMATE_INFERNO",
+                "ULTIMATE_JERRY",
+                "ULTIMATE_LAST_STAND",
+                "ULTIMATE_LEGION",
+                "ULTIMATE_NO_PAIN_NO_GAIN",
+                "ULTIMATE_ONE_FOR_ALL",
+                "ULTIMATE_REFRIGERATE",
+                "ULTIMATE_REITERATE",
+                "ULTIMATE_REND",
+                "ULTIMATE_SOUL_EATER",
+                "ULTIMATE_SWARM",
+                "ULTIMATE_THE_ONE",
+                "ULTIMATE_WISDOM",
+                "ULTIMATE_WISE"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Missile"
+        },
+        "ULTIMATE_NO_PAIN_NO_GAIN": {
+            "categories": [
+                "BOOTS",
+                "CHESTPLATE",
+                "HELMET",
+                "LEGGINGS",
+                "CARNIVAL_MASK"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_BANK",
+                "ULTIMATE_BOBBIN_TIME",
+                "ULTIMATE_CHIMERA",
+                "ULTIMATE_COMBO",
+                "ULTIMATE_FATAL_TEMPO",
+                "ULTIMATE_FIRST_IMPRESSION",
+                "ULTIMATE_FLASH",
+                "ULTIMATE_FLOWSTATE",
+                "ULTIMATE_HABANERO_TACTICS",
+                "ULTIMATE_INFERNO",
+                "ULTIMATE_JERRY",
+                "ULTIMATE_LAST_STAND",
+                "ULTIMATE_LEGION",
+                "ULTIMATE_MISSILE",
+                "ULTIMATE_ONE_FOR_ALL",
+                "ULTIMATE_REFRIGERATE",
+                "ULTIMATE_REITERATE",
+                "ULTIMATE_REND",
+                "ULTIMATE_SOUL_EATER",
+                "ULTIMATE_SWARM",
+                "ULTIMATE_THE_ONE",
+                "ULTIMATE_WISDOM",
+                "ULTIMATE_WISE"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "No Pain No Gain"
+        },
+        "ULTIMATE_ONE_FOR_ALL": {
+            "categories": [
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "ABSORB",
+                "AIMING",
+                "ANGLER",
+                "AQUA_AFFINITY",
+                "ARCANE",
+                "BANE_OF_ARTHROPODS",
+                "BIG_BRAIN",
+                "BLAST_PROTECTION",
+                "BLESSING",
+                "CASTER",
+                "CAYENNE",
+                "CHAMPION",
+                "CHANCE",
+                "CHARM",
+                "CLEAVE",
+                "COMPACT",
+                "CORRUPTION",
+                "COUNTER_STRIKE",
+                "CRITICAL",
+                "CUBISM",
+                "CULTIVATING",
+                "DEDICATION",
+                "DELICATE",
+                "DEPTH_STRIDER",
+                "DIVINE_GIFT",
+                "DRAGON_HUNTER",
+                "EFFICIENCY",
+                "ENDER_SLAYER",
+                "EXECUTE",
+                "EXPERIENCE",
+                "EXPERTISE",
+                "FEATHER_FALLING",
+                "FEROCIOUS_MANA",
+                "FIRE_ASPECT",
+                "FIRE_PROTECTION",
+                "FIRST_STRIKE",
+                "FLAME",
+                "FOREST_PLEDGE",
+                "FORTUNE",
+                "FRAIL",
+                "GIANT_KILLER",
+                "GREAT_SPOOK",
+                "GREEN_THUMB",
+                "GROWTH",
+                "HARDENED_MANA",
+                "HARVESTING",
+                "HECATOMB",
+                "ICE_COLD",
+                "IMPALING",
+                "INFINITE_QUIVER",
+                "KNOCKBACK",
+                "LAPIDARY",
+                "LETHALITY",
+                "LIFE_STEAL",
+                "LOOTING",
+                "LUCK",
+                "LUCK_OF_THE_SEA",
+                "LURE",
+                "MAGNET",
+                "MANA_STEAL",
+                "MANA_VAMPIRE",
+                "OVERLOAD",
+                "PALEONTOLOGIST",
+                "PESTERMINATOR",
+                "PIERCING",
+                "PISCARY",
+                "POWER",
+                "PRISTINE",
+                "PROJECTILE_PROTECTION",
+                "PROSECUTE",
+                "PROSPERITY",
+                "PROTECTION",
+                "PUNCH",
+                "QUANTUM",
+                "QUICK_BITE",
+                "RAINBOW",
+                "REFLECTION",
+                "REJUVENATE",
+                "REPLENISH",
+                "RESPIRATION",
+                "RESPITE",
+                "SCAVENGER",
+                "SCUBA",
+                "SHARPNESS",
+                "SILK_TOUCH",
+                "SMALL_BRAIN",
+                "SMARTY_PANTS",
+                "SMELTING_TOUCH",
+                "SMITE",
+                "SMOLDERING",
+                "SNIPE",
+                "SPIKED_HOOK",
+                "STEALTH",
+                "STRONG_MANA",
+                "SUGAR_RUSH",
+                "SUNDER",
+                "SYPHON",
+                "TABASCO",
+                "THORNS",
+                "THUNDERBOLT",
+                "THUNDERLORD",
+                "TIDAL",
+                "TITAN_KILLER",
+                "TOXOPHILITE",
+                "TRANSYLVANIAN",
+                "TRIPLE_STRIKE",
+                "TRUE_PROTECTION",
+                "TURBO_CACTUS",
+                "TURBO_CANE",
+                "TURBO_CARROT",
+                "TURBO_COCO",
+                "TURBO_MELON",
+                "TURBO_MUSHROOMS",
+                "TURBO_POTATO",
+                "TURBO_PUMPKIN",
+                "TURBO_WARTS",
+                "TURBO_WHEAT",
+                "ULTIMATE_BANK",
+                "ULTIMATE_BOBBIN_TIME",
+                "ULTIMATE_CHIMERA",
+                "ULTIMATE_COMBO",
+                "ULTIMATE_FATAL_TEMPO",
+                "ULTIMATE_FIRST_IMPRESSION",
+                "ULTIMATE_FLASH",
+                "ULTIMATE_FLOWSTATE",
+                "ULTIMATE_HABANERO_TACTICS",
+                "ULTIMATE_INFERNO",
+                "ULTIMATE_JERRY",
+                "ULTIMATE_LAST_STAND",
+                "ULTIMATE_LEGION",
+                "ULTIMATE_MISSILE",
+                "ULTIMATE_NO_PAIN_NO_GAIN",
+                "ULTIMATE_REFRIGERATE",
+                "ULTIMATE_REITERATE",
+                "ULTIMATE_REND",
+                "ULTIMATE_SOUL_EATER",
+                "ULTIMATE_SWARM",
+                "ULTIMATE_THE_ONE",
+                "ULTIMATE_WISDOM",
+                "ULTIMATE_WISE",
+                "VAMPIRISM",
+                "VENOMOUS",
+                "VICIOUS"
+            ],
+            "items": [],
+            "max_level": 1,
+            "min_level": 1,
+            "name": "One For All"
+        },
+        "ULTIMATE_REFRIGERATE": {
+            "categories": [
+                "BOOTS",
+                "CHESTPLATE",
+                "HELMET",
+                "LEGGINGS",
+                "CARNIVAL_MASK"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_BANK",
+                "ULTIMATE_BOBBIN_TIME",
+                "ULTIMATE_CHIMERA",
+                "ULTIMATE_COMBO",
+                "ULTIMATE_FATAL_TEMPO",
+                "ULTIMATE_FIRST_IMPRESSION",
+                "ULTIMATE_FLASH",
+                "ULTIMATE_FLOWSTATE",
+                "ULTIMATE_HABANERO_TACTICS",
+                "ULTIMATE_INFERNO",
+                "ULTIMATE_JERRY",
+                "ULTIMATE_LAST_STAND",
+                "ULTIMATE_LEGION",
+                "ULTIMATE_MISSILE",
+                "ULTIMATE_NO_PAIN_NO_GAIN",
+                "ULTIMATE_ONE_FOR_ALL",
+                "ULTIMATE_REITERATE",
+                "ULTIMATE_REND",
+                "ULTIMATE_SOUL_EATER",
+                "ULTIMATE_SWARM",
+                "ULTIMATE_THE_ONE",
+                "ULTIMATE_WISDOM",
+                "ULTIMATE_WISE"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Refrigerate"
+        },
+        "ULTIMATE_REITERATE": {
+            "categories": [
+                "BOW"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_BANK",
+                "ULTIMATE_BOBBIN_TIME",
+                "ULTIMATE_CHIMERA",
+                "ULTIMATE_COMBO",
+                "ULTIMATE_FATAL_TEMPO",
+                "ULTIMATE_FIRST_IMPRESSION",
+                "ULTIMATE_FLASH",
+                "ULTIMATE_FLOWSTATE",
+                "ULTIMATE_HABANERO_TACTICS",
+                "ULTIMATE_INFERNO",
+                "ULTIMATE_JERRY",
+                "ULTIMATE_LAST_STAND",
+                "ULTIMATE_LEGION",
+                "ULTIMATE_MISSILE",
+                "ULTIMATE_NO_PAIN_NO_GAIN",
+                "ULTIMATE_ONE_FOR_ALL",
+                "ULTIMATE_REFRIGERATE",
+                "ULTIMATE_REND",
+                "ULTIMATE_SOUL_EATER",
+                "ULTIMATE_SWARM",
+                "ULTIMATE_THE_ONE",
+                "ULTIMATE_WISDOM",
+                "ULTIMATE_WISE"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Duplex"
+        },
+        "ULTIMATE_REND": {
+            "categories": [
+                "BOW"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_BANK",
+                "ULTIMATE_BOBBIN_TIME",
+                "ULTIMATE_CHIMERA",
+                "ULTIMATE_COMBO",
+                "ULTIMATE_FATAL_TEMPO",
+                "ULTIMATE_FIRST_IMPRESSION",
+                "ULTIMATE_FLASH",
+                "ULTIMATE_FLOWSTATE",
+                "ULTIMATE_HABANERO_TACTICS",
+                "ULTIMATE_INFERNO",
+                "ULTIMATE_JERRY",
+                "ULTIMATE_LAST_STAND",
+                "ULTIMATE_LEGION",
+                "ULTIMATE_MISSILE",
+                "ULTIMATE_NO_PAIN_NO_GAIN",
+                "ULTIMATE_ONE_FOR_ALL",
+                "ULTIMATE_REFRIGERATE",
+                "ULTIMATE_REITERATE",
+                "ULTIMATE_SOUL_EATER",
+                "ULTIMATE_SWARM",
+                "ULTIMATE_THE_ONE",
+                "ULTIMATE_WISDOM",
+                "ULTIMATE_WISE"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Rend"
+        },
+        "ULTIMATE_SOUL_EATER": {
+            "categories": [
+                "BOW",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_BANK",
+                "ULTIMATE_BOBBIN_TIME",
+                "ULTIMATE_CHIMERA",
+                "ULTIMATE_COMBO",
+                "ULTIMATE_FATAL_TEMPO",
+                "ULTIMATE_FIRST_IMPRESSION",
+                "ULTIMATE_FLASH",
+                "ULTIMATE_FLOWSTATE",
+                "ULTIMATE_HABANERO_TACTICS",
+                "ULTIMATE_INFERNO",
+                "ULTIMATE_JERRY",
+                "ULTIMATE_LAST_STAND",
+                "ULTIMATE_LEGION",
+                "ULTIMATE_MISSILE",
+                "ULTIMATE_NO_PAIN_NO_GAIN",
+                "ULTIMATE_ONE_FOR_ALL",
+                "ULTIMATE_REFRIGERATE",
+                "ULTIMATE_REITERATE",
+                "ULTIMATE_REND",
+                "ULTIMATE_SWARM",
+                "ULTIMATE_THE_ONE",
+                "ULTIMATE_WISDOM",
+                "ULTIMATE_WISE"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Soul Eater"
+        },
+        "ULTIMATE_SWARM": {
+            "categories": [
+                "BOW",
+                "LONGSWORD",
+                "SWORD"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_BANK",
+                "ULTIMATE_BOBBIN_TIME",
+                "ULTIMATE_CHIMERA",
+                "ULTIMATE_COMBO",
+                "ULTIMATE_FATAL_TEMPO",
+                "ULTIMATE_FIRST_IMPRESSION",
+                "ULTIMATE_FLASH",
+                "ULTIMATE_FLOWSTATE",
+                "ULTIMATE_HABANERO_TACTICS",
+                "ULTIMATE_INFERNO",
+                "ULTIMATE_JERRY",
+                "ULTIMATE_LAST_STAND",
+                "ULTIMATE_LEGION",
+                "ULTIMATE_MISSILE",
+                "ULTIMATE_NO_PAIN_NO_GAIN",
+                "ULTIMATE_ONE_FOR_ALL",
+                "ULTIMATE_REFRIGERATE",
+                "ULTIMATE_REITERATE",
+                "ULTIMATE_REND",
+                "ULTIMATE_SOUL_EATER",
+                "ULTIMATE_THE_ONE",
+                "ULTIMATE_WISDOM",
+                "ULTIMATE_WISE"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Swarm"
+        },
+        "ULTIMATE_THE_ONE": {
+            "categories": [
+                "NECKLACE"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_BANK",
+                "ULTIMATE_BOBBIN_TIME",
+                "ULTIMATE_CHIMERA",
+                "ULTIMATE_COMBO",
+                "ULTIMATE_FATAL_TEMPO",
+                "ULTIMATE_FIRST_IMPRESSION",
+                "ULTIMATE_FLASH",
+                "ULTIMATE_FLOWSTATE",
+                "ULTIMATE_HABANERO_TACTICS",
+                "ULTIMATE_INFERNO",
+                "ULTIMATE_JERRY",
+                "ULTIMATE_LAST_STAND",
+                "ULTIMATE_LEGION",
+                "ULTIMATE_MISSILE",
+                "ULTIMATE_NO_PAIN_NO_GAIN",
+                "ULTIMATE_ONE_FOR_ALL",
+                "ULTIMATE_REFRIGERATE",
+                "ULTIMATE_REITERATE",
+                "ULTIMATE_REND",
+                "ULTIMATE_SOUL_EATER",
+                "ULTIMATE_SWARM",
+                "ULTIMATE_WISDOM",
+                "ULTIMATE_WISE"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 4,
+            "name": "The One"
+        },
+        "ULTIMATE_WISDOM": {
+            "categories": [
+                "BOOTS",
+                "CHESTPLATE",
+                "HELMET",
+                "LEGGINGS",
+                "CARNIVAL_MASK"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_BANK",
+                "ULTIMATE_BOBBIN_TIME",
+                "ULTIMATE_CHIMERA",
+                "ULTIMATE_COMBO",
+                "ULTIMATE_FATAL_TEMPO",
+                "ULTIMATE_FIRST_IMPRESSION",
+                "ULTIMATE_FLASH",
+                "ULTIMATE_FLOWSTATE",
+                "ULTIMATE_HABANERO_TACTICS",
+                "ULTIMATE_INFERNO",
+                "ULTIMATE_JERRY",
+                "ULTIMATE_LAST_STAND",
+                "ULTIMATE_LEGION",
+                "ULTIMATE_MISSILE",
+                "ULTIMATE_NO_PAIN_NO_GAIN",
+                "ULTIMATE_ONE_FOR_ALL",
+                "ULTIMATE_REFRIGERATE",
+                "ULTIMATE_REITERATE",
+                "ULTIMATE_REND",
+                "ULTIMATE_SOUL_EATER",
+                "ULTIMATE_SWARM",
+                "ULTIMATE_THE_ONE",
+                "ULTIMATE_WISE"
+            ],
+            "items": [],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Wisdom"
+        },
+        "ULTIMATE_WISE": {
+            "categories": [
+                "AXE",
+                "BOW",
+                "DRILL",
+                "FISHING_ROD",
+                "GAUNTLET",
+                "HOE",
+                "LONGSWORD",
+                "PICKAXE",
+                "SHEARS",
+                "SPADE",
+                "SWORD",
+                "WAND"
+            ],
+            "incompatibilities": [
+                "ULTIMATE_BANK",
+                "ULTIMATE_BOBBIN_TIME",
+                "ULTIMATE_CHIMERA",
+                "ULTIMATE_COMBO",
+                "ULTIMATE_FATAL_TEMPO",
+                "ULTIMATE_FIRST_IMPRESSION",
+                "ULTIMATE_FLASH",
+                "ULTIMATE_FLOWSTATE",
+                "ULTIMATE_HABANERO_TACTICS",
+                "ULTIMATE_INFERNO",
+                "ULTIMATE_JERRY",
+                "ULTIMATE_LAST_STAND",
+                "ULTIMATE_LEGION",
+                "ULTIMATE_MISSILE",
+                "ULTIMATE_NO_PAIN_NO_GAIN",
+                "ULTIMATE_ONE_FOR_ALL",
+                "ULTIMATE_REFRIGERATE",
+                "ULTIMATE_REITERATE",
+                "ULTIMATE_REND",
+                "ULTIMATE_SOUL_EATER",
+                "ULTIMATE_SWARM",
+                "ULTIMATE_THE_ONE",
+                "ULTIMATE_WISDOM"
+            ],
+            "items": [
+                "PRECURSOR_EYE"
+            ],
+            "max_level": 5,
+            "min_level": 1,
+            "name": "Ultimate Wise"
+        }
+    }
+}

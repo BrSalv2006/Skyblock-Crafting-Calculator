@@ -1,0 +1,209 @@
+{
+    "validTypes": {
+        "categories": [
+            "SWORD",
+            "BOW",
+            "CHISEL",
+            "FISHING_ROD",
+            "WAND",
+            "LONGSWORD",
+            "GAUNTLET",
+            "AXE",
+            "PICKAXE",
+            "DRILL",
+            "HOE",
+            "SPADE",
+            "SHEARS",
+            "VACUUM",
+            "ACCESSORY",
+            "CARNIVAL_MASK",
+            "HELMET",
+            "CHESTPLATE",
+            "LEGGINGS",
+            "BOOTS",
+            "CLOAK",
+            "NECKLACE",
+            "BELT",
+            "GLOVES",
+            "BRACELET"
+        ],
+        "items": [],
+        "materials": [],
+        "internalName": ""
+    },
+    "recombobulator": {
+        "categories": [
+            "SWORD",
+            "BOW",
+            "FISHING_ROD",
+            "WAND",
+            "LONGSWORD",
+            "GAUNTLET",
+            "AXE",
+            "PICKAXE",
+            "DRILL",
+            "HOE",
+            "SPADE",
+            "SHEARS",
+            "VACUUM",
+            "ACCESSORY",
+            "CARNIVAL_MASK",
+            "HELMET",
+            "CHESTPLATE",
+            "LEGGINGS",
+            "BOOTS",
+            "CLOAK",
+            "NECKLACE",
+            "BELT",
+            "GLOVES",
+            "BRACELET"
+        ],
+        "items": [],
+        "materials": [],
+        "internalName": "RECOMBOBULATOR_3000"
+    },
+    "artOfWar": {
+        "categories": [
+            "SWORD",
+            "BOW",
+            "FISHING_ROD",
+            "LONGSWORD",
+            "GAUNTLET",
+            "AXE"
+        ],
+        "items": [],
+        "materials": [],
+        "internalName": "THE_ART_OF_WAR"
+    },
+    "artOfPeace": {
+        "categories": [
+            "HELMET",
+            "CHESTPLATE",
+            "LEGGINGS",
+            "BOOTS",
+            "CARNIVAL_MASK"
+        ],
+        "items": [],
+        "materials": [],
+        "internalName": "THE_ART_OF_PEACE"
+    },
+    "woodSingularity": {
+        "categories": [],
+        "items": [],
+        "materials": [
+            "WOOD_SWORD"
+        ],
+        "internalName": "WOOD_SINGULARITY"
+    },
+    "farmingForDummies": {
+        "categories": [
+            "AXE",
+            "HOE",
+            "VACUUM"
+        ],
+        "items": [],
+        "materials": [],
+        "internalName": "FARMING_FOR_DUMMIES"
+    },
+    "bookwormBook": {
+        "categories": [
+            "VACUUM"
+        ],
+        "items": [],
+        "materials": [],
+        "internalName": "BOOKWORM_BOOK"
+    },
+    "bookOfStats": {
+        "categories": [
+            "SWORD",
+            "AXE",
+            "LONGSWORD",
+            "WAND",
+            "GAUNTLET",
+            "FISHING_ROD",
+            "BOW"
+        ],
+        "items": [],
+        "materials": [],
+        "internalName": "BOOK_OF_STATS"
+    },
+    "potatoBooks": {
+        "categories": [
+            "SWORD",
+            "BOW",
+            "FISHING_ROD",
+            "HELMET",
+            "CHESTPLATE",
+            "LEGGINGS",
+            "BOOTS",
+            "LONGSWORD",
+            "GAUNTLET",
+            "AXE",
+            "CARNIVAL_MASK"
+        ],
+        "items": [],
+        "materials": [],
+        "internalName": {
+            "hotPotatoBook": "HOT_POTATO_BOOK",
+            "fumingPotatoBook": "FUMING_POTATO_BOOK"
+        }
+    },
+    "silex": {
+        "categories": [
+            "PICKAXE",
+            "DRILL",
+            "GAUNTLET"
+        ],
+        "items": [],
+        "materials": [],
+        "internalName": [
+            "SIL_EX"
+        ]
+    },
+    "reforge": {
+        "categories": {
+            "equipment": [
+                "BELT",
+                "NECKLACE",
+                "BRACELET",
+                "CLOAK",
+                "GLOVES"
+            ],
+            "armor": [
+                "HELMET",
+                "CHESTPLATE",
+                "LEGGINGS",
+                "BOOTS",
+                "CARNIVAL_MASK"
+            ],
+            "drill": [
+                "DRILL"
+            ]
+        },
+        "items": [],
+        "materials": [],
+        "internalName": []
+    },
+    "divanPowderCoating": {
+        "categories": [
+            "DRILL"
+        ],
+        "items": [
+            "DIVAN_PENDANT",
+            "DIVAN_HELMET",
+            "DIVAN_CHESTPLATE",
+            "DIVAN_LEGGINGS",
+            "DIVAN_BOOTS"
+        ],
+        "materials": [],
+        "internalName": "DIVAN_POWDER_COATING"
+    },
+    "wetBook": {
+        "categories": [
+            "FISHING_ROD"
+        ],
+        "items": [],
+        "materials": [],
+        "internalName": "WET_BOOK"
+    }
+}
