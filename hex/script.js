@@ -2,10 +2,12 @@ let regularEnchantments = {};
 let ultimateEnchantments = {};
 let skyblockItems = [];
 let bazaarPrices = {};
+let auctionPrices = {};
 let gemstoneSlotData = {};
 let reforges = {};
 let others = {};
 let gemstones = {};
+let rightClickAbilityCache = {};
 let recombPrice = 0;
 let artOfWarPrice = 0;
 let artOfPeacePrice = 0;
@@ -20,6 +22,19 @@ let bookOfStatsPrice = 0;
 let hotPotatoBookPrice = 0;
 let fumingPotatoBookPrice = 0;
 let wetBookPrice = 0;
+let necronScrollPrices = {
+    implosion: 0,
+    witherShield: 0,
+    shadowWarp: 0
+};
+let powerScrollPrices = {
+    ruby: 0,
+    sapphire: 0,
+    jasper: 0,
+    amethyst: 0,
+    amber: 0,
+    opal: 0
+};
 
 async function fetchWithProxy(url) {
     const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(url);
@@ -40,11 +55,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         loadGemstoneData(),
         loadReforges(),
         loadSkyblockItems(),
-        loadBazaarPrices()
+        loadBazaarPrices(),
+        loadAuctionPrices()
     ]).catch(error => {
         console.error("Initialization failed:", error);
         itemSelect.innerHTML = '<option value="">Failed to load data</option>';
     });
+
+    // After loading all prices, update the static price displays
+    updateStaticPrices();
 
     itemSelect.disabled = false;
     itemSelect.addEventListener('change', updateItemDetails);
@@ -63,6 +82,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             updateReforgePrice(selectedItem);
         }
     });
+
+    document.getElementById('power-scroll-select').addEventListener('change', updatePowerScrollPrice);
 
     const mainElement = document.querySelector('main');
     mainElement.addEventListener('click', handleSpinnerClick);
@@ -199,91 +220,79 @@ async function loadSkyblockItems() {
 async function loadBazaarPrices() {
     try {
         bazaarPrices = await fetchWithProxy('https://hysky.de/api/bazaar');
-        const recombPriceData = bazaarPrices[others.recombobulator.internalName];
-        if (recombPriceData && recombPriceData.buyPrice != null) {
-            recombPrice = Math.round(recombPriceData.buyPrice);
-            document.getElementById('recomb-price-display').textContent = `${recombPrice.toLocaleString()} coins`;
-        }
-
-        const artOfWarPriceData = bazaarPrices[others.artOfWar.internalName];
-        if (artOfWarPriceData && artOfWarPriceData.buyPrice != null) {
-            artOfWarPrice = Math.round(artOfWarPriceData.buyPrice);
-            document.getElementById('art-of-war-price-display').textContent = `${artOfWarPrice.toLocaleString()} coins`;
-        }
-
-        const jalapenoBookPriceData = bazaarPrices[others.jalapenoBook.internalName];
-        if (jalapenoBookPriceData && jalapenoBookPriceData.buyPrice != null) {
-            jalapenoBookPrice = Math.round(jalapenoBookPriceData.buyPrice);
-            document.getElementById('jalapeno-book-price-display').textContent = `${jalapenoBookPrice.toLocaleString()} coins`;
-        }
-
-        const divanPowderCoatingPriceData = bazaarPrices[others.divanPowderCoating.internalName];
-        if (divanPowderCoatingPriceData && divanPowderCoatingPriceData.buyPrice != null) {
-            divanPowderCoatingPrice = Math.round(divanPowderCoatingPriceData.buyPrice);
-            document.getElementById('divan-powder-coating-price-display').textContent = `${divanPowderCoatingPrice.toLocaleString()} coins`;
-        }
-
-        const artOfPeacePriceData = bazaarPrices[others.artOfPeace.internalName];
-        if (artOfPeacePriceData && artOfPeacePriceData.buyPrice != null) {
-            artOfPeacePrice = Math.round(artOfPeacePriceData.buyPrice);
-            document.getElementById('art-of-peace-price-display').textContent = `${artOfPeacePrice.toLocaleString()} coins`;
-        } else {
-            artOfPeacePrice = 0;
-        }
-
-        const woodSingularityPriceData = bazaarPrices[others.woodSingularity.internalName];
-        if (woodSingularityPriceData && woodSingularityPriceData.buyPrice != null) {
-            woodSingularityPrice = Math.round(woodSingularityPriceData.buyPrice);
-            document.getElementById('wood-singularity-price-display').textContent = `${woodSingularityPrice.toLocaleString()} coins`;
-        } else {
-            woodSingularityPrice = 0;
-        }
-
-        const farmingForDummiesPriceData = bazaarPrices[others.farmingForDummies.internalName];
-        if (farmingForDummiesPriceData && farmingForDummiesPriceData.buyPrice != null) {
-            farmingForDummiesPrice = Math.round(farmingForDummiesPriceData.buyPrice);
-        }
-
-        const bookwormFavoriteBookPriceData = bazaarPrices[others.bookwormBook.internalName];
-        if (bookwormFavoriteBookPriceData && bookwormFavoriteBookPriceData.buyPrice != null) {
-            bookwormFavoriteBookPrice = Math.round(bookwormFavoriteBookPriceData.buyPrice);
-        }
-
-        const polarvoidBookPriceData = bazaarPrices[others.polarvoidBook.internalName];
-        if (polarvoidBookPriceData && polarvoidBookPriceData.buyPrice != null) {
-            polarvoidBookPrice = Math.round(polarvoidBookPriceData.buyPrice);
-        }
-
-        const manaDisintegratorPriceData = bazaarPrices[others.manaDisintegrator.internalName];
-        if (manaDisintegratorPriceData && manaDisintegratorPriceData.buyPrice != null) {
-            manaDisintegratorPrice = Math.round(manaDisintegratorPriceData.buyPrice);
-        }
-
-        const bookOfStatsPriceData = bazaarPrices[others.bookOfStats.internalName];
-        if (bookOfStatsPriceData && bookOfStatsPriceData.buyPrice != null) {
-            bookOfStatsPrice = Math.round(bookOfStatsPriceData.buyPrice);
-            document.getElementById('book-of-stats-price-display').textContent = `${bookOfStatsPrice.toLocaleString()} coins`;
-        }
-
-        const hotPotatoPriceData = bazaarPrices[others.potatoBooks.internalName.hotPotatoBook];
-        if (hotPotatoPriceData && hotPotatoPriceData.buyPrice != null) {
-            hotPotatoBookPrice = Math.round(hotPotatoPriceData.buyPrice);
-        }
-
-        const fumingPotatoPriceData = bazaarPrices[others.potatoBooks.internalName.fumingPotatoBook];
-        if (fumingPotatoPriceData && fumingPotatoPriceData.buyPrice != null) {
-            fumingPotatoBookPrice = Math.round(fumingPotatoPriceData.buyPrice);
-        }
-
-        const wetBookPriceData = bazaarPrices[others.wetBook.internalName];
-        if (wetBookPriceData && wetBookPriceData.buyPrice != null) {
-            wetBookPrice = Math.round(wetBookPriceData.buyPrice);
-        }
-
     } catch (error) {
         console.error("Could not load bazaar prices:", error);
     }
 }
+
+async function loadAuctionPrices() {
+    try {
+        const auctionData = await fetchWithProxy('https://hysky.de/api/auctions');
+        auctionData.forEach(item => {
+            if (item.id && item.auction && item.auction.price) {
+                auctionPrices[item.id] = item;
+            }
+        });
+    } catch (error) {
+        console.error("Could not load auction prices:", error);
+    }
+}
+
+function getItemPrice(internalName) {
+    if (bazaarPrices[internalName] && bazaarPrices[internalName].buyPrice != null) {
+        return Math.round(bazaarPrices[internalName].buyPrice);
+    }
+    if (auctionPrices[internalName] && auctionPrices[internalName].auction && auctionPrices[internalName].auction.price != null) {
+        return Math.round(auctionPrices[internalName].auction.price);
+    }
+    return 0;
+}
+
+function updateStaticPrices() {
+    recombPrice = getItemPrice(others.recombobulator.internalName);
+    document.getElementById('recomb-price-display').textContent = `${recombPrice.toLocaleString()} coins`;
+
+    artOfWarPrice = getItemPrice(others.artOfWar.internalName);
+    document.getElementById('art-of-war-price-display').textContent = `${artOfWarPrice.toLocaleString()} coins`;
+
+    jalapenoBookPrice = getItemPrice(others.jalapenoBook.internalName);
+    document.getElementById('jalapeno-book-price-display').textContent = `${jalapenoBookPrice.toLocaleString()} coins`;
+
+    divanPowderCoatingPrice = getItemPrice(others.divanPowderCoating.internalName);
+    document.getElementById('divan-powder-coating-price-display').textContent = `${divanPowderCoatingPrice.toLocaleString()} coins`;
+
+    artOfPeacePrice = getItemPrice(others.artOfPeace.internalName);
+    document.getElementById('art-of-peace-price-display').textContent = `${artOfPeacePrice.toLocaleString()} coins`;
+
+    woodSingularityPrice = getItemPrice(others.woodSingularity.internalName);
+    document.getElementById('wood-singularity-price-display').textContent = `${woodSingularityPrice.toLocaleString()} coins`;
+
+    farmingForDummiesPrice = getItemPrice(others.farmingForDummies.internalName);
+    bookwormFavoriteBookPrice = getItemPrice(others.bookwormBook.internalName);
+    polarvoidBookPrice = getItemPrice(others.polarvoidBook.internalName);
+    manaDisintegratorPrice = getItemPrice(others.manaDisintegrator.internalName);
+
+    bookOfStatsPrice = getItemPrice(others.bookOfStats.internalName);
+    document.getElementById('book-of-stats-price-display').textContent = `${bookOfStatsPrice.toLocaleString()} coins`;
+
+    hotPotatoBookPrice = getItemPrice(others.potatoBooks.internalName.hotPotatoBook);
+    fumingPotatoBookPrice = getItemPrice(others.potatoBooks.internalName.fumingPotatoBook);
+    wetBookPrice = getItemPrice(others.wetBook.internalName);
+
+    necronScrollPrices.implosion = getItemPrice(others.necronScrolls.internalNames.implosion);
+    document.getElementById('implosion-scroll-price-display').textContent = `${necronScrollPrices.implosion.toLocaleString()} coins`;
+
+    necronScrollPrices.witherShield = getItemPrice(others.necronScrolls.internalNames.witherShield);
+    document.getElementById('wither-shield-scroll-price-display').textContent = `${necronScrollPrices.witherShield.toLocaleString()} coins`;
+
+    necronScrollPrices.shadowWarp = getItemPrice(others.necronScrolls.internalNames.shadowWarp);
+    document.getElementById('shadow-warp-scroll-price-display').textContent = `${necronScrollPrices.shadowWarp.toLocaleString()} coins`;
+
+    for (const [scroll, internalName] of Object.entries(others.powerScrolls.internalNames)) {
+        powerScrollPrices[scroll] = getItemPrice(internalName);
+    }
+}
+
 
 async function loadReforges() {
     try {
@@ -297,57 +306,59 @@ async function loadReforges() {
 function getEnchantmentPrice(name, level) {
     const details = regularEnchantments[name] || ultimateEnchantments[name];
     if (!details) return null;
+
     if (name === "Efficiency" && level > 5) {
-        const silexPriceData = bazaarPrices[others.silex.internalName];
-        return (silexPriceData?.buyPrice * (level - 5)) ?? null;
+        const silexPrice = getItemPrice(others.silex.internalName);
+        return silexPrice * (level - 5);
     }
     if (name === "Bane of Arthropods" && level == 7) {
-        const ensnaredSnailPriceData = bazaarPrices[`ENSNARED_SNAIL`];
-        const priceData = bazaarPrices[`${details.id}6`];
-        return (priceData?.buyPrice + ensnaredSnailPriceData?.buyPrice) ?? null;
+        const snailPrice = getItemPrice(`ENSNARED_SNAIL`);
+        const bookPrice = getItemPrice(`${details.id}6`);
+        return bookPrice + snailPrice;
     }
     if (name === "Charm" && level == 6) {
-        const chainEndTimesPriceData = bazaarPrices[`CHAIN_END_TIMES`];
-        const priceData = bazaarPrices[`${details.id}5`];
-        return (priceData?.buyPrice + chainEndTimesPriceData?.buyPrice) ?? null;
+        const chainPrice = getItemPrice(`CHAIN_END_TIMES`);
+        const bookPrice = getItemPrice(`${details.id}5`);
+        return bookPrice + chainPrice;
     }
     if (name === "Frail" && level == 7) {
-        const severedPincerPriceData = bazaarPrices[`SEVERED_PINCER`];
-        const priceData = bazaarPrices[`${details.id}6`];
-        return (priceData?.buyPrice + severedPincerPriceData?.buyPrice) ?? null;
+        const pincerPrice = getItemPrice(`SEVERED_PINCER`);
+        const bookPrice = getItemPrice(`${details.id}6`);
+        return bookPrice + pincerPrice;
     }
     if (name === "Luck of the Sea" && level == 7) {
-        const goldBottleCapPriceData = bazaarPrices[`GOLD_BOTTLE_CAP`];
-        const priceData = bazaarPrices[`${details.id}6`];
-        return (priceData?.buyPrice + goldBottleCapPriceData?.buyPrice) ?? null;
+        const capPrice = getItemPrice(`GOLD_BOTTLE_CAP`);
+        const bookPrice = getItemPrice(`${details.id}6`);
+        return bookPrice + capPrice;
     }
     if (name === "Piscary" && level == 7) {
-        const troubledBubblePriceData = bazaarPrices[`TROUBLED_BUBBLE`];
-        const priceData = bazaarPrices[`${details.id}6`];
-        return (priceData?.buyPrice + troubledBubblePriceData?.buyPrice) ?? null;
+        const bubblePrice = getItemPrice(`TROUBLED_BUBBLE`);
+        const bookPrice = getItemPrice(`${details.id}6`);
+        return bookPrice + bubblePrice;
     }
     if (name === "Pesterminator" && level == 6) {
-        const pesthuntingGuidePriceData = bazaarPrices[`PESTHUNTING_GUIDE`];
-        const priceData = bazaarPrices[`${details.id}5`];
-        return (priceData?.buyPrice + pesthuntingGuidePriceData?.buyPrice) ?? null;
+        const guidePrice = getItemPrice(`PESTHUNTING_GUIDE`);
+        const bookPrice = getItemPrice(`${details.id}5`);
+        return bookPrice + guidePrice;
     }
     if (name === "Scavenger" && level == 6) {
-        const goldenBountyPriceData = bazaarPrices[`GOLDEN_BOUNTY`];
-        const priceData = bazaarPrices[`${details.id}5`];
-        return (priceData?.buyPrice + goldenBountyPriceData?.buyPrice) ?? null;
+        const bountyPrice = getItemPrice(`GOLDEN_BOUNTY`);
+        const bookPrice = getItemPrice(`${details.id}5`);
+        return bookPrice + bountyPrice;
     }
     if (name === "Spiked Hook" && level == 7) {
-        const octopusTendrilPriceData = bazaarPrices[`OCTOPUS_TENDRIL`];
-        const priceData = bazaarPrices[`${details.id}6`];
-        return (priceData?.buyPrice + octopusTendrilPriceData?.buyPrice) ?? null;
+        const tendrilPrice = getItemPrice(`OCTOPUS_TENDRIL`);
+        const bookPrice = getItemPrice(`${details.id}6`);
+        return bookPrice + tendrilPrice;
     }
-    const priceData = bazaarPrices[`${details.id}${level}`];
-    return priceData?.buyPrice ?? null;
+
+    const price = getItemPrice(`${details.id}${level}`);
+    return price !== 0 ? price : null;
 }
 
 function getGemstonePrice(tier, gemstoneName) {
-    const priceData = bazaarPrices[`${tier}_${gemstoneName}_GEM`];
-    return priceData?.buyPrice ?? null;
+    const price = getItemPrice(`${tier}_${gemstoneName}_GEM`);
+    return price !== 0 ? price : null;
 }
 
 function getEnchantmentCategoryFromItem(item) {
@@ -361,6 +372,29 @@ function getReforgeCategoryFromItem(item) {
     if (others.reforge.categories.armor.includes(item.category)) return "ARMOR";
     if (others.reforge.categories.drill.includes(item.category)) return "PICKAXE";
     return item.category;
+}
+
+async function itemHasRightClickAbility(itemInternalName) {
+    if (rightClickAbilityCache[itemInternalName] !== undefined) {
+        return rightClickAbilityCache[itemInternalName];
+    }
+
+    try {
+        const url = `https://raw.githubusercontent.com/NotEnoughUpdates/NotEnoughUpdates-REPO/refs/heads/master/items/${itemInternalName}.json`;
+        const data = await fetchWithProxy(url);
+
+        if (data && data.lore) {
+            const hasAbility = data.lore.some(line => line.includes("RIGHT CLICK"));
+            rightClickAbilityCache[itemInternalName] = hasAbility;
+            return hasAbility;
+        }
+
+        rightClickAbilityCache[itemInternalName] = false;
+        return false;
+    } catch (error) {
+        rightClickAbilityCache[itemInternalName] = false;
+        return false;
+    }
 }
 
 function toggleUpgradeSection(config) {
@@ -383,12 +417,14 @@ function toggleUpgradeSection(config) {
                 input.checked = false;
             } else if (input.type === 'number') {
                 input.value = 0;
+            } else if (input.tagName === 'SELECT') {
+                input.value = '';
             }
         }
     }
 }
 
-function updateItemDetails() {
+async function updateItemDetails() {
     const calculatorBody = document.getElementById('calculator-body');
     const selectedItemId = document.getElementById('item-select').value;
     const selectedItem = skyblockItems.find(item => item.id === selectedItemId);
@@ -462,6 +498,10 @@ function updateItemDetails() {
             sectionId: 'wet-book-section',
             inputId: 'wet-book',
             upgradeKey: 'wetBook'
+        }, {
+            sectionId: 'necron-scrolls-section',
+            inputId: null,
+            upgradeKey: 'necronScrolls'
         }];
 
         upgradeConfigs.forEach(config => {
@@ -472,6 +512,21 @@ function updateItemDetails() {
                 itemMaterial
             });
         });
+
+        const hasAbility = await itemHasRightClickAbility(itemId);
+        const powerScrollSection = document.getElementById('power-scroll-section');
+        const powerScrollsData = others.powerScrolls;
+        const isEligibleByCategory = powerScrollsData.categories.includes(itemCategory);
+        const isEligibleByItem = powerScrollsData.items.includes(itemId);
+
+        if (hasAbility || isEligibleByCategory || isEligibleByItem) {
+            powerScrollSection.style.display = 'block';
+        } else {
+            powerScrollSection.style.display = 'none';
+            document.getElementById('power-scroll-select').value = '';
+        }
+
+        updatePowerScrollPrice();
 
     } else {
         calculatorBody.classList.add('hidden');
@@ -533,7 +588,7 @@ function updateReforgePrice(selectedItem) {
             ...reforges.stone_reforges
         };
         const reforge = Object.values(allReforges).find(r => r.name === selectedReforgeName);
-        const reforgePrice = bazaarPrices[reforge.internalName] ? bazaarPrices[reforge.internalName].buyPrice : 0;
+        const reforgePrice = getItemPrice(reforge.internalName);
         const rarity = selectedItem.tier || 'COMMON';
         const reforgeCost = reforge.reforgeCosts[rarity] ? reforge.reforgeCosts[rarity] : 0;
 
@@ -542,6 +597,20 @@ function updateReforgePrice(selectedItem) {
     } else {
         reforgePriceLabel.textContent = 'Price';
         reforgePriceLabel.classList.add('text-gray-400');
+    }
+}
+
+function updatePowerScrollPrice() {
+    const select = document.getElementById('power-scroll-select');
+    const priceLabel = document.getElementById('power-scroll-price');
+    const selectedScroll = select.value;
+
+    if (selectedScroll && powerScrollPrices[selectedScroll]) {
+        priceLabel.textContent = powerScrollPrices[selectedScroll].toLocaleString() + ' coins';
+        priceLabel.classList.remove('text-gray-400');
+    } else {
+        priceLabel.textContent = 'Price';
+        priceLabel.classList.add('text-gray-400');
     }
 }
 
@@ -935,6 +1004,7 @@ function calculateTotal() {
     const bookwormFavoriteBookCount = parseFloat(document.getElementById('bookworm-favorite-book').value) || 0;
     const polarvoidBookCount = parseFloat(document.getElementById('polarvoid-book').value) || 0;
     const manaDisintegratorCount = parseFloat(document.getElementById('mana-disintegrator').value) || 0;
+    const selectedScroll = document.getElementById('power-scroll-select').value;
 
     const costs = {
         enchantments: sumLabels('#enchantments-container .price-label'),
@@ -954,7 +1024,19 @@ function calculateTotal() {
         bookOfStats: document.getElementById('book-of-stats-checkbox').checked ? bookOfStatsPrice : 0,
         potatoBooks: (hotBooksCount * hotPotatoBookPrice) + (fumingBooksCount * fumingPotatoBookPrice),
         wetBook: (wetBookCount * wetBookPrice),
+        necronScrolls: 0,
+        powerScroll: selectedScroll ? (powerScrollPrices[selectedScroll] || 0) : 0,
     };
+
+    if (document.getElementById('implosion-scroll-checkbox').checked) {
+        costs.necronScrolls += necronScrollPrices.implosion;
+    }
+    if (document.getElementById('wither-shield-scroll-checkbox').checked) {
+        costs.necronScrolls += necronScrollPrices.witherShield;
+    }
+    if (document.getElementById('shadow-warp-scroll-checkbox').checked) {
+        costs.necronScrolls += necronScrollPrices.shadowWarp;
+    }
 
     costs.total = Object.values(costs).reduce((sum, cost) => sum + cost, 0);
 
@@ -980,12 +1062,20 @@ function displayResults(costs, rawItemName) {
         label: 'Ultimate Enchantment',
         color: 'text-purple-300'
     }, {
+        key: 'necronScrolls',
+        label: "Necron's Blade Scrolls",
+        color: 'text-yellow-300'
+    }, {
         key: 'gemstones',
         label: 'Gemstones',
         color: 'text-teal-300'
     }, {
         key: 'reforge',
         label: 'Reforge',
+        color: 'text-yellow-300'
+    }, {
+        key: 'powerScroll',
+        label: 'Power Scroll',
         color: 'text-yellow-300'
     }, {
         key: 'recomb',

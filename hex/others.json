@@ -229,5 +229,44 @@
         "items": [],
         "materials": [],
         "internalName": "WET_BOOK"
+    },
+    "necronScrolls": {
+        "categories": [],
+        "items": [
+            "HYPERION",
+            "ASTRAEA",
+            "SCYLLA",
+            "VALKYRIE",
+            "NECRON_BLADE"
+        ],
+        "materials": [],
+        "internalNames": {
+            "implosion": "IMPLOSION_SCROLL",
+            "witherShield": "WITHER_SHIELD_SCROLL",
+            "shadowWarp": "SHADOW_WARP_SCROLL"
+        }
+    },
+    "powerScrolls": {
+        "categories": [
+            "DRILL",
+            "PICKAXE",
+            "AXE"
+        ],
+        "items": [
+            "HYPERION",
+            "ASTRAEA",
+            "SCYLLA",
+            "VALKYRIE",
+            "NECRON_BLADE"
+        ],
+        "materials": [],
+        "internalNames": {
+            "ruby": "RUBY_POWER_SCROLL",
+            "sapphire": "SAPPHIRE_POWER_SCROLL",
+            "jasper": "JASPER_POWER_SCROLL",
+            "amethyst": "AMETHYST_POWER_SCROLL",
+            "amber": "AMBER_POWER_SCROLL",
+            "opal": "OPAL_POWER_SCROLL"
+        }
     }
 }
