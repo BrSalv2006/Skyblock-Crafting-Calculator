@@ -182,11 +182,11 @@ async function loadSkyblockItems() {
             return (others.validTypes.categories.includes(item.category) && (canBeEnchanted || hasGemstoneSlots || canBeReforged));
         });
 
-        skyblockItems.sort((a, b) => a.name.localeCompare(b.name));
+        skyblockItems.sort((a, b) => stripMinecraftFormat(a.name).localeCompare(stripMinecraftFormat(b.name)));
 
         itemSelect.innerHTML = '<option value="">Select an item...</option>';
         skyblockItems.forEach(item => {
-            const option = new Option(item.name, item.id);
+            const option = new Option(stripMinecraftFormat(item.name), item.id);
             itemSelect.appendChild(option);
         });
     } catch (error) {
@@ -806,6 +806,110 @@ function updateGemstoneSlots(selectedItem) {
     }
 }
 
+function preprocessCustomFormats(text) {
+    if (!text) return text;
+    const customFormatMap = {
+        'black': '0', 'dark_blue': '1', 'dark_green': '2', 'dark_aqua': '3',
+        'dark_red': '4', 'dark_purple': '5', 'gold': '6', 'gray': '7',
+        'dark_gray': '8', 'blue': '9', 'green': 'a', 'aqua': 'b',
+        'red': 'c', 'light_purple': 'd', 'yellow': 'e', 'white': 'f',
+        'obfuscated': 'k', 'bold': 'l', 'strikethrough': 'm', 'underline': 'n',
+        'italic': 'o', 'reset': 'r'
+    };
+
+    return text.replace(/%%([a-z_]+)%%/g, (match, formatName) => {
+        const code = customFormatMap[formatName.toLowerCase()];
+        return code ? `§${code}` : '';
+    });
+}
+
+function stripMinecraftFormat(text) {
+    if (!text) return '';
+    const preprocessedText = preprocessCustomFormats(text);
+    return preprocessedText.replace(/§[0-9a-fk-or]/g, '');
+}
+
+function minecraftColorToHtml(text) {
+    if (!text) return '';
+
+    const preprocessedText = preprocessCustomFormats(text);
+
+    const colorMap = {
+        '0': '#000000', '1': '#0000AA', '2': '#00AA00', '3': '#00AAAA',
+        '4': '#AA0000', '5': '#AA00AA', '6': '#FFAA00', '7': '#AAAAAA',
+        '8': '#555555', '9': '#5555FF', 'a': '#55FF55', 'b': '#55FFFF',
+        'c': '#FF5555', 'd': '#FF55FF', 'e': '#FFFF55', 'f': '#FFFFFF'
+    };
+
+    let html = '';
+    const sections = preprocessedText.split('§');
+    
+    let remainingText = sections.shift() || '';
+    
+    const activeFormats = {
+        color: null,
+        bold: false,
+        italic: false,
+        underline: false,
+        strikethrough: false
+    };
+
+    function applyFormatting() {
+        if (remainingText.length === 0) return;
+
+        const styles = [];
+        if (activeFormats.color) styles.push(`color: ${activeFormats.color}`);
+        if (activeFormats.bold) styles.push('font-weight: bold');
+        if (activeFormats.italic) styles.push('font-style: italic');
+        
+        let textDecoration = [];
+        if (activeFormats.underline) textDecoration.push('underline');
+        if (activeFormats.strikethrough) textDecoration.push('line-through');
+        if (textDecoration.length > 0) styles.push(`text-decoration: ${textDecoration.join(' ')}`);
+
+        if (styles.length > 0) {
+            html += `<span style="${styles.join('; ')}">${remainingText.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</span>`;
+        } else {
+            html += remainingText.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+    }
+
+    for (const section of sections) {
+        if (section.length === 0) continue;
+
+        applyFormatting();
+
+        const formatCode = section[0];
+        remainingText = section.substring(1);
+
+        if (colorMap[formatCode]) {
+            activeFormats.color = colorMap[formatCode];
+            activeFormats.bold = false;
+            activeFormats.italic = false;
+            activeFormats.underline = false;
+            activeFormats.strikethrough = false;
+        } else {
+            switch (formatCode) {
+                case 'l': activeFormats.bold = true; break;
+                case 'o': activeFormats.italic = true; break;
+                case 'n': activeFormats.underline = true; break;
+                case 'm': activeFormats.strikethrough = true; break;
+                case 'r': // Reset all formats
+                    activeFormats.color = null;
+                    activeFormats.bold = false;
+                    activeFormats.italic = false;
+                    activeFormats.underline = false;
+                    activeFormats.strikethrough = false;
+                    break;
+            }
+        }
+    }
+    
+    applyFormatting();
+    
+    return html;
+}
+
 function calculateTotal() {
     const sumLabels = (selector) => Array.from(document.querySelectorAll(selector)).reduce((sum, label) => {
         const value = parseFloat(label.textContent.replace(/\s/g, '')) || 0;
@@ -841,14 +945,17 @@ function calculateTotal() {
     };
 
     costs.total = Object.values(costs).reduce((sum, cost) => sum + cost, 0);
+    
+    const selectedItemId = document.getElementById('item-select').value;
+    const selectedItem = skyblockItems.find(item => item.id === selectedItemId);
+    const rawItemName = selectedItem ? selectedItem.name : 'Selected Item';
 
-    displayResults(costs);
+    displayResults(costs, rawItemName);
 }
 
-function displayResults(costs) {
+function displayResults(costs, rawItemName) {
     const resultsDiv = document.getElementById('results-container');
-    const itemSelect = document.getElementById('item-select');
-    const itemName = itemSelect.options[itemSelect.selectedIndex].textContent;
+    const itemNameHtml = minecraftColorToHtml(rawItemName);
 
     const format = (n) => n.toLocaleString('en-US');
 
@@ -921,7 +1028,7 @@ function displayResults(costs) {
     let costDetailsHTML = costCategories
         .map(cat => {
             if (costs[cat.key] > 0) {
-                return `<div class="flex justify-between items-center"><span class="${cat.color}">${cat.label}:</span><span class="font-semibold">${format(costs[cat.key])} coins</span></div>`;
+                return `<div class="flex justify-between items-center"><span class="${cat.color}">${cat.label}:</span><span class="font-semibold">${format(Math.round(costs[cat.key]))} coins</span></div>`;
             }
             return '';
         })
@@ -936,14 +1043,14 @@ function displayResults(costs) {
 
     resultsDiv.innerHTML = `
         <div class="bg-gray-800/70 backdrop-blur-sm border border-gray-700 rounded-2xl p-6 fade-in">
-            <h3 class="text-2xl font-bold text-center mb-6">Cost Summary for <span class="text-blue-400">${itemName}</span></h3>
+            <h3 class="text-2xl font-bold text-center mb-6">Cost Summary for <span class="text-blue-400">${itemNameHtml}</span></h3>
             <div class="space-y-3 text-lg">
                 ${costDetailsHTML}
             </div>
             <hr class="border-gray-600 my-6">
             <div class="text-center">
                 <p class="text-gray-400 text-xl">Total Added Cost</p>
-                <p class="text-4xl font-bold text-green-400 mt-1">${format(costs.total)} coins</p>
+                <p class="text-4xl font-bold text-green-400 mt-1">${format(Math.round(costs.total))} coins</p>
             </div>
         </div>
     `;
