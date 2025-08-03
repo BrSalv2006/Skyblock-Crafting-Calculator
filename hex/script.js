@@ -9,6 +9,7 @@ let gemstones = {};
 let recombPrice = 0;
 let artOfWarPrice = 0;
 let artOfPeacePrice = 0;
+let jalapenoBookPrice = 0;
 let woodSingularityPrice = 0;
 let divanPowderCoatingPrice = 0;
 let farmingForDummiesPrice = 0;
@@ -208,6 +209,12 @@ async function loadBazaarPrices() {
         if (artOfWarPriceData && artOfWarPriceData.buyPrice != null) {
             artOfWarPrice = Math.round(artOfWarPriceData.buyPrice);
             document.getElementById('art-of-war-price-display').textContent = `${artOfWarPrice.toLocaleString()} coins`;
+        }
+
+        const jalapenoBookPriceData = bazaarPrices[others.jalapenoBook.internalName];
+        if (jalapenoBookPriceData && jalapenoBookPriceData.buyPrice != null) {
+            jalapenoBookPrice = Math.round(jalapenoBookPriceData.buyPrice);
+            document.getElementById('jalapeno-book-price-display').textContent = `${jalapenoBookPrice.toLocaleString()} coins`;
         }
 
         const divanPowderCoatingPriceData = bazaarPrices[others.divanPowderCoating.internalName];
@@ -411,6 +418,10 @@ function updateItemDetails() {
             sectionId: 'art-of-war-section',
             inputId: 'art-of-war-checkbox',
             upgradeKey: 'artOfWar'
+        }, {
+            sectionId: 'jalapeno-book-section',
+            inputId: 'jalapeno-book-checkbox',
+            upgradeKey: 'jalapenoBook'
         }, {
             sectionId: 'art-of-peace-section',
             inputId: 'art-of-peace-checkbox',
@@ -843,9 +854,9 @@ function minecraftColorToHtml(text) {
 
     let html = '';
     const sections = preprocessedText.split('§');
-    
+
     let remainingText = sections.shift() || '';
-    
+
     const activeFormats = {
         color: null,
         bold: false,
@@ -861,7 +872,7 @@ function minecraftColorToHtml(text) {
         if (activeFormats.color) styles.push(`color: ${activeFormats.color}`);
         if (activeFormats.bold) styles.push('font-weight: bold');
         if (activeFormats.italic) styles.push('font-style: italic');
-        
+
         let textDecoration = [];
         if (activeFormats.underline) textDecoration.push('underline');
         if (activeFormats.strikethrough) textDecoration.push('line-through');
@@ -894,7 +905,7 @@ function minecraftColorToHtml(text) {
                 case 'o': activeFormats.italic = true; break;
                 case 'n': activeFormats.underline = true; break;
                 case 'm': activeFormats.strikethrough = true; break;
-                case 'r': // Reset all formats
+                case 'r':
                     activeFormats.color = null;
                     activeFormats.bold = false;
                     activeFormats.italic = false;
@@ -904,9 +915,9 @@ function minecraftColorToHtml(text) {
             }
         }
     }
-    
+
     applyFormatting();
-    
+
     return html;
 }
 
@@ -932,6 +943,7 @@ function calculateTotal() {
         reforge: parseFloat(document.getElementById('reforge-price').textContent.replace(/\s/g, '')) || 0,
         recomb: document.getElementById('recomb-checkbox').checked ? recombPrice : 0,
         artOfWar: document.getElementById('art-of-war-checkbox').checked ? artOfWarPrice : 0,
+        jalapenoBook: document.getElementById('jalapeno-book-checkbox').checked ? jalapenoBookPrice : 0,
         divanPowderCoating: document.getElementById('divan-powder-coating-checkbox').checked ? divanPowderCoatingPrice : 0,
         artOfPeace: document.getElementById('art-of-peace-checkbox').checked ? artOfPeacePrice : 0,
         woodSingularity: document.getElementById('wood-singularity-checkbox').checked ? woodSingularityPrice : 0,
@@ -945,7 +957,7 @@ function calculateTotal() {
     };
 
     costs.total = Object.values(costs).reduce((sum, cost) => sum + cost, 0);
-    
+
     const selectedItemId = document.getElementById('item-select').value;
     const selectedItem = skyblockItems.find(item => item.id === selectedItemId);
     const rawItemName = selectedItem ? selectedItem.name : 'Selected Item';
@@ -982,6 +994,10 @@ function displayResults(costs, rawItemName) {
     }, {
         key: 'artOfWar',
         label: 'The Art of War',
+        color: 'text-yellow-300'
+    }, {
+        key: 'jalapenoBook',
+        label: 'Jalapeno Book',
         color: 'text-yellow-300'
     }, {
         key: 'artOfPeace',

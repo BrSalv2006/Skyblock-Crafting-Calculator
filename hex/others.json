@@ -76,6 +76,14 @@
         "materials": [],
         "internalName": "THE_ART_OF_WAR"
     },
+    "jalapenoBook": {
+        "categories": [
+            "DEPLOYABLE"
+        ],
+        "items": [],
+        "materials": [],
+        "internalName": "JALAPENO_BOOK"
+    },
     "artOfPeace": {
         "categories": [
             "HELMET",
