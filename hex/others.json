@@ -25,7 +25,8 @@
             "NECKLACE",
             "BELT",
             "GLOVES",
-            "BRACELET"
+            "BRACELET",
+            "DEPLOYABLE"
         ],
         "items": [],
         "materials": [],
@@ -120,6 +121,15 @@
         "items": [],
         "materials": [],
         "internalName": "POLARVOID_BOOK"
+    },
+    "manaDisintegrator": {
+        "categories": [
+            "WAND",
+            "DEPLOYABLE"
+        ],
+        "items": [],
+        "materials": [],
+        "internalName": "MANA_DISINTEGRATOR"
     },
     "bookOfStats": {
         "categories": [

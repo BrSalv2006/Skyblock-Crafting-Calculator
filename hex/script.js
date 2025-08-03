@@ -14,6 +14,7 @@ let divanPowderCoatingPrice = 0;
 let farmingForDummiesPrice = 0;
 let bookwormFavoriteBookPrice = 0;
 let polarvoidBookPrice = 0;
+let manaDisintegratorPrice = 0;
 let bookOfStatsPrice = 0;
 let hotPotatoBookPrice = 0;
 let fumingPotatoBookPrice = 0;
@@ -246,6 +247,11 @@ async function loadBazaarPrices() {
             polarvoidBookPrice = Math.round(polarvoidBookPriceData.buyPrice);
         }
 
+        const manaDisintegratorPriceData = bazaarPrices[others.manaDisintegrator.internalName];
+        if (manaDisintegratorPriceData && manaDisintegratorPriceData.buyPrice != null) {
+            manaDisintegratorPrice = Math.round(manaDisintegratorPriceData.buyPrice);
+        }
+
         const bookOfStatsPriceData = bazaarPrices[others.bookOfStats.internalName];
         if (bookOfStatsPriceData && bookOfStatsPriceData.buyPrice != null) {
             bookOfStatsPrice = Math.round(bookOfStatsPriceData.buyPrice);
@@ -430,6 +436,10 @@ function updateItemDetails() {
             inputId: 'polarvoid-book',
             upgradeKey: 'polarvoidBook'
         }, {
+            sectionId: 'mana-disintegrator-section',
+            inputId: 'mana-disintegrator',
+            upgradeKey: 'manaDisintegrator'
+        }, {
             sectionId: 'book-of-stats-section',
             inputId: 'book-of-stats-checkbox',
             upgradeKey: 'bookOfStats'
@@ -441,7 +451,7 @@ function updateItemDetails() {
             sectionId: 'wet-book-section',
             inputId: 'wet-book',
             upgradeKey: 'wetBook'
-        },];
+        }];
 
         upgradeConfigs.forEach(config => {
             toggleUpgradeSection({
@@ -799,7 +809,6 @@ function updateGemstoneSlots(selectedItem) {
 function calculateTotal() {
     const sumLabels = (selector) => Array.from(document.querySelectorAll(selector)).reduce((sum, label) => {
         const value = parseFloat(label.textContent.replace(/\s/g, '')) || 0;
-        console.log(label.textContent)
         return sum + value;
     }, 0);
 
@@ -810,6 +819,7 @@ function calculateTotal() {
     const farmingForDummiesCount = parseFloat(document.getElementById('farming-for-dummies').value) || 0;
     const bookwormFavoriteBookCount = parseFloat(document.getElementById('bookworm-favorite-book').value) || 0;
     const polarvoidBookCount = parseFloat(document.getElementById('polarvoid-book').value) || 0;
+    const manaDisintegratorCount = parseFloat(document.getElementById('mana-disintegrator').value) || 0;
 
     const costs = {
         enchantments: sumLabels('#enchantments-container .price-label'),
@@ -824,6 +834,7 @@ function calculateTotal() {
         farmingForDummies: (farmingForDummiesCount * farmingForDummiesPrice),
         bookwormFavoriteBook: (bookwormFavoriteBookCount * bookwormFavoriteBookPrice),
         polarvoidBook: (polarvoidBookCount * polarvoidBookPrice),
+        manaDisintegrator: (manaDisintegratorCount * manaDisintegratorPrice),
         bookOfStats: document.getElementById('book-of-stats-checkbox').checked ? bookOfStatsPrice : 0,
         potatoBooks: (hotBooksCount * hotPotatoBookPrice) + (fumingBooksCount * fumingPotatoBookPrice),
         wetBook: (wetBookCount * wetBookPrice),
@@ -890,6 +901,10 @@ function displayResults(costs) {
         label: 'Polarvoid Book',
         color: 'text-yellow-300'
     }, {
+        key: 'manaDisintegrator',
+        label: 'Mana Disintegrator',
+        color: 'text-yellow-300'
+    }, {
         key: 'bookOfStats',
         label: 'Book of Stats',
         color: 'text-yellow-300'
@@ -901,7 +916,7 @@ function displayResults(costs) {
         key: 'wetBook',
         label: 'Wet Books',
         color: 'text-yellow-300'
-    },];
+    }];
 
     let costDetailsHTML = costCategories
         .map(cat => {
