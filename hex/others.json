@@ -268,5 +268,30 @@
             "amber": "AMBER_POWER_SCROLL",
             "opal": "OPAL_POWER_SCROLL"
         }
+    },
+    "enrichments": {
+        "categories": [
+            "ACCESSORY"
+        ],
+        "rarities": [
+            "LEGENDARY",
+            "MYTHIC",
+            "SPECIAL",
+            "VERY_SPECIAL"
+        ],
+        "items": [],
+        "internalNames": {
+            "critical_chance": "TALISMAN_ENRICHMENT_CRITICAL_CHANCE",
+            "speed": "TALISMAN_ENRICHMENT_WALK_SPEED",
+            "intelligence": "TALISMAN_ENRICHMENT_INTELLIGENCE",
+            "critical_damage": "TALISMAN_ENRICHMENT_CRITICAL_DAMAGE",
+            "strength": "TALISMAN_ENRICHMENT_STRENGTH",
+            "defense": "TALISMAN_ENRICHMENT_DEFENSE",
+            "health": "TALISMAN_ENRICHMENT_HEALTH",
+            "magic_find": "TALISMAN_ENRICHMENT_MAGIC_FIND",
+            "ferocity": "TALISMAN_ENRICHMENT_FEROCITY",
+            "sea_creature_chance": "TALISMAN_ENRICHMENT_SEA_CREATURE_CHANCE",
+            "attack_speed": "TALISMAN_ENRICHMENT_ATTACK_SPEED"
+        }
     }
 }

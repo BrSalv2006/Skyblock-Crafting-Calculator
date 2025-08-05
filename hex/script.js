@@ -35,6 +35,20 @@ let powerScrollPrices = {
     amber: 0,
     opal: 0
 };
+let enrichmentPrices = {
+    critical_chance: 0,
+    speed: 0,
+    intelligence: 0,
+    critical_damage: 0,
+    strength: 0,
+    defense: 0,
+    health: 0,
+    magic_find: 0,
+    ferocity: 0,
+    sea_creature_chance: 0,
+    attack_speed: 0
+};
+
 
 async function fetchWithProxy(url) {
     const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(url);
@@ -84,6 +98,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     document.getElementById('power-scroll-select').addEventListener('change', updatePowerScrollPrice);
+    document.getElementById('enrichment-select').addEventListener('change', updateEnrichmentPrice);
+    document.getElementById('recomb-checkbox').addEventListener('change', updateEnrichmentSectionVisibility);
+
 
     const mainElement = document.querySelector('main');
     mainElement.addEventListener('click', handleSpinnerClick);
@@ -290,6 +307,12 @@ function updateStaticPrices() {
 
     for (const [scroll, internalName] of Object.entries(others.powerScrolls.internalNames)) {
         powerScrollPrices[scroll] = getItemPrice(internalName);
+    }
+
+    if (others.enrichments) {
+        for (const [enrichment, internalName] of Object.entries(others.enrichments.internalNames)) {
+            enrichmentPrices[enrichment] = getItemPrice(internalName);
+        }
     }
 }
 
@@ -527,6 +550,8 @@ async function updateItemDetails() {
         }
 
         updatePowerScrollPrice();
+        updateEnrichmentSectionVisibility();
+
 
     } else {
         calculatorBody.classList.add('hidden');
@@ -607,6 +632,52 @@ function updatePowerScrollPrice() {
 
     if (selectedScroll && powerScrollPrices[selectedScroll]) {
         priceLabel.textContent = powerScrollPrices[selectedScroll].toLocaleString() + ' coins';
+        priceLabel.classList.remove('text-gray-400');
+    } else {
+        priceLabel.textContent = 'Price';
+        priceLabel.classList.add('text-gray-400');
+    }
+}
+
+function updateEnrichmentSectionVisibility() {
+    const selectedItemId = document.getElementById('item-select').value;
+    if (!selectedItemId) return;
+    const selectedItem = skyblockItems.find(item => item.id === selectedItemId);
+    if (!selectedItem) return;
+
+    const enrichmentSection = document.getElementById('enrichment-section');
+    if (!enrichmentSection || !others.enrichments) return;
+
+    const itemCategory = getEnchantmentCategoryFromItem(selectedItem);
+    const itemRarity = selectedItem.tier;
+    const itemId = selectedItem.id;
+    const isRecombed = document.getElementById('recomb-checkbox').checked;
+    const enrichmentData = others.enrichments;
+
+    const isNativelyApplicable = enrichmentData.rarities.includes(itemRarity);
+    const isEpicAndRecombed = itemRarity === 'EPIC' && isRecombed;
+
+    const isApplicableForEnrichment =
+        enrichmentData.categories.includes(itemCategory) &&
+        (isNativelyApplicable || isEpicAndRecombed) &&
+        itemId !== 'HOCUS_POCUS_CIPHER';
+
+    if (isApplicableForEnrichment) {
+        enrichmentSection.style.display = 'block';
+    } else {
+        enrichmentSection.style.display = 'none';
+        document.getElementById('enrichment-select').value = '';
+    }
+    updateEnrichmentPrice();
+}
+
+function updateEnrichmentPrice() {
+    const select = document.getElementById('enrichment-select');
+    const priceLabel = document.getElementById('enrichment-price');
+    const selectedEnrichment = select.value;
+
+    if (selectedEnrichment && enrichmentPrices[selectedEnrichment]) {
+        priceLabel.textContent = enrichmentPrices[selectedEnrichment].toLocaleString() + ' coins';
         priceLabel.classList.remove('text-gray-400');
     } else {
         priceLabel.textContent = 'Price';
@@ -992,7 +1063,7 @@ function minecraftColorToHtml(text) {
 
 function calculateTotal() {
     const sumLabels = (selector) => Array.from(document.querySelectorAll(selector)).reduce((sum, label) => {
-        const value = parseFloat(label.textContent.replace(/\s/g, '')) || 0;
+        const value = parseFloat(label.textContent.replace(/,/g, '')) || 0;
         return sum + value;
     }, 0);
 
@@ -1005,12 +1076,14 @@ function calculateTotal() {
     const polarvoidBookCount = parseFloat(document.getElementById('polarvoid-book').value) || 0;
     const manaDisintegratorCount = parseFloat(document.getElementById('mana-disintegrator').value) || 0;
     const selectedScroll = document.getElementById('power-scroll-select').value;
+    const selectedEnrichment = document.getElementById('enrichment-select').value;
+
 
     const costs = {
         enchantments: sumLabels('#enchantments-container .price-label'),
         ultimate: sumLabels('#ultimate-enchantment-container .price-label'),
         gemstones: sumLabels('#gemstones-container .price-label'),
-        reforge: parseFloat(document.getElementById('reforge-price').textContent.replace(/\s/g, '')) || 0,
+        reforge: parseFloat(document.getElementById('reforge-price').textContent.replace(/,/g, '')) || 0,
         recomb: document.getElementById('recomb-checkbox').checked ? recombPrice : 0,
         artOfWar: document.getElementById('art-of-war-checkbox').checked ? artOfWarPrice : 0,
         jalapenoBook: document.getElementById('jalapeno-book-checkbox').checked ? jalapenoBookPrice : 0,
@@ -1026,6 +1099,7 @@ function calculateTotal() {
         wetBook: (wetBookCount * wetBookPrice),
         necronScrolls: 0,
         powerScroll: selectedScroll ? (powerScrollPrices[selectedScroll] || 0) : 0,
+        enrichment: selectedEnrichment ? (enrichmentPrices[selectedEnrichment] || 0) : 0,
     };
 
     if (document.getElementById('implosion-scroll-checkbox').checked) {
@@ -1076,6 +1150,10 @@ function displayResults(costs, rawItemName) {
     }, {
         key: 'powerScroll',
         label: 'Power Scroll',
+        color: 'text-yellow-300'
+    }, {
+        key: 'enrichment',
+        label: 'Enrichment',
         color: 'text-yellow-300'
     }, {
         key: 'recomb',
